@@ -154,3 +154,120 @@ h1{
     }
 
 }
+/* ===========================
+   Bovenbalk
+=========================== */
+
+.topbar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:75px;
+
+    background:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+    z-index:1000;
+
+}
+
+.logo-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:auto;
+
+    transform:translateX(-28px);
+
+}
+
+.logo-title img{
+
+    width:48px;
+    height:48px;
+
+    user-select:none;
+
+    pointer-events:none;
+
+}
+
+.logo-title span{
+
+    font-size:1.8rem;
+
+    font-weight:bold;
+
+    color:#333;
+
+}
+
+.back-btn{
+
+    width:50px;
+    height:50px;
+
+    border-radius:15px;
+
+    background:#4BA3FF;
+
+    color:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:1.8rem;
+
+    font-weight:bold;
+
+    transition:.2s;
+
+}
+
+.back-btn:hover{
+
+    transform:scale(1.08);
+
+}
+
+.back-btn:active{
+
+    transform:scale(.95);
+
+}
+
+/* Spel onder de balk */
+
+#game{
+
+    position:relative;
+
+    width:100vw;
+
+    height:calc(100vh - 75px);
+
+    margin-top:75px;
+
+}
