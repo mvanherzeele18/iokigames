@@ -2,10 +2,20 @@
    Ballonnen - Ioki Games
 =========================== */
 
-body{
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
     overflow:hidden;
-    background:linear-gradient(#87CEEB,#BFEFFF);
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:linear-gradient(180deg,#87CEEB,#BFEFFF);
+
 }
 
 /* ===========================
@@ -13,49 +23,30 @@ body{
 =========================== */
 
 #game{
+
     position:relative;
+
     width:100vw;
+
     height:100vh;
+
 }
 
 /* ===========================
-   Titel
-=========================== */
-
-h1{
-    position:absolute;
-
-    top:20px;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    margin:0;
-
-    color:white;
-
-    font-size:3rem;
-
-    text-shadow:
-        3px 3px 8px rgba(0,0,0,.25);
-
-    z-index:900;
-
-    pointer-events:none;
-}
-
-/* ===========================
-   Terug knop
+   Terugknop
 =========================== */
 
 .back-button{
 
-    position:absolute;
+    position:fixed;
 
     top:20px;
     left:20px;
 
-    z-index:1000;
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
 
     background:white;
 
@@ -63,15 +54,17 @@ h1{
 
     text-decoration:none;
 
-    padding:14px 22px;
+    font-size:2rem;
 
-    border-radius:18px;
+    display:flex;
 
-    font-size:1.2rem;
+    justify-content:center;
 
-    font-weight:bold;
+    align-items:center;
 
     box-shadow:0 6px 15px rgba(0,0,0,.2);
+
+    z-index:1000;
 
     transition:.2s;
 
@@ -79,13 +72,41 @@ h1{
 
 .back-button:hover{
 
-    transform:scale(1.05);
+    transform:scale(1.08);
 
 }
 
 .back-button:active{
 
     transform:scale(.95);
+
+}
+
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
 
 }
 
@@ -101,9 +122,9 @@ h1{
 
     font-size:70px;
 
-    user-select:none;
-
     cursor:pointer;
+
+    user-select:none;
 
     animation:floatUp linear forwards;
 
@@ -129,21 +150,20 @@ h1{
    Mobiel
 =========================== */
 
-@media (max-width:700px){
+@media(max-width:700px){
 
-    h1{
+    .logo{
 
-        font-size:2.4rem;
-
-        top:25px;
+        font-size:1.6rem;
 
     }
 
     .back-button{
 
-        font-size:1rem;
+        width:55px;
+        height:55px;
 
-        padding:12px 18px;
+        font-size:1.8rem;
 
     }
 
@@ -152,122 +172,5 @@ h1{
         font-size:60px;
 
     }
-
-}
-/* ===========================
-   Bovenbalk
-=========================== */
-
-.topbar{
-
-    position:fixed;
-
-    top:0;
-    left:0;
-
-    width:100%;
-    height:75px;
-
-    background:white;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    padding:0 20px;
-
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
-
-    z-index:1000;
-
-}
-
-.logo-title{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin:auto;
-
-    transform:translateX(-28px);
-
-}
-
-.logo-title img{
-
-    width:48px;
-    height:48px;
-
-    user-select:none;
-
-    pointer-events:none;
-
-}
-
-.logo-title span{
-
-    font-size:1.8rem;
-
-    font-weight:bold;
-
-    color:#333;
-
-}
-
-.back-btn{
-
-    width:50px;
-    height:50px;
-
-    border-radius:15px;
-
-    background:#4BA3FF;
-
-    color:white;
-
-    text-decoration:none;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:1.8rem;
-
-    font-weight:bold;
-
-    transition:.2s;
-
-}
-
-.back-btn:hover{
-
-    transform:scale(1.08);
-
-}
-
-.back-btn:active{
-
-    transform:scale(.95);
-
-}
-
-/* Spel onder de balk */
-
-#game{
-
-    position:relative;
-
-    width:100vw;
-
-    height:calc(100vh - 75px);
-
-    margin-top:75px;
 
 }
