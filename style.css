@@ -120,7 +120,20 @@ h1{
     font-size:5rem;
 
 }
+/* ===========================
+   Logo
+=========================== */
 
+.logo{
+    margin-bottom:20px;
+}
+
+.logo img{
+    width:140px;
+    max-width:80%;
+    user-select:none;
+    pointer-events:none;
+}
 /* ===========================
    Mobiel
 =========================== */
