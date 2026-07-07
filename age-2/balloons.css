@@ -1,0 +1,59 @@
+body{
+    overflow:hidden;
+}
+
+#game{
+    width:100vw;
+    height:100vh;
+    position:relative;
+}
+
+.balloon{
+
+    position:absolute;
+
+    font-size:70px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    animation:floatUp linear forwards;
+
+}
+
+@keyframes floatUp{
+
+    from{
+        transform:translateY(120vh);
+    }
+
+    to{
+        transform:translateY(-150px);
+    }
+
+}
+
+.back-button{
+
+    position:absolute;
+
+    top:20px;
+
+    left:20px;
+
+    background:white;
+
+    padding:12px 20px;
+
+    border-radius:15px;
+
+    text-decoration:none;
+
+    color:black;
+
+    font-weight:bold;
+
+    z-index:999;
+
+}
