@@ -1,0 +1,147 @@
+/* ===========================
+   Ioki Games
+   Algemene stijl
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(180deg,#87CEEB 0%,#BFEFFF 100%);
+
+    overflow-x:hidden;
+}
+
+/* ===========================
+   Container
+=========================== */
+
+.container{
+    width:90%;
+    max-width:1000px;
+
+    text-align:center;
+
+    padding:40px 20px;
+}
+
+/* ===========================
+   Titel
+=========================== */
+
+h1{
+    font-size:4rem;
+    color:white;
+
+    text-shadow:
+        3px 3px 0px #4BA3FF,
+        6px 6px 10px rgba(0,0,0,.2);
+
+    margin-bottom:20px;
+}
+
+.subtitle{
+    font-size:1.8rem;
+    color:white;
+    margin-bottom:50px;
+}
+
+/* ===========================
+   Leeftijd knoppen
+=========================== */
+
+.age-grid{
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:30px;
+}
+
+.age-button{
+
+    text-decoration:none;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:35px 20px;
+
+    color:#333;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:15px;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    transition:.25s;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,.15);
+}
+
+.age-button:hover{
+
+    transform:
+        translateY(-8px)
+        scale(1.05);
+
+    box-shadow:
+        0 20px 30px rgba(0,0,0,.2);
+}
+
+.age-button:active{
+
+    transform:scale(.97);
+
+}
+
+.emoji{
+
+    font-size:5rem;
+
+}
+
+/* ===========================
+   Mobiel
+=========================== */
+
+@media (max-width:700px){
+
+    h1{
+        font-size:3rem;
+    }
+
+    .subtitle{
+        font-size:1.4rem;
+    }
+
+    .age-button{
+        font-size:1.6rem;
+        padding:25px;
+    }
+
+    .emoji{
+        font-size:4rem;
+    }
+
+}
