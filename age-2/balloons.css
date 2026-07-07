@@ -67,3 +67,6 @@ body{
 .back-button:active{
     transform:scale(.95);
 }
+h1{
+    margin-top:80px;
+}
