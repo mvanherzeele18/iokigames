@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dieren - Ioki Games</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="animals.css">
+
+</head>
+
+<body>
+
+<div id="game">
+
+    <!-- Terug -->
+    <a href="index.html" class="back-button">⬅</a>
+
+    <!-- Logo -->
+    <div class="logo">
+        <img src="../assets/images/logo.png" alt="Ioki Games">
+    </div>
+
+    <!-- Vorige -->
+    <button id="previous" class="arrow">
+        ◀
+    </button>
+
+    <!-- Dier -->
+    <div id="animal-container">
+
+        <img
+            id="animal-image"
+            src="../assets/images/animals/dog.png"
+            alt="Hond">
+
+        <h1 id="animal-name">
+            Hond
+        </h1>
+
+        <button id="play-sound">
+            🔊 Nog eens
+        </button>
+
+    </div>
+
+    <!-- Volgende -->
+    <button id="next" class="arrow">
+        ▶
+    </button>
+
+</div>
+
+<script src="../script.js"></script>
+
+<script>
+createClouds(5, "../assets/images/cloud.png");
+</script>
+
+<script src="animals.js"></script>
+
+</body>
+
+</html>
