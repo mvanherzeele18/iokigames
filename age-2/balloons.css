@@ -192,7 +192,35 @@ body{
     }
 
 }
+.pop-effect{
 
+    position:fixed;
+
+    transform:translate(-50%, -50%);
+
+    font-size:55px;
+
+    pointer-events:none;
+
+    animation:popEffect .3s forwards;
+
+    z-index:9999;
+
+}
+
+@keyframes popEffect{
+
+    0%{
+        transform:translate(-50%,-50%) scale(.5);
+        opacity:1;
+    }
+
+    100%{
+        transform:translate(-50%,-50%) scale(1.8);
+        opacity:0;
+    }
+
+}
 /* ===========================
    Mobiel
 =========================== */
