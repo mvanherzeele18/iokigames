@@ -134,15 +134,33 @@ body{
 
 @keyframes floatUp{
 
-    from{
+    0%{
 
-        transform:translateY(0);
+        transform:translateY(0) rotate(-4deg);
 
     }
 
-    to{
+    25%{
 
-        transform:translateY(-130vh);
+        transform:translateY(-30vh) rotate(4deg);
+
+    }
+
+    50%{
+
+        transform:translateY(-60vh) rotate(-3deg);
+
+    }
+
+    75%{
+
+        transform:translateY(-90vh) rotate(5deg);
+
+    }
+
+    100%{
+
+        transform:translateY(-130vh) rotate(-4deg);
 
     }
 
