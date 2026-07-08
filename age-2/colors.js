@@ -126,7 +126,6 @@ const eraserButton = document.getElementById("eraser");
 eraserButton.addEventListener("click", () => {
     colorButtons.forEach(btn=>btn.classList.remove("selected"));
     currentColor = "transparent";
-    speak("Gum");
     eraserButton.classList.add("selected");
 });
 
