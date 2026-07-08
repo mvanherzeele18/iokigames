@@ -15,80 +15,25 @@ function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
-    // Wacht tot de ster geladen is
-    if (star.complete) {
-        loadStarMask();
-    }
-
 }
 
 resizeCanvas();
 
 window.addEventListener("resize", resizeCanvas);
 
-// Als ster afbeelding geladen is
-star.addEventListener("load", loadStarMask);
+// Simpel: controleer met IsPointInPath op de SVG path
+// We gebruiken een gestripte versie: teken de ster onzichtbaar en gebruik isPointInPath
 
-// Fallback: laad mask als ster al gecached is
-if (star.complete && star.naturalHeight !== 0) {
-    loadStarMask();
+function setupClipping() {
+    // We zullen via de SVG data gaan
+    // Maar eerst: test of we gewoon kunnen tekenen zonder masking
+    console.log("Clipping setup (placeholder)");
 }
 
-// -------------------------------
-// Ster Mask laden
-// -------------------------------
-
-function loadStarMask() {
-
-    console.log("Loading star mask...");
-
-    // Maak een offscreen canvas voor het mask
-    const maskCanvas = document.createElement("canvas");
-    maskCanvas.width = canvas.width;
-    maskCanvas.height = canvas.height;
-    const maskCtx = maskCanvas.getContext("2d");
-
-    // Zet de achtergrond op wit
-    maskCtx.fillStyle = "white";
-    maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
-
-    // Teken de ster afbeelding op het mask canvas
-    try {
-        maskCtx.drawImage(star, 0, 0, maskCanvas.width, maskCanvas.height);
-    } catch (e) {
-        console.error("Error drawing star image:", e);
-        return;
-    }
-
-    // Zet de ImageData
-    const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
-    const data = imageData.data;
-
-    // Creëer een map van pixels die in de ster zitten
-    window.starPixels = new Uint8ClampedArray(maskCanvas.width * maskCanvas.height);
-
-    let coloredPixels = 0;
-
-    for (let i = 0; i < data.length; i += 4) {
-
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        const a = data[i + 3];
-
-        // Een pixel hoort in de ster als het NIET volledig wit is
-        // Wit = R>240 EN G>240 EN B>240 EN A>240
-        const isWhite = r > 240 && g > 240 && b > 240 && a > 240;
-        
-        if (!isWhite) {
-            window.starPixels[i / 4] = 1;
-            coloredPixels++;
-        }
-
-    }
-
-    console.log("Star mask loaded. Colored pixels: " + coloredPixels);
-
+// Wacht tot SVG geladen is
+star.addEventListener("load", setupClipping);
+if (star.complete) {
+    setupClipping();
 }
 
 // -------------------------------
@@ -100,6 +45,10 @@ let drawing = false;
 let currentColor = "#ff3b30";
 
 let brushSize = 15;
+
+// Offset van container
+let containerOffsetX = 0;
+let containerOffsetY = 0;
 
 // -------------------------------
 // Kleuren
@@ -165,6 +114,51 @@ colorButtons.forEach(button=>{
 ctx.lineCap = "round";
 ctx.lineJoin = "round";
 
+// Zet clipping path: we tekenen de ster onzichtbaar en gebruiken dat als clipping path
+function updateClippingPath() {
+    // Maak een offscreen canvas voor de ster
+    const maskCanvas = document.createElement("canvas");
+    maskCanvas.width = canvas.width;
+    maskCanvas.height = canvas.height;
+    const maskCtx = maskCanvas.getContext("2d");
+    
+    // Teken de ster afbeelding
+    maskCtx.drawImage(star, 0, 0, canvas.width, canvas.height);
+    
+    // Haal de pixels op
+    const imageData = maskCtx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    
+    // Creëer een set van geldige pixels
+    window.validPixels = new Set();
+    
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const a = data[i + 3];
+        
+        // Pixel is geldig als het niet wit is of niet transparent
+        // SVG heeft een witte achtergrond dus alles wat NIET wit is = ster
+        const isNotWhite = !(r > 240 && g > 240 && b > 240);
+        
+        if (isNotWhite && a > 50) {
+            window.validPixels.add(i / 4);
+        }
+    }
+    
+    console.log("Clipping path updated. Valid pixels:", window.validPixels.size);
+}
+
+// Update clipping zodra pagina geladen is
+setTimeout(updateClippingPath, 100);
+
+// Herlaad clipping bij resize
+window.addEventListener("resize", () => {
+    resizeCanvas();
+    setTimeout(updateClippingPath, 50);
+});
+
 // -------------------------------
 // Positie bepalen
 // -------------------------------
@@ -199,24 +193,20 @@ function getPosition(event){
 
 function isPointInStar(x, y) {
 
-    if (!window.starPixels) {
-        console.log("Star pixels not loaded yet");
+    if (!window.validPixels) {
         return false;
     }
 
     const width = canvas.width;
     const height = canvas.height;
 
-    // Zorg dat x en y integers zijn
     x = Math.floor(x);
     y = Math.floor(y);
 
-    // Controleer grenzen
     if (x < 0 || x >= width || y < 0 || y >= height) return false;
 
-    // Controleer of pixel in ster zit
     const index = y * width + x;
-    return window.starPixels[index] === 1;
+    return window.validPixels.has(index);
 
 }
 
@@ -228,9 +218,7 @@ function startDrawing(event){
 
     const pos = getPosition(event);
 
-    // Check of we in de ster starten
     if (!isPointInStar(pos.x, pos.y)) {
-        console.log("Not in star at", pos);
         return;
     }
 
@@ -266,7 +254,6 @@ function draw(event){
 
     const pos = getPosition(event);
 
-    // Check of we in de ster zijn
     if (!isPointInStar(pos.x, pos.y)) {
         drawing = false;
         ctx.beginPath();
