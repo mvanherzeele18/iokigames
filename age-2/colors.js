@@ -14,6 +14,7 @@ function resizeCanvas() {
 
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+    updateClippingPath();
 
 }
 
@@ -21,19 +22,10 @@ resizeCanvas();
 
 window.addEventListener("resize", resizeCanvas);
 
-// Simpel: controleer met IsPointInPath op de SVG path
-// We gebruiken een gestripte versie: teken de ster onzichtbaar en gebruik isPointInPath
-
-function setupClipping() {
-    // We zullen via de SVG data gaan
-    // Maar eerst: test of we gewoon kunnen tekenen zonder masking
-    console.log("Clipping setup (placeholder)");
-}
-
 // Wacht tot SVG geladen is
-star.addEventListener("load", setupClipping);
+star.addEventListener("load", updateClippingPath);
 if (star.complete) {
-    setupClipping();
+    setTimeout(updateClippingPath, 50);
 }
 
 // -------------------------------
@@ -45,10 +37,6 @@ let drawing = false;
 let currentColor = "#ff3b30";
 
 let brushSize = 15;
-
-// Offset van container
-let containerOffsetX = 0;
-let containerOffsetY = 0;
 
 // -------------------------------
 // Kleuren
@@ -122,11 +110,15 @@ function updateClippingPath() {
     maskCanvas.height = canvas.height;
     const maskCtx = maskCanvas.getContext("2d");
     
-    // Teken de ster afbeelding
+    // Zet achtergrond op zwart (om goed te kunnen detecteren)
+    maskCtx.fillStyle = "black";
+    maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
+    
+    // Teken de ster afbeelding (die heeft witte vulling + zwarte stroke)
     maskCtx.drawImage(star, 0, 0, canvas.width, canvas.height);
     
     // Haal de pixels op
-    const imageData = maskCtx.getImageData(0, 0, canvas.width, canvas.height);
+    const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
     const data = imageData.data;
     
     // Creëer een set van geldige pixels
@@ -138,26 +130,19 @@ function updateClippingPath() {
         const b = data[i + 2];
         const a = data[i + 3];
         
-        // Pixel is geldig als het niet wit is of niet transparent
-        // SVG heeft een witte achtergrond dus alles wat NIET wit is = ster
-        const isNotWhite = !(r > 240 && g > 240 && b > 240);
+        // Pixel is geldig als het WIT is (de vulling van de ster) of ZWART (de stroke/rand)
+        // WIT = R>240 EN G>240 EN B>240
+        // ZWART = R<15 EN G<15 EN B<15
+        const isWhite = r > 240 && g > 240 && b > 240;
+        const isBlack = r < 15 && g < 15 && b < 15;
         
-        if (isNotWhite && a > 50) {
+        if ((isWhite || isBlack) && a > 200) {
             window.validPixels.add(i / 4);
         }
     }
     
     console.log("Clipping path updated. Valid pixels:", window.validPixels.size);
 }
-
-// Update clipping zodra pagina geladen is
-setTimeout(updateClippingPath, 100);
-
-// Herlaad clipping bij resize
-window.addEventListener("resize", () => {
-    resizeCanvas();
-    setTimeout(updateClippingPath, 50);
-});
 
 // -------------------------------
 // Positie bepalen
