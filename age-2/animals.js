@@ -8,6 +8,7 @@ const animals = [
     {
         name: "Hond",
         image: "../assets/images/animals/dog.png",
+        speech: "../assets/sounds/animals/dog_name.mp3",
         sound: "../assets/sounds/animals/dog.mp3",
         volume: 1
     },
@@ -15,6 +16,7 @@ const animals = [
     {
         name: "Kat",
         image: "../assets/images/animals/cat.png",
+        speech: "../assets/sounds/animals/cat_name.mp3",
         sound: "../assets/sounds/animals/cat.mp3",
         volume: 1
     },
@@ -22,6 +24,7 @@ const animals = [
     {
         name: "Koe",
         image: "../assets/images/animals/cow.png",
+        speech: "../assets/sounds/animals/cow_name.mp3",
         sound: "../assets/sounds/animals/cow.mp3",
         volume: 1
     },
@@ -29,6 +32,7 @@ const animals = [
     {
         name: "Varken",
         image: "../assets/images/animals/pig.png",
+        speech: "../assets/sounds/animals/pig_name.mp3",
         sound: "../assets/sounds/animals/pig.mp3",
         volume: 1
     },
@@ -36,6 +40,7 @@ const animals = [
     {
         name: "Schaap",
         image: "../assets/images/animals/sheep.png",
+        speech: "../assets/sounds/animals/sheep_name.mp3",
         sound: "../assets/sounds/animals/sheep.mp3",
         volume: 1
     },
@@ -43,6 +48,7 @@ const animals = [
     {
         name: "Leeuw",
         image: "../assets/images/animals/lion.png",
+        speech: "../assets/sounds/animals/lion_name.mp3",
         sound: "../assets/sounds/animals/lion.mp3",
         volume: 1
     },
@@ -50,6 +56,7 @@ const animals = [
     {
         name: "Olifant",
         image: "../assets/images/animals/elephant.png",
+        speech: "../assets/sounds/animals/elephant_name.mp3",
         sound: "../assets/sounds/animals/elephant.mp3",
         volume: 0.5
     },
@@ -57,6 +64,7 @@ const animals = [
     {
         name: "Kikker",
         image: "../assets/images/animals/frog.png",
+        speech: "../assets/sounds/animals/frog_name.mp3",
         sound: "../assets/sounds/animals/frog.mp3",
         volume: 0.7
     }
@@ -89,37 +97,31 @@ function showAnimal() {
 }
 
 // ---------------------------
-// Spreek naam uit
+// Naam afspelen
 // ---------------------------
 
-function speak(text, callback) {
+function playAnimalName(callback) {
 
-    if (!window.speechSynthesis) {
+    const animal = animals[currentAnimal];
 
-        if (callback) callback();
-        return;
+    const speech = new Audio(animal.speech);
 
-    }
+    speech.onended = () => {
 
-    speechSynthesis.cancel();
+        if (callback) {
 
-    const voice = new SpeechSynthesisUtterance(text);
+            callback();
 
-    voice.lang = "nl-NL";
-    voice.rate = 0.85;
-
-    voice.onend = () => {
-
-        if (callback) callback();
+        }
 
     };
 
-    speechSynthesis.speak(voice);
+    speech.play();
 
 }
 
 // ---------------------------
-// Geluid
+// Dierengeluid
 // ---------------------------
 
 function playAnimalSound() {
@@ -127,7 +129,7 @@ function playAnimalSound() {
     const animal = animals[currentAnimal];
 
     const sound = new Audio(animal.sound);
-    
+
     sound.volume = animal.volume;
 
     sound.play();
@@ -156,7 +158,7 @@ function playCurrentAnimal() {
 
     jumpAnimal();
 
-    speak(animals[currentAnimal].name, () => {
+    playAnimalName(() => {
 
         playAnimalSound();
 
@@ -179,6 +181,7 @@ nextButton.addEventListener("click", () => {
     }
 
     showAnimal();
+
     playCurrentAnimal();
 
 });
@@ -198,6 +201,7 @@ previousButton.addEventListener("click", () => {
     }
 
     showAnimal();
+
     playCurrentAnimal();
 
 });
