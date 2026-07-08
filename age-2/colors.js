@@ -10,9 +10,13 @@ const ctx = canvas.getContext("2d");
 function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+
+    // Ster-mask opnieuw tekenen
+    if (starMask.complete) {
+        applyMask();
+    }
 }
 
-resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 // Variabelen
@@ -125,7 +129,28 @@ eraserButton.addEventListener("click", () => {
 // Clear
 function clearCanvas(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    applyMask();
 }
 
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", clearCanvas);
+
+// ⭐ Ster-mask laden
+const starMask = new Image();
+starMask.src = "../assets/images/star-background.png";
+
+starMask.onload = () => {
+    resizeCanvas();
+};
+
+// ⭐ Clipmask toepassen
+function applyMask() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Teken de ster-background
+    ctx.globalCompositeOperation = "source-over";
+    ctx.drawImage(starMask, 0, 0, canvas.width, canvas.height);
+
+    // Alles wat daarna getekend wordt, blijft binnen de ster
+    ctx.globalCompositeOperation = "source-in";
+}
