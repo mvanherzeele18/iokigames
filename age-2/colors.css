@@ -109,31 +109,29 @@ body{
 
 /* Canvas */
 
-#paintCanvas{
-
-    position:absolute;
-
-    width:100%;
-
-    height:100%;
-
-    z-index:1;
-
-}
-
-/* Ster */
-
 #star{
 
     position:absolute;
 
     width:100%;
+    height:100%;
 
+    z-index:1;
+
+    pointer-events:none;
+
+}
+
+#paintCanvas{
+
+    position:absolute;
+
+    width:100%;
     height:100%;
 
     z-index:2;
 
-    pointer-events:none;
+    touch-action:none;
 
 }
 
