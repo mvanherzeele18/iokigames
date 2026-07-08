@@ -17,36 +17,66 @@
 
 <div id="game">
 
+    <!-- Terug -->
     <a href="index.html" class="back-button">⬅</a>
 
+    <!-- Logo -->
     <div class="logo">
-        Ioki Games
+        <img src="../assets/images/logo.png" alt="Ioki Games">
     </div>
 
-    <div id="drawing-area">
+    <!-- Tekengebied -->
+    <div id="drawing-container">
 
         <canvas id="paintCanvas"></canvas>
-    
+
         <img
-            id="starMask"
-            src="../assets/images/star.svg"
+            id="star"
+            src="../assets/images/star.png"
             alt="Ster">
-    
+
     </div>
 
-    <div id="colors">
+    <!-- Kleuren -->
+    <div id="toolbar">
 
-        <button class="color selected" data-color="#ff3b30" style="background:#ff3b30;"></button>
+        <button class="color selected"
+            data-color="#ff3b30"
+            style="background:#ff3b30;">
+        </button>
 
-        <button class="color" data-color="#007aff" style="background:#007aff;"></button>
+        <button class="color"
+            data-color="#007aff"
+            style="background:#007aff;">
+        </button>
 
-        <button class="color" data-color="#34c759" style="background:#34c759;"></button>
+        <button class="color"
+            data-color="#34c759"
+            style="background:#34c759;">
+        </button>
 
-        <button class="color" data-color="#ffcc00" style="background:#ffcc00;"></button>
+        <button class="color"
+            data-color="#ffcc00"
+            style="background:#ffcc00;">
+        </button>
 
-        <button class="color" data-color="#af52de" style="background:#af52de;"></button>
+        <button class="color"
+            data-color="#af52de"
+            style="background:#af52de;">
+        </button>
 
-        <button class="color" data-color="#ff9500" style="background:#ff9500;"></button>
+        <button class="color"
+            data-color="#ff9500"
+            style="background:#ff9500;">
+        </button>
+
+        <button id="eraser">
+            🩹
+        </button>
+
+        <button id="clear">
+            🗑️
+        </button>
 
     </div>
 
@@ -55,7 +85,7 @@
 <script src="../script.js"></script>
 
 <script>
-createClouds(5,"../assets/images/cloud.png");
+createClouds(5, "../assets/images/cloud.png");
 </script>
 
 <script src="colors.js"></script>
