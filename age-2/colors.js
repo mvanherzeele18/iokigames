@@ -1,132 +1,211 @@
-// ===========================
-// Kleur de Ster - Ioki Games
-// ===========================
+// ==========================================
+// Ioki Games - Kleur de Ster
+// Deel 1
+// ==========================================
 
 // Canvas
 const canvas = document.getElementById("paintCanvas");
 const ctx = canvas.getContext("2d");
 
-// Grootte van het canvas
-canvas.width = canvas.offsetWidth;
-canvas.height = canvas.offsetHeight;
+// Ster
+const star = document.getElementById("starMask");
 
-// Tekenen
+// Canvas grootte
+function resizeCanvas() {
+
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+}
+
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+
+// -------------------------------
+// Variabelen
+// -------------------------------
+
 let drawing = false;
 
-// Huidige kleur
 let currentColor = "#ff3b30";
 
-// Alle kleurknoppen
+let brushSize = 35;
+
+// -------------------------------
+// Kleuren
+// -------------------------------
+
 const colorButtons = document.querySelectorAll(".color");
 
-// Nederlandse namen
 const colorNames = {
-    "#ff3b30": "Rood",
-    "#007aff": "Blauw",
-    "#34c759": "Groen",
-    "#ffcc00": "Geel",
-    "#af52de": "Paars",
-    "#ff9500": "Oranje"
+
+    "#ff3b30":"Rood",
+    "#007aff":"Blauw",
+    "#34c759":"Groen",
+    "#ffcc00":"Geel",
+    "#af52de":"Paars",
+    "#ff9500":"Oranje"
+
 };
 
+// -------------------------------
+// Stem
+// -------------------------------
+
+function speak(text){
+
+    if(!window.speechSynthesis) return;
+
+    speechSynthesis.cancel();
+
+    const voice = new SpeechSynthesisUtterance(text);
+
+    voice.lang = "nl-NL";
+
+    voice.rate = 0.85;
+
+    speechSynthesis.speak(voice);
+
+}
+
+// -------------------------------
 // Kleur kiezen
-colorButtons.forEach(button => {
+// -------------------------------
 
-    button.addEventListener("click", () => {
+colorButtons.forEach(button=>{
 
-        // Oude selectie verwijderen
-        colorButtons.forEach(btn => btn.classList.remove("selected"));
+    button.addEventListener("click",()=>{
 
-        // Nieuwe selectie
+        colorButtons.forEach(btn=>btn.classList.remove("selected"));
+
         button.classList.add("selected");
 
         currentColor = button.dataset.color;
 
-        // Kleur uitspreken
         speak(colorNames[currentColor]);
 
     });
 
 });
 
-// Stem
-function speak(text){
+// -------------------------------
+// Teken instellingen
+// -------------------------------
 
-    if(!("speechSynthesis" in window)) return;
-
-    speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    utterance.lang = "nl-NL";
-    utterance.rate = 0.9;
-
-    speechSynthesis.speak(utterance);
-
-}
-
-// Tekenstijl
-ctx.lineWidth = 20;
 ctx.lineCap = "round";
 ctx.lineJoin = "round";
 
-// Begin tekenen
-function startDrawing(e){
+// -------------------------------
+// Positie bepalen
+// -------------------------------
 
-    drawing = true;
-    draw(e);
-
-}
-
-// Stop tekenen
-function stopDrawing(){
-
-    drawing = false;
-    ctx.beginPath();
-
-}
-
-// Tekenen
-function draw(e){
-
-    if(!drawing) return;
+function getPosition(event){
 
     const rect = canvas.getBoundingClientRect();
 
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    if(event.touches){
 
-    ctx.strokeStyle = currentColor;
+        return{
 
-    ctx.lineTo(x,y);
-    ctx.stroke();
+            x:event.touches[0].clientX-rect.left,
+            y:event.touches[0].clientY-rect.top
 
-    ctx.beginPath();
-    ctx.moveTo(x,y);
+        };
+
+    }
+
+    return{
+
+        x:event.clientX-rect.left,
+        y:event.clientY-rect.top
+
+    };
 
 }
 
+// -------------------------------
+// Tekenen starten
+// -------------------------------
+
+function startDrawing(event){
+
+    drawing=true;
+
+    const pos=getPosition(event);
+
+    ctx.beginPath();
+
+    ctx.moveTo(pos.x,pos.y);
+
+}
+
+// -------------------------------
+// Stoppen
+// -------------------------------
+
+function stopDrawing(){
+
+    drawing=false;
+
+    ctx.beginPath();
+
+}
+
+// -------------------------------
+// Tekenen
+// -------------------------------
+
+function draw(event){
+
+    if(!drawing) return;
+
+    event.preventDefault();
+
+    const pos=getPosition(event);
+
+    ctx.strokeStyle=currentColor;
+
+    ctx.lineWidth=brushSize;
+
+    ctx.lineTo(pos.x,pos.y);
+
+    ctx.stroke();
+
+    ctx.beginPath();
+
+    ctx.moveTo(pos.x,pos.y);
+
+}
+
+// -------------------------------
 // Muis
-canvas.addEventListener("mousedown", startDrawing);
-canvas.addEventListener("mouseup", stopDrawing);
-canvas.addEventListener("mouseleave", stopDrawing);
-canvas.addEventListener("mousemove", draw);
+// -------------------------------
 
+canvas.addEventListener("mousedown",startDrawing);
+
+canvas.addEventListener("mousemove",draw);
+
+canvas.addEventListener("mouseup",stopDrawing);
+
+canvas.addEventListener("mouseleave",stopDrawing);
+
+// -------------------------------
 // Touch
-canvas.addEventListener("touchstart", e => {
+// -------------------------------
 
-    e.preventDefault();
+canvas.addEventListener("touchstart",startDrawing,{passive:false});
 
-    startDrawing(e.touches[0]);
+canvas.addEventListener("touchmove",draw,{passive:false});
 
-});
+canvas.addEventListener("touchend",stopDrawing);
 
-canvas.addEventListener("touchmove", e => {
+// -------------------------------
+// Wisfunctie
+// -------------------------------
 
-    e.preventDefault();
+function clearCanvas(){
 
-    draw(e.touches[0]);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
-});
-
-canvas.addEventListener("touchend", stopDrawing);
+}
