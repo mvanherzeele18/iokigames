@@ -158,3 +158,80 @@ h1{
     }
 
 }
+/* ===========================
+   Achtergrondwolken
+=========================== */
+
+.cloud{
+
+    position:fixed;
+
+    background:white;
+
+    border-radius:100px;
+
+    opacity:.75;
+
+    z-index:-1;
+
+    animation:cloudMove linear infinite;
+
+}
+
+/* Extra bollen zodat het op een wolk lijkt */
+
+.cloud::before{
+
+    content:"";
+
+    position:absolute;
+
+    background:white;
+
+    width:60%;
+
+    height:80%;
+
+    left:15%;
+
+    top:-35%;
+
+    border-radius:50%;
+
+}
+
+.cloud::after{
+
+    content:"";
+
+    position:absolute;
+
+    background:white;
+
+    width:35%;
+
+    height:55%;
+
+    right:10%;
+
+    top:-20%;
+
+    border-radius:50%;
+
+}
+
+@keyframes cloudMove{
+
+    from{
+
+        transform:translateX(-250px);
+
+    }
+
+    to{
+
+        transform:translateX(calc(100vw + 300px));
+
+    }
+
+}
