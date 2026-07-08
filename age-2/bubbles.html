@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bubbels - Ioki Games</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="bubbles.css">
+
+</head>
+
+<body>
+
+<div id="game">
+
+    <!-- Terug -->
+    <a href="index.html" class="back-button">⬅</a>
+
+    <!-- Logo -->
+    <div class="logo">
+        <img src="../assets/images/logo.png" alt="Ioki Games">
+    </div>
+
+    <!-- Bubbel -->
+    <div id="bubble-container">
+
+        <img
+            id="bubble"
+            src="../assets/images/bubble.png"
+            alt="Bubbel">
+
+    </div>
+
+</div>
+
+<script src="../script.js"></script>
+
+<script>
+createClouds(5, "../assets/images/cloud.png");
+</script>
+
+<script src="bubbles.js"></script>
+
+</body>
+
+</html>
