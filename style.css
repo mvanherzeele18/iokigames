@@ -159,79 +159,35 @@ h1{
 
 }
 /* ===========================
-   Achtergrondwolken
+   Wolken
 =========================== */
 
 .cloud{
 
     position:fixed;
 
-    background:white;
+    left:-350px;
 
-    border-radius:100px;
+    pointer-events:none;
 
-    opacity:.75;
+    user-select:none;
 
     z-index:-1;
 
+    opacity:.9;
+
     animation:cloudMove linear infinite;
-
-}
-
-/* Extra bollen zodat het op een wolk lijkt */
-
-.cloud::before{
-
-    content:"";
-
-    position:absolute;
-
-    background:white;
-
-    width:60%;
-
-    height:80%;
-
-    left:15%;
-
-    top:-35%;
-
-    border-radius:50%;
-
-}
-
-.cloud::after{
-
-    content:"";
-
-    position:absolute;
-
-    background:white;
-
-    width:35%;
-
-    height:55%;
-
-    right:10%;
-
-    top:-20%;
-
-    border-radius:50%;
 
 }
 
 @keyframes cloudMove{
 
     from{
-
-        transform:translateX(-250px);
-
+        left:-350px;
     }
 
     to{
-
-        transform:translateX(calc(100vw + 300px));
-
+        left:calc(100vw + 350px);
     }
 
 }
