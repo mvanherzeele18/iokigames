@@ -3,18 +3,21 @@
 // ==========================================
 
 // Canvas
-const canvas = document.getElementById("paintCanvas");
-const ctx = canvas.getContext("2d");
+const maskCanvas = document.getElementById("maskCanvas");
+const maskCtx = maskCanvas.getContext("2d");
+
+const paintCanvas = document.getElementById("paintCanvas");
+const paintCtx = paintCanvas.getContext("2d");
 
 // Canvas grootte
 function resizeCanvas() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    maskCanvas.width = maskCanvas.offsetWidth;
+    maskCanvas.height = maskCanvas.offsetHeight;
 
-    // Ster-mask opnieuw tekenen
-    if (starMask.complete) {
-        applyMask();
-    }
+    paintCanvas.width = paintCanvas.offsetWidth;
+    paintCanvas.height = paintCanvas.offsetHeight;
+
+    drawMask();
 }
 
 window.addEventListener("resize", resizeCanvas);
@@ -55,13 +58,9 @@ colorButtons.forEach(button=>{
     });
 });
 
-// Teken instellingen
-ctx.lineCap = "round";
-ctx.lineJoin = "round";
-
 // Positie bepalen
 function getPosition(event){
-    const rect = canvas.getBoundingClientRect();
+    const rect = paintCanvas.getBoundingClientRect();
     if(event.touches){
         return{
             x:event.touches[0].clientX-rect.left,
@@ -78,14 +77,14 @@ function getPosition(event){
 function startDrawing(event){
     drawing = true;
     const pos = getPosition(event);
-    ctx.beginPath();
-    ctx.moveTo(pos.x, pos.y);
+    paintCtx.beginPath();
+    paintCtx.moveTo(pos.x, pos.y);
 }
 
 // Stoppen
 function stopDrawing(){
     drawing = false;
-    ctx.beginPath();
+    paintCtx.beginPath();
 }
 
 // Tekenen
@@ -95,27 +94,32 @@ function draw(event){
     const pos = getPosition(event);
 
     if (currentColor === "transparent") {
-        ctx.clearRect(pos.x - brushSize/2, pos.y - brushSize/2, brushSize, brushSize);
+        paintCtx.clearRect(pos.x - brushSize/2, pos.y - brushSize/2, brushSize, brushSize);
     } else {
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = brushSize;
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y);
+        paintCtx.lineCap = "round";
+        paintCtx.lineJoin = "round";
+        paintCtx.strokeStyle = currentColor;
+        paintCtx.lineWidth = brushSize;
+
+        paintCtx.lineTo(pos.x, pos.y);
+        paintCtx.stroke();
+        paintCtx.beginPath();
+        paintCtx.moveTo(pos.x, pos.y);
     }
+
+    applyMask();
 }
 
 // Muis events
-canvas.addEventListener("mousedown", startDrawing);
-canvas.addEventListener("mousemove", draw);
-canvas.addEventListener("mouseup", stopDrawing);
-canvas.addEventListener("mouseleave", stopDrawing);
+paintCanvas.addEventListener("mousedown", startDrawing);
+paintCanvas.addEventListener("mousemove", draw);
+paintCanvas.addEventListener("mouseup", stopDrawing);
+paintCanvas.addEventListener("mouseleave", stopDrawing);
 
 // Touch events
-canvas.addEventListener("touchstart", startDrawing, {passive:false});
-canvas.addEventListener("touchmove", draw, {passive:false});
-canvas.addEventListener("touchend", stopDrawing);
+paintCanvas.addEventListener("touchstart", startDrawing, {passive:false});
+paintCanvas.addEventListener("touchmove", draw, {passive:false});
+paintCanvas.addEventListener("touchend", stopDrawing);
 
 // Eraser
 const eraserButton = document.getElementById("eraser");
@@ -128,7 +132,7 @@ eraserButton.addEventListener("click", () => {
 
 // Clear
 function clearCanvas(){
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
     applyMask();
 }
 
@@ -136,21 +140,37 @@ const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", clearCanvas);
 
 // ⭐ Ster-mask laden
-const starMask = new Image();
-starMask.src = "../assets/images/star-background.png";
+const maskImg = new Image();
+maskImg.src = "../assets/images/star-background.png";
 
-starMask.onload = () => {
+maskImg.onload = () => {
     resizeCanvas();
 };
 
-// ⭐ Clipmask toepassen
+// ⭐ Mask tekenen
+function drawMask() {
+    maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+    maskCtx.drawImage(maskImg, 0, 0, maskCanvas.width, maskCanvas.height);
+}
+
+// ⭐ Mask toepassen
 function applyMask() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = paintCanvas.width;
+    tempCanvas.height = paintCanvas.height;
 
-    // Teken de ster-background
-    ctx.globalCompositeOperation = "source-over";
-    ctx.drawImage(starMask, 0, 0, canvas.width, canvas.height);
+    const tempCtx = tempCanvas.getContext("2d");
 
-    // Alles wat daarna getekend wordt, blijft binnen de ster
-    ctx.globalCompositeOperation = "source-in";
+    // teken de ster-background
+    tempCtx.drawImage(maskCanvas, 0, 0);
+
+    // gebruik de ster als masker
+    tempCtx.globalCompositeOperation = "source-in";
+
+    // teken de kleurlaag erin
+    tempCtx.drawImage(paintCanvas, 0, 0);
+
+    // zet het resultaat terug
+    paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
+    paintCtx.drawImage(tempCanvas, 0, 0);
 }
