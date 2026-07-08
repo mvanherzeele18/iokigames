@@ -1,6 +1,5 @@
 // ==========================================
 // Ioki Games - Kleur de Ster
-// Deel 1
 // ==========================================
 
 // Canvas
@@ -8,7 +7,7 @@ const canvas = document.getElementById("paintCanvas");
 const ctx = canvas.getContext("2d");
 
 // Ster
-const star = document.getElementById("starMask");
+const star = document.getElementById("star");
 
 // Canvas grootte
 function resizeCanvas() {
@@ -16,11 +15,57 @@ function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
+    // Laad het sterplaatje en maak het clipping path
+    loadStarMask();
+
 }
 
 resizeCanvas();
 
 window.addEventListener("resize", resizeCanvas);
+
+// -------------------------------
+// Ster Mask laden
+// -------------------------------
+
+function loadStarMask() {
+
+    const img = new Image();
+    
+    img.onload = function() {
+
+        // Maak een offscreen canvas voor het mask
+        const maskCanvas = document.createElement("canvas");
+        maskCanvas.width = canvas.width;
+        maskCanvas.height = canvas.height;
+        const maskCtx = maskCanvas.getContext("2d");
+
+        // Teken de ster op het mask canvas
+        maskCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Zet de ImageData
+        const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
+        const data = imageData.data;
+
+        // Creëer een lunArrMap van pixels die in de ster zitten
+        window.starPixels = new Uint8ClampedArray(maskCanvas.width * maskCanvas.height);
+
+        for (let i = 0; i < data.length; i += 4) {
+
+            // Controleer of pixel niet transparant is (alpha > 127)
+            if (data[i + 3] > 127) {
+
+                window.starPixels[i / 4] = 1;
+
+            }
+
+        }
+
+    };
+
+    img.src = star.src;
+
+}
 
 // -------------------------------
 // Variabelen
@@ -125,18 +170,45 @@ function getPosition(event){
 }
 
 // -------------------------------
+// Check of punt in ster zit
+// -------------------------------
+
+function isPointInStar(x, y) {
+
+    if (!window.starPixels) return false;
+
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Zorg dat x en y integers zijn
+    x = Math.floor(x);
+    y = Math.floor(y);
+
+    // Controleer grenzen
+    if (x < 0 || x >= width || y < 0 || y >= height) return false;
+
+    // Controleer of pixel in ster zit
+    const index = y * width + x;
+    return window.starPixels[index] === 1;
+
+}
+
+// -------------------------------
 // Tekenen starten
 // -------------------------------
 
 function startDrawing(event){
 
-    drawing=true;
+    const pos = getPosition(event);
 
-    const pos=getPosition(event);
+    // Check of we in de ster starten
+    if (!isPointInStar(pos.x, pos.y)) return;
+
+    drawing = true;
 
     ctx.beginPath();
 
-    ctx.moveTo(pos.x,pos.y);
+    ctx.moveTo(pos.x, pos.y);
 
 }
 
@@ -146,7 +218,7 @@ function startDrawing(event){
 
 function stopDrawing(){
 
-    drawing=false;
+    drawing = false;
 
     ctx.beginPath();
 
@@ -162,19 +234,26 @@ function draw(event){
 
     event.preventDefault();
 
-    const pos=getPosition(event);
+    const pos = getPosition(event);
 
-    ctx.strokeStyle=currentColor;
+    // Check of we in de ster zijn
+    if (!isPointInStar(pos.x, pos.y)) {
+        drawing = false;
+        ctx.beginPath();
+        return;
+    }
 
-    ctx.lineWidth=brushSize;
+    ctx.strokeStyle = currentColor;
 
-    ctx.lineTo(pos.x,pos.y);
+    ctx.lineWidth = brushSize;
+
+    ctx.lineTo(pos.x, pos.y);
 
     ctx.stroke();
 
     ctx.beginPath();
 
-    ctx.moveTo(pos.x,pos.y);
+    ctx.moveTo(pos.x, pos.y);
 
 }
 
@@ -182,23 +261,76 @@ function draw(event){
 // Muis
 // -------------------------------
 
-canvas.addEventListener("mousedown",startDrawing);
+canvas.addEventListener("mousedown", startDrawing);
 
-canvas.addEventListener("mousemove",draw);
+canvas.addEventListener("mousemove", draw);
 
-canvas.addEventListener("mouseup",stopDrawing);
+canvas.addEventListener("mouseup", stopDrawing);
 
-canvas.addEventListener("mouseleave",stopDrawing);
+canvas.addEventListener("mouseleave", stopDrawing);
 
 // -------------------------------
 // Touch
 // -------------------------------
 
-canvas.addEventListener("touchstart",startDrawing,{passive:false});
+canvas.addEventListener("touchstart", startDrawing, {passive:false});
 
-canvas.addEventListener("touchmove",draw,{passive:false});
+canvas.addEventListener("touchmove", draw, {passive:false});
 
-canvas.addEventListener("touchend",stopDrawing);
+canvas.addEventListener("touchend", stopDrawing);
+
+// -------------------------------
+// Eraser
+// -------------------------------
+
+const eraserButton = document.getElementById("eraser");
+
+eraserButton.addEventListener("click", () => {
+
+    colorButtons.forEach(btn=>btn.classList.remove("selected"));
+
+    currentColor = "transparent";
+
+    speak("Gum");
+
+    eraserButton.classList.add("selected");
+
+});
+
+// Als eraser gekozen is, gebruik clearRect
+const originalDraw = draw;
+
+canvas.addEventListener("mousemove", (event) => {
+
+    if (!drawing) return;
+
+    event.preventDefault();
+
+    const pos = getPosition(event);
+
+    // Check of we in de ster zijn
+    if (!isPointInStar(pos.x, pos.y)) {
+        drawing = false;
+        ctx.beginPath();
+        return;
+    }
+
+    if (currentColor === "transparent") {
+
+        ctx.clearRect(pos.x - brushSize/2, pos.y - brushSize/2, brushSize, brushSize);
+
+    } else {
+
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = brushSize;
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+
+    }
+
+}, {passive: false});
 
 // -------------------------------
 // Wisfunctie
@@ -206,6 +338,10 @@ canvas.addEventListener("touchend",stopDrawing);
 
 function clearCanvas(){
 
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 }
+
+const clearButton = document.getElementById("clear");
+
+clearButton.addEventListener("click", clearCanvas);
