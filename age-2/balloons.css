@@ -118,17 +118,29 @@ body{
 
     position:absolute;
 
-    bottom:-150px;
-
-    cursor:pointer;
+    bottom:-140px;
 
     user-select:none;
 
+    cursor:pointer;
+
     animation:floatUp linear forwards;
 
-    transition:
-        transform .15s,
-        opacity .15s;
+    transition:transform .15s, opacity .15s;
+
+}
+
+.balloon:hover{
+
+    transform:scale(1.05);
+
+}
+
+.pop{
+
+    transform:scale(1.4);
+
+    opacity:0;
 
 }
 
