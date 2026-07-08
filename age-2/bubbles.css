@@ -125,7 +125,15 @@ body{
 }
 
 #bubble{
+    -webkit-tap-highlight-color: transparent;
 
+    outline: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+
+    touch-action: manipulation;
     width:100%;
 
     user-select:none;
