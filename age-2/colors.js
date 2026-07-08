@@ -40,20 +40,33 @@ function loadStarMask() {
         maskCanvas.height = canvas.height;
         const maskCtx = maskCanvas.getContext("2d");
 
-        // Teken de ster op het mask canvas
+        // Zet de transformatie hetzelfde als het display canvas
+        const rect = star.getBoundingClientRect();
+        const containerRect = star.parentElement.getBoundingClientRect();
+        
+        // Teken de ster op het mask canvas met juiste afmetingen
         maskCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         // Zet de ImageData
         const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
         const data = imageData.data;
 
-        // Creëer een lunArrMap van pixels die in de ster zitten
+        // Creëer een map van pixels die in de ster zitten (niet-witte pixels)
         window.starPixels = new Uint8ClampedArray(maskCanvas.width * maskCanvas.height);
 
         for (let i = 0; i < data.length; i += 4) {
 
-            // Controleer of pixel niet transparant is (alpha > 127)
-            if (data[i + 3] > 127) {
+            // RGB waarden (SVG witte achtergrond = 255,255,255)
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const a = data[i + 3];
+
+            // Pixel is in de ster als het NIET wit is en niet transparant
+            // Witte pixels hebben RGB dicht bij 255 en alpha > 127
+            const isWhite = r > 200 && g > 200 && b > 200;
+            
+            if (!isWhite && a > 127) {
 
                 window.starPixels[i / 4] = 1;
 
@@ -75,7 +88,7 @@ let drawing = false;
 
 let currentColor = "#ff3b30";
 
-let brushSize = 35;
+let brushSize = 15;
 
 // -------------------------------
 // Kleuren
@@ -298,8 +311,6 @@ eraserButton.addEventListener("click", () => {
 });
 
 // Als eraser gekozen is, gebruik clearRect
-const originalDraw = draw;
-
 canvas.addEventListener("mousemove", (event) => {
 
     if (!drawing) return;
@@ -318,15 +329,6 @@ canvas.addEventListener("mousemove", (event) => {
     if (currentColor === "transparent") {
 
         ctx.clearRect(pos.x - brushSize/2, pos.y - brushSize/2, brushSize, brushSize);
-
-    } else {
-
-        ctx.strokeStyle = currentColor;
-        ctx.lineWidth = brushSize;
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(pos.x, pos.y);
 
     }
 
