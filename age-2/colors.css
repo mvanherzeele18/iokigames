@@ -83,7 +83,7 @@ body{
 }
 
 /* ===========================
-   Logo
+   Logo / Titel
 =========================== */
 
 .logo{
@@ -125,7 +125,7 @@ body{
     position:absolute;
 
     left:50%;
-    top:48%;
+    top:50%;
 
     transform:translate(-50%,-50%);
 
@@ -175,7 +175,7 @@ body{
 
 #toolbar{
 
-    position:absolute;
+    position:fixed;
 
     left:50%;
     bottom:25px;
