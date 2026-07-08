@@ -23,6 +23,10 @@
     <!-- Tekengebied -->
     <div id="drawing-container">
 
+        <!-- Mask canvas (ster-background) -->
+        <canvas id="maskCanvas"></canvas>
+
+        <!-- Paint canvas (tekenen) -->
         <canvas id="paintCanvas"></canvas>
 
         <!-- Outline bovenop -->
@@ -35,7 +39,7 @@
     <!-- Kleuren -->
     <div id="toolbar">
 
-        <button class="color" data-color="#ff3b30" style="background:#ff3b30;"></button>
+        <button class="color selected" data-color="#ff3b30" style="background:#ff3b30;"></button>
         <button class="color" data-color="#007aff" style="background:#007aff;"></button>
         <button class="color" data-color="#34c759" style="background:#34c759;"></button>
         <button class="color" data-color="#ffcc00" style="background:#ffcc00;"></button>
