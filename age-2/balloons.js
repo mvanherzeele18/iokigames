@@ -44,7 +44,13 @@ function createBalloon() {
         const pop = new Audio("../assets/sounds/pop.mp3");
         pop.play();
 
-        // Animatie
+        const rect = balloon.getBoundingClientRect();
+
+        createPopEffect(
+            rect.left + rect.width / 2,
+            rect.top + rect.height / 2
+        );
+        
         balloon.classList.add("pop");
 
         // Ballon verwijderen
@@ -63,6 +69,22 @@ function createBalloon() {
     game.appendChild(balloon);
 
 }
+function createPopEffect(x, y){
 
+    const pop = document.createElement("div");
+
+    pop.className = "pop-effect";
+    pop.textContent = "💥";
+
+    pop.style.left = x + "px";
+    pop.style.top = y + "px";
+
+    game.appendChild(pop);
+
+    setTimeout(() => {
+        pop.remove();
+    }, 300);
+
+}
 // Elke 700 ms een nieuwe ballon
 setInterval(createBalloon, 700);
