@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kleur de Ster - Ioki Games</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="colors.css">
+
+</head>
+
+<body>
+
+<div id="game">
+
+    <a href="index.html" class="back-button">⬅</a>
+
+    <div class="logo">
+        Ioki Games
+    </div>
+
+    <div id="drawing-area">
+
+        <canvas id="paintCanvas"></canvas>
+
+        <img
+            id="star"
+            src="../assets/images/star.png"
+            alt="Ster">
+
+    </div>
+
+    <div id="colors">
+
+        <button class="color selected" data-color="#ff3b30" style="background:#ff3b30;"></button>
+
+        <button class="color" data-color="#007aff" style="background:#007aff;"></button>
+
+        <button class="color" data-color="#34c759" style="background:#34c759;"></button>
+
+        <button class="color" data-color="#ffcc00" style="background:#ffcc00;"></button>
+
+        <button class="color" data-color="#af52de" style="background:#af52de;"></button>
+
+        <button class="color" data-color="#ff9500" style="background:#ff9500;"></button>
+
+    </div>
+
+</div>
+
+<script src="../script.js"></script>
+
+<script>
+createClouds(5,"../assets/images/cloud.png");
+</script>
+
+<script src="colors.js"></script>
+
+</body>
+
+</html>
