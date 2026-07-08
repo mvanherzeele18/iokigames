@@ -31,6 +31,7 @@ window.addEventListener("resize", resizeCanvas);
 function loadStarMask() {
 
     const img = new Image();
+    img.crossOrigin = "anonymous";
     
     img.onload = function() {
 
@@ -40,10 +41,10 @@ function loadStarMask() {
         maskCanvas.height = canvas.height;
         const maskCtx = maskCanvas.getContext("2d");
 
-        // Zet de transformatie hetzelfde als het display canvas
-        const rect = star.getBoundingClientRect();
-        const containerRect = star.parentElement.getBoundingClientRect();
-        
+        // Zet de achtergrond op wit zodat we goed kunnen detecteren
+        maskCtx.fillStyle = "white";
+        maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
+
         // Teken de ster op het mask canvas met juiste afmetingen
         maskCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -51,29 +52,33 @@ function loadStarMask() {
         const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
         const data = imageData.data;
 
-        // Creëer een map van pixels die in de ster zitten (niet-witte pixels)
+        // Creëer een map van pixels die in de ster zitten
         window.starPixels = new Uint8ClampedArray(maskCanvas.width * maskCanvas.height);
 
         for (let i = 0; i < data.length; i += 4) {
 
-            // RGB waarden (SVG witte achtergrond = 255,255,255)
             const r = data[i];
             const g = data[i + 1];
             const b = data[i + 2];
             const a = data[i + 3];
 
-            // Pixel is in de ster als het NIET wit is en niet transparant
-            // Witte pixels hebben RGB dicht bij 255 en alpha > 127
-            const isWhite = r > 200 && g > 200 && b > 200;
+            // Een pixel hoort in de ster als het NIET volledig wit is
+            // Wit = R>240 EN G>240 EN B>240
+            // Dus als het iets anders is (zwarte border of semi-transparant), mag je erin tekenen
+            const isWhite = r > 240 && g > 240 && b > 240 && a > 240;
             
-            if (!isWhite && a > 127) {
-
+            if (!isWhite) {
                 window.starPixels[i / 4] = 1;
-
             }
 
         }
 
+        console.log("Star mask loaded successfully");
+
+    };
+
+    img.onerror = function() {
+        console.error("Failed to load star image");
     };
 
     img.src = star.src;
