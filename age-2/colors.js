@@ -15,8 +15,10 @@ function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
-    // Laad het sterplaatje en maak het clipping path
-    loadStarMask();
+    // Wacht tot de ster geladen is
+    if (star.complete) {
+        loadStarMask();
+    }
 
 }
 
@@ -24,64 +26,68 @@ resizeCanvas();
 
 window.addEventListener("resize", resizeCanvas);
 
+// Als ster afbeelding geladen is
+star.addEventListener("load", loadStarMask);
+
+// Fallback: laad mask als ster al gecached is
+if (star.complete && star.naturalHeight !== 0) {
+    loadStarMask();
+}
+
 // -------------------------------
 // Ster Mask laden
 // -------------------------------
 
 function loadStarMask() {
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    
-    img.onload = function() {
+    console.log("Loading star mask...");
 
-        // Maak een offscreen canvas voor het mask
-        const maskCanvas = document.createElement("canvas");
-        maskCanvas.width = canvas.width;
-        maskCanvas.height = canvas.height;
-        const maskCtx = maskCanvas.getContext("2d");
+    // Maak een offscreen canvas voor het mask
+    const maskCanvas = document.createElement("canvas");
+    maskCanvas.width = canvas.width;
+    maskCanvas.height = canvas.height;
+    const maskCtx = maskCanvas.getContext("2d");
 
-        // Zet de achtergrond op wit zodat we goed kunnen detecteren
-        maskCtx.fillStyle = "white";
-        maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
+    // Zet de achtergrond op wit
+    maskCtx.fillStyle = "white";
+    maskCtx.fillRect(0, 0, maskCanvas.width, maskCanvas.height);
 
-        // Teken de ster op het mask canvas met juiste afmetingen
-        maskCtx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    // Teken de ster afbeelding op het mask canvas
+    try {
+        maskCtx.drawImage(star, 0, 0, maskCanvas.width, maskCanvas.height);
+    } catch (e) {
+        console.error("Error drawing star image:", e);
+        return;
+    }
 
-        // Zet de ImageData
-        const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
-        const data = imageData.data;
+    // Zet de ImageData
+    const imageData = maskCtx.getImageData(0, 0, maskCanvas.width, maskCanvas.height);
+    const data = imageData.data;
 
-        // Creëer een map van pixels die in de ster zitten
-        window.starPixels = new Uint8ClampedArray(maskCanvas.width * maskCanvas.height);
+    // Creëer een map van pixels die in de ster zitten
+    window.starPixels = new Uint8ClampedArray(maskCanvas.width * maskCanvas.height);
 
-        for (let i = 0; i < data.length; i += 4) {
+    let coloredPixels = 0;
 
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-            const a = data[i + 3];
+    for (let i = 0; i < data.length; i += 4) {
 
-            // Een pixel hoort in de ster als het NIET volledig wit is
-            // Wit = R>240 EN G>240 EN B>240
-            // Dus als het iets anders is (zwarte border of semi-transparant), mag je erin tekenen
-            const isWhite = r > 240 && g > 240 && b > 240 && a > 240;
-            
-            if (!isWhite) {
-                window.starPixels[i / 4] = 1;
-            }
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const a = data[i + 3];
 
+        // Een pixel hoort in de ster als het NIET volledig wit is
+        // Wit = R>240 EN G>240 EN B>240 EN A>240
+        const isWhite = r > 240 && g > 240 && b > 240 && a > 240;
+        
+        if (!isWhite) {
+            window.starPixels[i / 4] = 1;
+            coloredPixels++;
         }
 
-        console.log("Star mask loaded successfully");
+    }
 
-    };
-
-    img.onerror = function() {
-        console.error("Failed to load star image");
-    };
-
-    img.src = star.src;
+    console.log("Star mask loaded. Colored pixels: " + coloredPixels);
 
 }
 
@@ -193,7 +199,10 @@ function getPosition(event){
 
 function isPointInStar(x, y) {
 
-    if (!window.starPixels) return false;
+    if (!window.starPixels) {
+        console.log("Star pixels not loaded yet");
+        return false;
+    }
 
     const width = canvas.width;
     const height = canvas.height;
@@ -220,7 +229,10 @@ function startDrawing(event){
     const pos = getPosition(event);
 
     // Check of we in de ster starten
-    if (!isPointInStar(pos.x, pos.y)) return;
+    if (!isPointInStar(pos.x, pos.y)) {
+        console.log("Not in star at", pos);
+        return;
+    }
 
     drawing = true;
 
@@ -261,17 +273,20 @@ function draw(event){
         return;
     }
 
-    ctx.strokeStyle = currentColor;
+    if (currentColor === "transparent") {
 
-    ctx.lineWidth = brushSize;
+        ctx.clearRect(pos.x - brushSize/2, pos.y - brushSize/2, brushSize, brushSize);
 
-    ctx.lineTo(pos.x, pos.y);
+    } else {
 
-    ctx.stroke();
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = brushSize;
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
 
-    ctx.beginPath();
-
-    ctx.moveTo(pos.x, pos.y);
+    }
 
 }
 
@@ -314,30 +329,6 @@ eraserButton.addEventListener("click", () => {
     eraserButton.classList.add("selected");
 
 });
-
-// Als eraser gekozen is, gebruik clearRect
-canvas.addEventListener("mousemove", (event) => {
-
-    if (!drawing) return;
-
-    event.preventDefault();
-
-    const pos = getPosition(event);
-
-    // Check of we in de ster zijn
-    if (!isPointInStar(pos.x, pos.y)) {
-        drawing = false;
-        ctx.beginPath();
-        return;
-    }
-
-    if (currentColor === "transparent") {
-
-        ctx.clearRect(pos.x - brushSize/2, pos.y - brushSize/2, brushSize, brushSize);
-
-    }
-
-}, {passive: false});
 
 // -------------------------------
 // Wisfunctie
