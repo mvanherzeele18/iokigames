@@ -2,15 +2,12 @@
 <html lang="nl">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Kleur de Ster - Ioki Games</title>
 
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="colors.css">
-
 </head>
 
 <body>
@@ -21,69 +18,38 @@
     <a href="index.html" class="back-button">⬅</a>
 
     <!-- Logo -->
-    <div class="logo">
-        Ioki Games
-    </div>
+    <div class="logo">Ioki Games</div>
 
     <!-- Tekengebied -->
     <div id="drawing-container">
 
         <canvas id="paintCanvas"></canvas>
 
+        <!-- Outline bovenop -->
         <img
-            id="star"
-            src="../assets/images/star.svg"
-            alt="Ster">
-
+            id="star-outline"
+            src="../assets/images/star-outlining.png"
+            alt="Ster outline">
     </div>
 
     <!-- Kleuren -->
     <div id="toolbar">
 
-        <button class="color selected"
-            data-color="#ff3b30"
-            style="background:#ff3b30;">
-        </button>
+        <button class="color" data-color="#ff3b30" style="background:#ff3b30;"></button>
+        <button class="color" data-color="#007aff" style="background:#007aff;"></button>
+        <button class="color" data-color="#34c759" style="background:#34c759;"></button>
+        <button class="color" data-color="#ffcc00" style="background:#ffcc00;"></button>
+        <button class="color" data-color="#af52de" style="background:#af52de;"></button>
+        <button class="color" data-color="#ff9500" style="background:#ff9500;"></button>
 
-        <button class="color"
-            data-color="#007aff"
-            style="background:#007aff;">
-        </button>
-
-        <button class="color"
-            data-color="#34c759"
-            style="background:#34c759;">
-        </button>
-
-        <button class="color"
-            data-color="#ffcc00"
-            style="background:#ffcc00;">
-        </button>
-
-        <button class="color"
-            data-color="#af52de"
-            style="background:#af52de;">
-        </button>
-
-        <button class="color"
-            data-color="#ff9500"
-            style="background:#ff9500;">
-        </button>
-
-        <button id="eraser">
-            🩹
-        </button>
-
-        <button id="clear">
-            🗑️
-        </button>
+        <button id="eraser">🩹</button>
+        <button id="clear">🗑️</button>
 
     </div>
 
 </div>
 
 <script src="../script.js"></script>
-
 <script>
 createClouds(5, "../assets/images/cloud.png");
 </script>
@@ -91,5 +57,4 @@ createClouds(5, "../assets/images/cloud.png");
 <script src="colors.js"></script>
 
 </body>
-
 </html>
