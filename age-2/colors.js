@@ -29,32 +29,17 @@ let brushSize = 15;
 
 // Kleuren
 const colorButtons = document.querySelectorAll(".color");
-const colorNames = {
-    "#ff3b30":"Rood",
-    "#007aff":"Blauw",
-    "#34c759":"Groen",
-    "#ffcc00":"Geel",
-    "#af52de":"Paars",
-    "#ff9500":"Oranje"
+
+const colorSounds = {
+    "#ff3b30": new Audio("../assets/audio/rood.mp3"),
+    "#007aff": new Audio("../assets/audio/blauw.mp3"),
+    "#34c759": new Audio("../assets/audio/groen.mp3"),
+    "#ffcc00": new Audio("../assets/audio/geel.mp3"),
+    "#af52de": new Audio("../assets/audio/paars.mp3"),
+    "#ff9500": new Audio("../assets/audio/oranje.mp3")
 };
 
-// ⭐ AUDIO UNLOCK voor iPhone
-document.body.addEventListener("touchstart", () => {
-    const unlock = new SpeechSynthesisUtterance("");
-    speechSynthesis.speak(unlock);
-}, { once: true });
-
-// ⭐ DIRECTE spraakfunctie (mobiel‑veilig)
-function speakDirect(text) {
-    if (!window.speechSynthesis) return;
-
-    const voice = new SpeechSynthesisUtterance(text);
-    voice.lang = "nl-NL";
-    voice.rate = 0.85;
-
-    speechSynthesis.cancel();
-    speechSynthesis.speak(voice);
-}
+const gumSound = new Audio("../assets/audio/gum.mp3");
 
 // Kleur kiezen
 colorButtons.forEach(button=>{
@@ -64,8 +49,9 @@ colorButtons.forEach(button=>{
 
         currentColor = button.dataset.color;
 
-        // ⭐ Spraak direct in click-event (vereist voor mobiel)
-        speakDirect(colorNames[currentColor]);
+        // ⭐ Speel audio af (werkt op ALLE gsm’s)
+        colorSounds[currentColor].currentTime = 0;
+        colorSounds[currentColor].play();
     });
 });
 
@@ -140,8 +126,8 @@ eraserButton.addEventListener("click", () => {
 
     eraserButton.classList.add("selected");
 
-    // ⭐ Gum wordt uitgesproken
-    speakDirect("Gum");
+    gumSound.currentTime = 0;
+    gumSound.play();
 });
 
 // Clear
@@ -175,16 +161,10 @@ function applyMask() {
 
     const tempCtx = tempCanvas.getContext("2d");
 
-    // teken de ster-background
     tempCtx.drawImage(maskCanvas, 0, 0);
-
-    // gebruik de ster als masker
     tempCtx.globalCompositeOperation = "source-in";
-
-    // teken de kleurlaag erin
     tempCtx.drawImage(paintCanvas, 0, 0);
 
-    // zet het resultaat terug
     paintCtx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
     paintCtx.drawImage(tempCanvas, 0, 0);
 }
