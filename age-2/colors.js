@@ -38,13 +38,21 @@ const colorNames = {
     "#ff9500":"Oranje"
 };
 
-// Stem
-function speak(text){
-    if(!window.speechSynthesis) return;
-    speechSynthesis.cancel();
+// ⭐ AUDIO UNLOCK voor iPhone
+document.body.addEventListener("touchstart", () => {
+    const unlock = new SpeechSynthesisUtterance("");
+    speechSynthesis.speak(unlock);
+}, { once: true });
+
+// ⭐ DIRECTE spraakfunctie (mobiel‑veilig)
+function speakDirect(text) {
+    if (!window.speechSynthesis) return;
+
     const voice = new SpeechSynthesisUtterance(text);
     voice.lang = "nl-NL";
     voice.rate = 0.85;
+
+    speechSynthesis.cancel();
     speechSynthesis.speak(voice);
 }
 
@@ -53,8 +61,11 @@ colorButtons.forEach(button=>{
     button.addEventListener("click",()=>{
         colorButtons.forEach(btn=>btn.classList.remove("selected"));
         button.classList.add("selected");
+
         currentColor = button.dataset.color;
-        speak(colorNames[currentColor]);
+
+        // ⭐ Spraak direct in click-event (vereist voor mobiel)
+        speakDirect(colorNames[currentColor]);
     });
 });
 
@@ -126,7 +137,11 @@ const eraserButton = document.getElementById("eraser");
 eraserButton.addEventListener("click", () => {
     colorButtons.forEach(btn=>btn.classList.remove("selected"));
     currentColor = "transparent";
+
     eraserButton.classList.add("selected");
+
+    // ⭐ Gum wordt uitgesproken
+    speakDirect("Gum");
 });
 
 // Clear
