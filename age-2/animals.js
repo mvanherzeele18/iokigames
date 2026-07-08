@@ -9,48 +9,56 @@ const animals = [
         name: "Hond",
         image: "../assets/images/animals/dog.png",
         sound: "../assets/sounds/animals/dog.mp3"
+        volume: 1
     },
 
     {
         name: "Kat",
         image: "../assets/images/animals/cat.png",
         sound: "../assets/sounds/animals/cat.mp3"
+        volume: 1
     },
 
     {
         name: "Koe",
         image: "../assets/images/animals/cow.png",
         sound: "../assets/sounds/animals/cow.mp3"
+        volume: 1
     },
 
     {
         name: "Varken",
         image: "../assets/images/animals/pig.png",
         sound: "../assets/sounds/animals/pig.mp3"
+        volume: 1
     },
 
     {
         name: "Schaap",
         image: "../assets/images/animals/sheep.png",
         sound: "../assets/sounds/animals/sheep.mp3"
+        volume: 1
     },
 
     {
         name: "Leeuw",
         image: "../assets/images/animals/lion.png",
         sound: "../assets/sounds/animals/lion.mp3"
+        volume: 1
     },
 
     {
         name: "Olifant",
         image: "../assets/images/animals/elephant.png",
         sound: "../assets/sounds/animals/elephant.mp3"
+        volume: 0.5
     },
 
     {
         name: "Kikker",
         image: "../assets/images/animals/frog.png",
         sound: "../assets/sounds/animals/frog.mp3"
+        volume: 0.7
     }
 
 ];
@@ -119,6 +127,8 @@ function playAnimalSound() {
     const animal = animals[currentAnimal];
 
     const sound = new Audio(animal.sound);
+    
+    sound.volume = animal.volume;
 
     sound.play();
 
