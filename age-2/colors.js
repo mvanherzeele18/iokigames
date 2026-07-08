@@ -31,15 +31,15 @@ let brushSize = 15;
 const colorButtons = document.querySelectorAll(".color");
 
 const colorSounds = {
-    "#ff3b30": new Audio("../assets/audio/rood.mp3"),
-    "#007aff": new Audio("../assets/audio/blauw.mp3"),
-    "#34c759": new Audio("../assets/audio/groen.mp3"),
-    "#ffcc00": new Audio("../assets/audio/geel.mp3"),
-    "#af52de": new Audio("../assets/audio/paars.mp3"),
-    "#ff9500": new Audio("../assets/audio/oranje.mp3")
+    "#ff3b30": new Audio("../assets/sounds/rood.mp3"),
+    "#007aff": new Audio("../assets/sounds/blauw.mp3"),
+    "#34c759": new Audio("../assets/sounds/groen.mp3"),
+    "#ffcc00": new Audio("../assets/sounds/geel.mp3"),
+    "#af52de": new Audio("../assets/sounds/paars.mp3"),
+    "#ff9500": new Audio("../assets/sounds/oranje.mp3")
 };
 
-const gumSound = new Audio("../assets/audio/gum.mp3");
+const gumSound = new Audio("../assets/sounds/gum.mp3");
 
 // Kleur kiezen
 colorButtons.forEach(button=>{
