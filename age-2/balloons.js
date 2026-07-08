@@ -1,25 +1,37 @@
+const balloons = [
+    "../assets/images/balloons/red.png",
+    "../assets/images/balloons/blue.png",
+    "../assets/images/balloons/green.png",
+    "../assets/images/balloons/yellow.png",
+    "../assets/images/balloons/purple.png"
+];
+
 function maakBallon(){
 
-    const ballon = document.createElement("div");
+    const ballon = document.createElement("img");
 
     ballon.className = "balloon";
 
-    ballon.innerHTML = "🎈";
+    ballon.src = balloons[Math.floor(Math.random()*balloons.length)];
 
-    ballon.style.left = Math.random() * 90 + "vw";
+    ballon.style.left = Math.random()*85 + "vw";
+
+    const grootte = 70 + Math.random()*60;
+
+    ballon.style.width = grootte + "px";
 
     ballon.style.animationDuration =
-        (4 + Math.random() * 3) + "s";
+        (5 + Math.random()*3) + "s";
 
     ballon.onclick = () => {
 
-        ballon.innerHTML = "💥";
+        ballon.style.transform = "scale(1.3)";
 
-        setTimeout(() => {
+        ballon.style.opacity = "0";
 
+        setTimeout(()=>{
             ballon.remove();
-
-        },200);
+        },150);
 
     };
 
