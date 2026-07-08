@@ -1,4 +1,4 @@
-const balloons = [
+const balloonImages = [
     "../assets/images/balloons/red.png",
     "../assets/images/balloons/blue.png",
     "../assets/images/balloons/green.png",
@@ -6,43 +6,42 @@ const balloons = [
     "../assets/images/balloons/purple.png"
 ];
 
-function maakBallon(){
+const game = document.getElementById("game");
 
-    const ballon = document.createElement("img");
+function createBalloon() {
 
-    ballon.className = "balloon";
+    const balloon = document.createElement("img");
 
-    ballon.src = balloons[Math.floor(Math.random()*balloons.length)];
+    balloon.classList.add("balloon");
 
-    ballon.style.left = Math.random()*85 + "vw";
+    balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
 
-    const grootte = 70 + Math.random()*60;
+    // Willekeurige grootte
+    const size = 70 + Math.random() * 50;
+    balloon.style.width = size + "px";
 
-    ballon.style.width = grootte + "px";
+    // Willekeurige positie
+    balloon.style.left = Math.random() * 90 + "vw";
 
-    ballon.style.animationDuration =
-        (5 + Math.random()*3) + "s";
+    // Willekeurige snelheid
+    balloon.style.animationDuration = (5 + Math.random() * 3) + "s";
 
-    ballon.onclick = () => {
+    balloon.addEventListener("click", () => {
 
-        ballon.style.transform = "scale(1.3)";
+        balloon.classList.add("pop");
 
-        ballon.style.opacity = "0";
-
-        setTimeout(()=>{
-            ballon.remove();
-        },150);
-
-    };
-
-    document.getElementById("game").appendChild(ballon);
-
-    ballon.addEventListener("animationend",()=>{
-
-        ballon.remove();
+        setTimeout(() => {
+            balloon.remove();
+        }, 180);
 
     });
 
+    balloon.addEventListener("animationend", () => {
+        balloon.remove();
+    });
+
+    game.appendChild(balloon);
+
 }
 
-setInterval(maakBallon,700);
+setInterval(createBalloon, 700);
