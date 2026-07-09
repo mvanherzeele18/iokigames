@@ -106,7 +106,24 @@ const rightWall = Bodies.rectangle(
 
 );
 
-World.add(world,[ground,leftWall,rightWall]);
+const ceiling = Bodies.rectangle(
+
+    window.innerWidth / 2,
+    -40,
+
+    window.innerWidth,
+    80,
+
+    {
+        isStatic: true,
+        render: {
+            visible: false
+        }
+    }
+
+);
+
+World.add(world,[ground,leftWall,rightWall,ceiling]);
 
 // ---------------------------
 // Blokken
@@ -130,7 +147,7 @@ for(let i=0;i<6;i++){
         180+i*95,
         220,
 
-        80,
+        100,
         80,
 
         {
