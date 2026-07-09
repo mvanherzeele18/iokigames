@@ -55,18 +55,20 @@ Runner.run(runner, engine);
 // Muren
 // ---------------------------
 
+const GROUND_HEIGHT = 120;
+
 const ground = Bodies.rectangle(
 
-    window.innerWidth/2,
-    window.innerHeight+40,
+    window.innerWidth / 2,
+    window.innerHeight - GROUND_HEIGHT + 40,
 
     window.innerWidth,
     80,
 
     {
-        isStatic:true,
-        render:{
-            visible:false
+        isStatic: true,
+        render: {
+            visible: false
         }
     }
 
@@ -140,11 +142,13 @@ const colors=[
 
 ];
 
+const spacing = window.innerWidth / 7;
+
 for(let i=0;i<6;i++){
 
-    const block=Bodies.rectangle(
+    const block = Bodies.rectangle(
 
-        180+i*95,
+        spacing * (i + 1),
         220,
 
         120,
