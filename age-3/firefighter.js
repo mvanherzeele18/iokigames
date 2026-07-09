@@ -96,7 +96,7 @@ function createDrop(){
     drop.className = "raindrop";
 
     let x = rect.left + rect.width/2 + (Math.random()*40-20);
-    let y = rect.bottom - 5;
+    let y = rect.bottom - 15;
 
     drop.style.left = x + "px";
     drop.style.top = y + "px";
