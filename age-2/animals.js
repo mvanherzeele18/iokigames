@@ -10,7 +10,7 @@ const animals = [
         image: "../assets/images/animals/dog.png",
         speech: "../assets/sounds/animals/dog_name.mp3",
         sound: "../assets/sounds/animals/dog.mp3",
-        volume: 1
+        volume: 0.8
     },
 
     {
@@ -18,7 +18,7 @@ const animals = [
         image: "../assets/images/animals/cat.png",
         speech: "../assets/sounds/animals/cat_name.mp3",
         sound: "../assets/sounds/animals/cat.mp3",
-        volume: 1
+        volume: 0.8
     },
 
     {
@@ -26,7 +26,7 @@ const animals = [
         image: "../assets/images/animals/cow.png",
         speech: "../assets/sounds/animals/cow_name.mp3",
         sound: "../assets/sounds/animals/cow.mp3",
-        volume: 1
+        volume: 0.8
     },
 
     {
@@ -34,7 +34,7 @@ const animals = [
         image: "../assets/images/animals/pig.png",
         speech: "../assets/sounds/animals/pig_name.mp3",
         sound: "../assets/sounds/animals/pig.mp3",
-        volume: 1
+        volume: 0.8
     },
 
     {
@@ -42,7 +42,7 @@ const animals = [
         image: "../assets/images/animals/sheep.png",
         speech: "../assets/sounds/animals/sheep_name.mp3",
         sound: "../assets/sounds/animals/sheep.mp3",
-        volume: 1
+        volume: 0.8
     },
 
     {
@@ -50,7 +50,7 @@ const animals = [
         image: "../assets/images/animals/lion.png",
         speech: "../assets/sounds/animals/lion_name.mp3",
         sound: "../assets/sounds/animals/lion.mp3",
-        volume: 1
+        volume: 0.8
     },
 
     {
@@ -58,7 +58,7 @@ const animals = [
         image: "../assets/images/animals/elephant.png",
         speech: "../assets/sounds/animals/elephant_name.mp3",
         sound: "../assets/sounds/animals/elephant.mp3",
-        volume: 0.5
+        volume: 0.3
     },
 
     {
@@ -66,7 +66,7 @@ const animals = [
         image: "../assets/images/animals/frog.png",
         speech: "../assets/sounds/animals/frog_name.mp3",
         sound: "../assets/sounds/animals/frog.mp3",
-        volume: 0.7
+        volume: 0.5
     }
 
 ];
