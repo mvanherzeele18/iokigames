@@ -102,7 +102,7 @@ function clean(x,y){
 
         ctx.restore();
 
-    },5000);
+    },3000);
 
 }
 
