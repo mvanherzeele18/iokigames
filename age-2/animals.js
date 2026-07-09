@@ -38,6 +38,14 @@ const animals = [
     },
 
     {
+        name: "Kip",
+        image: "../assets/images/animals/chicken.png",
+        speech: "../assets/sounds/animals/chicken_name.mp3",
+        sound: "../assets/sounds/animals/chicken.mp3",
+        volume: 0.8
+    },
+    
+    {
         name: "Schaap",
         image: "../assets/images/animals/sheep.png",
         speech: "../assets/sounds/animals/sheep_name.mp3",
@@ -46,12 +54,60 @@ const animals = [
     },
 
     {
+        name: "Paard",
+        image: "../assets/images/animals/horse.png",
+        speech: "../assets/sounds/animals/horse_name.mp3",
+        sound: "../assets/sounds/animals/horse.mp3",
+        volume: 0.8
+    },
+
+    {
+        name: "Geit",
+        image: "../assets/images/animals/goat.png",
+        speech: "../assets/sounds/animals/goat_name.mp3",
+        sound: "../assets/sounds/animals/goat.mp3",
+        volume: 0.8
+    },    
+
+    {
+        name: "Eend",
+        image: "../assets/images/animals/duck.png",
+        speech: "../assets/sounds/animals/duck_name.mp3",
+        sound: "../assets/sounds/animals/duck.mp3",
+        volume: 0.8
+    },    
+
+    {
+        name: "Uil",
+        image: "../assets/images/animals/owl.png",
+        speech: "../assets/sounds/animals/owl_name.mp3",
+        sound: "../assets/sounds/animals/owl.mp3",
+        volume: 0.8
+    },    
+    
+    {
         name: "Leeuw",
         image: "../assets/images/animals/lion.png",
         speech: "../assets/sounds/animals/lion_name.mp3",
         sound: "../assets/sounds/animals/lion.mp3",
         volume: 0.8
     },
+
+    {
+        name: "Aap",
+        image: "../assets/images/animals/ape.png",
+        speech: "../assets/sounds/animals/ape_name.mp3",
+        sound: "../assets/sounds/animals/ape.mp3",
+        volume: 0.8
+    },    
+
+    {
+        name: "Beer",
+        image: "../assets/images/animals/bear.png",
+        speech: "../assets/sounds/animals/bear_name.mp3",
+        sound: "../assets/sounds/animals/bear.mp3",
+        volume: 0.8
+    },    
 
     {
         name: "Olifant",
