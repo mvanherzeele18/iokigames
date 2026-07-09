@@ -118,6 +118,12 @@ body{
 
 }
 
+#clean-window{
+
+    display:block;
+
+}
+
 #dirty-window{
 
     touch-action:none;
@@ -134,19 +140,21 @@ body{
 
     width:100px;
 
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
     pointer-events:none;
 
     user-select:none;
     -webkit-user-select:none;
     -webkit-user-drag:none;
+    -webkit-tap-highlight-color:transparent;
 
     z-index:20;
 
 }
-
-/* ===========================
-   Mobiel
-=========================== */
 
 @media(max-width:700px){
 
