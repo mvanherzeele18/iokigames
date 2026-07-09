@@ -2,6 +2,8 @@
 // Ioki Games - Schoonmaken
 // =====================================
 
+const game = document.getElementById("game");
+
 const canvas = document.getElementById("dirty-window");
 const ctx = canvas.getContext("2d");
 
@@ -20,8 +22,17 @@ function resizeCanvas() {
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
     ctx.globalCompositeOperation = "source-over";
-    ctx.drawImage(dirtyImage, 0, 0, canvas.width, canvas.height);
+
+    ctx.drawImage(
+        dirtyImage,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
 }
 
@@ -30,10 +41,17 @@ dirtyImage.onload = resizeCanvas;
 window.addEventListener("resize", resizeCanvas);
 
 // ---------------------------
-// Spons
+// Spons verplaatsen
 // ---------------------------
 
-let cleaning = false;
+function moveSponge(x, y) {
+
+    const gameRect = game.getBoundingClientRect();
+
+    sponge.style.left = (x - gameRect.left) + "px";
+    sponge.style.top = (y - gameRect.top) + "px";
+
+}
 
 // ---------------------------
 // Schoonmaken
@@ -46,11 +64,7 @@ function clean(x, y) {
     const cx = x - rect.left;
     const cy = y - rect.top;
 
-    // Spons verplaatsen
-    sponge.style.left = cx + "px";
-    sponge.style.top = cy + "px";
-
-    // Alleen poetsen binnen het raam
+    // Alleen binnen het raam poetsen
     if (
         cx < 0 ||
         cy < 0 ||
@@ -60,7 +74,7 @@ function clean(x, y) {
         return;
     }
 
-    // Transparant maken
+    // Maak schoon
     ctx.globalCompositeOperation = "destination-out";
 
     ctx.beginPath();
@@ -88,7 +102,7 @@ function clean(x, y) {
 
         ctx.restore();
 
-    }, 10000);
+    }, 5000);
 
 }
 
@@ -96,21 +110,9 @@ function clean(x, y) {
 // Muis
 // ---------------------------
 
-container.addEventListener("mousedown", () => {
-
-    cleaning = true;
-
-});
-
-window.addEventListener("mouseup", () => {
-
-    cleaning = false;
-
-});
-
 window.addEventListener("mousemove", (e) => {
 
-    if (!cleaning) return;
+    moveSponge(e.clientX, e.clientY);
 
     clean(e.clientX, e.clientY);
 
@@ -120,29 +122,23 @@ window.addEventListener("mousemove", (e) => {
 // Touch
 // ---------------------------
 
-container.addEventListener("touchstart", (e) => {
-
-    cleaning = true;
+window.addEventListener("touchstart", (e) => {
 
     const touch = e.touches[0];
+
+    moveSponge(touch.clientX, touch.clientY);
 
     clean(touch.clientX, touch.clientY);
 
 });
 
-window.addEventListener("touchend", () => {
-
-    cleaning = false;
-
-});
-
 window.addEventListener("touchmove", (e) => {
-
-    if (!cleaning) return;
 
     e.preventDefault();
 
     const touch = e.touches[0];
+
+    moveSponge(touch.clientX, touch.clientY);
 
     clean(touch.clientX, touch.clientY);
 
