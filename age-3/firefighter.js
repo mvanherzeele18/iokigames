@@ -3,12 +3,15 @@
 // =====================================
 
 // Elementen
-const playArea = document.getElementById("play-area");
-const firesContainer = document.getElementById("fires");
-const water = document.getElementById("water");
+const cloud = document.getElementById("rain-cloud");
+const rain = document.getElementById("rain");
+const fires = document.getElementById("fires");
 
 // Instellingen
 const FIRE_COUNT = 4;
+
+let cloudX = window.innerWidth / 2;
+let dragging = false;
 
 // ---------------------------
 // Nieuw vuurtje
@@ -21,14 +24,14 @@ function createFire() {
     fire.className = "fire";
     fire.textContent = "🔥";
 
-    // Willekeurige positie
-    const x = Math.random() * (window.innerWidth - 80);
-    const y = 120 + Math.random() * (window.innerHeight - 220);
+    // Alleen op het gras
+    const x = 20 + Math.random() * (window.innerWidth - 90);
+    const y = window.innerHeight * 0.74 + Math.random() * (window.innerHeight * 0.20);
 
     fire.style.left = x + "px";
     fire.style.top = y + "px";
 
-    firesContainer.appendChild(fire);
+    fires.appendChild(fire);
 
 }
 
@@ -36,126 +39,142 @@ function createFire() {
 // Start
 // ---------------------------
 
-for (let i = 0; i < FIRE_COUNT; i++) {
+for(let i = 0; i < FIRE_COUNT; i++){
 
     createFire();
 
 }
 
 // ---------------------------
-// Water volgen
+// Wolk verplaatsen
 // ---------------------------
 
-function moveWater(x, y) {
+function moveCloud(x){
 
-    water.style.display = "block";
+    const width = cloud.offsetWidth;
 
-    water.style.left = x + "px";
-    water.style.top = y + "px";
+    cloudX = Math.max(width / 2, Math.min(window.innerWidth - width / 2, x));
 
-    checkFireCollision();
+    cloud.style.left = cloudX + "px";
 
 }
 
-// ---------------------------
-// Botsing controleren
-// ---------------------------
-
-function checkFireCollision() {
-
-    const waterRect = water.getBoundingClientRect();
-
-    document.querySelectorAll(".fire").forEach(fire => {
-
-        if (fire.classList.contains("out")) return;
-
-        const fireRect = fire.getBoundingClientRect();
-
-        const hit = !(
-            waterRect.right < fireRect.left ||
-            waterRect.left > fireRect.right ||
-            waterRect.bottom < fireRect.top ||
-            waterRect.top > fireRect.bottom
-        );
-
-        if (hit) {
-
-            fire.classList.add("out");
-
-            setTimeout(() => {
-
-                fire.remove();
-
-                createFire();
-
-            }, 250);
-
-        }
-
-    });
-
-}
-
-// ---------------------------
 // Muis
-// ---------------------------
 
-playArea.addEventListener("mousemove", (e) => {
+cloud.addEventListener("mousedown", () => {
 
-    moveWater(e.clientX, e.clientY);
-
-});
-
-// ---------------------------
-// Touch
-// ---------------------------
-
-playArea.addEventListener("touchstart", (e) => {
-
-    const touch = e.touches[0];
-
-    moveWater(touch.clientX, touch.clientY);
+    dragging = true;
 
 });
 
-playArea.addEventListener("touchmove", (e) => {
+window.addEventListener("mouseup", () => {
 
-    e.preventDefault();
-
-    const touch = e.touches[0];
-
-    moveWater(touch.clientX, touch.clientY);
-
-}, { passive: false });
-
-// ---------------------------
-// Water verbergen
-// ---------------------------
-
-playArea.addEventListener("mouseleave", () => {
-
-    water.style.display = "none";
+    dragging = false;
 
 });
 
-playArea.addEventListener("touchend", () => {
+window.addEventListener("mousemove", (e) => {
 
-    water.style.display = "none";
+    if(dragging){
 
-});
-
-// ---------------------------
-// Bij draaien scherm
-// ---------------------------
-
-window.addEventListener("resize", () => {
-
-    document.querySelectorAll(".fire").forEach(fire => fire.remove());
-
-    for (let i = 0; i < FIRE_COUNT; i++) {
-
-        createFire();
+        moveCloud(e.clientX);
 
     }
 
 });
+
+// Touch
+
+cloud.addEventListener("touchstart", () => {
+
+    dragging = true;
+
+});
+
+window.addEventListener("touchend", () => {
+
+    dragging = false;
+
+});
+
+window.addEventListener("touchmove", (e) => {
+
+    if(!dragging) return;
+
+    e.preventDefault();
+
+    moveCloud(e.touches[0].clientX);
+
+}, { passive:false });
+
+// ---------------------------
+// Regendruppel
+// ---------------------------
+
+function createDrop(){
+
+    const drop = document.createElement("div");
+
+    drop.className = "raindrop";
+
+    const x = cloud.offsetLeft + cloud.offsetWidth / 2 + (Math.random() * 60 - 30);
+    const y = cloud.offsetTop + cloud.offsetHeight - 10;
+
+    drop.style.left = x + "px";
+    drop.style.top = y + "px";
+
+    rain.appendChild(drop);
+
+    const interval = setInterval(() => {
+
+        const dropRect = drop.getBoundingClientRect();
+
+        document.querySelectorAll(".fire").forEach(fire => {
+
+            if(fire.classList.contains("out")) return;
+
+            const fireRect = fire.getBoundingClientRect();
+
+            const hit = !(
+                dropRect.right < fireRect.left ||
+                dropRect.left > fireRect.right ||
+                dropRect.bottom < fireRect.top ||
+                dropRect.top > fireRect.bottom
+            );
+
+            if(hit){
+
+                fire.classList.add("out");
+
+                setTimeout(() => {
+
+                    fire.remove();
+                    createFire();
+
+                },200);
+
+                drop.remove();
+
+                clearInterval(interval);
+
+            }
+
+        });
+
+    },20);
+
+    setTimeout(() => {
+
+        clearInterval(interval);
+
+        drop.remove();
+
+    },800);
+
+}
+
+// ---------------------------
+// Regen
+// ---------------------------
+
+setInterval(createDrop, 80);
