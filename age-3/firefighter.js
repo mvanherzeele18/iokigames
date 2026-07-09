@@ -16,10 +16,11 @@ let dragging = false;
 
 function createFire(){
 
-    const fire = document.createElement("div");
-
+    const fire = document.createElement("img");
+    
     fire.className = "fire";
-    fire.textContent = "🔥";
+    fire.src = "../assets/images/fire.png";
+    fire.alt = "Vuur";
 
     const x = 20 + Math.random() * (window.innerWidth - 90);
 
