@@ -151,10 +151,10 @@ const ceiling = Bodies.rectangle(
 World.add(world,[ground,leftWall,rightWall,ceiling]);
 
 // ---------------------------
-// Blokken
+// Vormen
 // ---------------------------
 
-const colors=[
+const colors = [
 
     "#ff6b6b",
     "#4dabf7",
@@ -167,37 +167,94 @@ const colors=[
 
 const spacing = WIDTH / 7;
 
-for(let i=0;i<6;i++){
+const blocks = [
 
-    const block = Bodies.rectangle(
-
-        spacing * (i + 1),
+    // Vierkant
+    Bodies.rectangle(
+        spacing * 1,
         220,
+        80,
+        80,
+        {
+            restitution: 0.03,
+            friction: 0.8,
+            density: 0.002,
+            render: { fillStyle: colors[0] }
+        }
+    ),
 
+    // Liggende rechthoek
+    Bodies.rectangle(
+        spacing * 2,
+        220,
         120,
         60,
-
         {
-
-            restitution:0.03,
-
-            friction:0.8,
-
-            density:0.002,
-
-            render:{
-
-                fillStyle:colors[i]
-
-            }
-
+            restitution: 0.03,
+            friction: 0.8,
+            density: 0.002,
+            render: { fillStyle: colors[1] }
         }
+    ),
 
-    );
+    // Staande rechthoek
+    Bodies.rectangle(
+        spacing * 3,
+        220,
+        60,
+        120,
+        {
+            restitution: 0.03,
+            friction: 0.8,
+            density: 0.002,
+            render: { fillStyle: colors[2] }
+        }
+    ),
 
-    World.add(world,block);
+    // Cirkel
+    Bodies.circle(
+        spacing * 4,
+        220,
+        40,
+        {
+            restitution: 0.03,
+            friction: 0.8,
+            density: 0.002,
+            render: { fillStyle: colors[3] }
+        }
+    ),
 
-}
+    // Driehoek
+    Bodies.polygon(
+        spacing * 5,
+        220,
+        3,
+        45,
+        {
+            restitution: 0.03,
+            friction: 0.8,
+            density: 0.002,
+            render: { fillStyle: colors[4] }
+        }
+    ),
+
+    // Zeshoek
+    Bodies.polygon(
+        spacing * 6,
+        220,
+        6,
+        40,
+        {
+            restitution: 0.03,
+            friction: 0.8,
+            density: 0.002,
+            render: { fillStyle: colors[5] }
+        }
+    )
+
+];
+
+World.add(world, blocks);
 
 // ---------------------------
 // Slepen
