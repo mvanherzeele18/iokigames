@@ -55,15 +55,16 @@ Runner.run(runner, engine);
 // Muren
 // ---------------------------
 
+const FLOOR_THICKNESS = 80;
 const GROUND_HEIGHT = 120;
 
 const ground = Bodies.rectangle(
 
     window.innerWidth / 2,
-    window.innerHeight - GROUND_HEIGHT + 40,
+    window.innerHeight - GROUND_HEIGHT + FLOOR_THICKNESS / 2,
 
     window.innerWidth,
-    80,
+    FLOOR_THICKNESS,
 
     {
         isStatic: true,
@@ -209,5 +210,26 @@ render.mouse=mouse;
 window.addEventListener("resize",()=>{
 
     location.reload();
+
+});
+
+Matter.Events.on(engine, "beforeUpdate", () => {
+
+    const limit = window.innerHeight - GROUND_HEIGHT;
+
+    world.bodies.forEach(body => {
+
+        if(body.isStatic) return;
+
+        if(body.position.y > limit){
+
+            Matter.Body.setPosition(body, {
+                x: body.position.x,
+                y: limit
+            });
+
+        }
+
+    });
 
 });
