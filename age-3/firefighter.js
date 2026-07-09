@@ -2,31 +2,31 @@
 // Ioki Games - Brandweer
 // =====================================
 
-// Elementen
 const cloud = document.getElementById("rain-cloud");
 const rain = document.getElementById("rain");
 const fires = document.getElementById("fires");
 
-// Instellingen
 const FIRE_COUNT = 4;
 
-let cloudX = window.innerWidth / 2;
 let dragging = false;
 
-// ---------------------------
-// Nieuw vuurtje
-// ---------------------------
+// --------------------
+// Vuurtje
+// --------------------
 
-function createFire() {
+function createFire(){
 
     const fire = document.createElement("div");
 
     fire.className = "fire";
     fire.textContent = "🔥";
 
-    // Alleen op het gras
     const x = 20 + Math.random() * (window.innerWidth - 90);
-    const y = window.innerHeight * 0.74 + Math.random() * (window.innerHeight * 0.20);
+
+    // Alleen op het gras
+    const groundTop = window.innerHeight * 0.72;
+
+    const y = groundTop + Math.random() * (window.innerHeight * 0.20);
 
     fire.style.left = x + "px";
     fire.style.top = y + "px";
@@ -35,45 +35,31 @@ function createFire() {
 
 }
 
-// ---------------------------
-// Start
-// ---------------------------
-
-for(let i = 0; i < FIRE_COUNT; i++){
+for(let i=0;i<FIRE_COUNT;i++){
 
     createFire();
 
 }
 
-// ---------------------------
-// Wolk verplaatsen
-// ---------------------------
+// --------------------
+// Wolk slepen
+// --------------------
 
 function moveCloud(x){
 
-    const width = cloud.offsetWidth;
+    const w = cloud.offsetWidth;
 
-    cloudX = Math.max(width / 2, Math.min(window.innerWidth - width / 2, x));
+    x = Math.max(w/2, Math.min(window.innerWidth-w/2,x));
 
-    cloud.style.left = cloudX + "px";
+    cloud.style.left = x + "px";
 
 }
 
-// Muis
+cloud.addEventListener("mousedown",()=>dragging=true);
 
-cloud.addEventListener("mousedown", () => {
+window.addEventListener("mouseup",()=>dragging=false);
 
-    dragging = true;
-
-});
-
-window.addEventListener("mouseup", () => {
-
-    dragging = false;
-
-});
-
-window.addEventListener("mousemove", (e) => {
+window.addEventListener("mousemove",(e)=>{
 
     if(dragging){
 
@@ -83,21 +69,11 @@ window.addEventListener("mousemove", (e) => {
 
 });
 
-// Touch
+cloud.addEventListener("touchstart",()=>dragging=true);
 
-cloud.addEventListener("touchstart", () => {
+window.addEventListener("touchend",()=>dragging=false);
 
-    dragging = true;
-
-});
-
-window.addEventListener("touchend", () => {
-
-    dragging = false;
-
-});
-
-window.addEventListener("touchmove", (e) => {
+window.addEventListener("touchmove",(e)=>{
 
     if(!dragging) return;
 
@@ -105,31 +81,37 @@ window.addEventListener("touchmove", (e) => {
 
     moveCloud(e.touches[0].clientX);
 
-}, { passive:false });
+},{passive:false});
 
-// ---------------------------
-// Regendruppel
-// ---------------------------
+// --------------------
+// Regen
+// --------------------
 
 function createDrop(){
+
+    const rect = cloud.getBoundingClientRect();
 
     const drop = document.createElement("div");
 
     drop.className = "raindrop";
 
-    const x = cloud.offsetLeft + cloud.offsetWidth / 2 + (Math.random() * 60 - 30);
-    const y = cloud.offsetTop + cloud.offsetHeight - 10;
+    let x = rect.left + rect.width/2 + (Math.random()*40-20);
+    let y = rect.bottom - 5;
 
     drop.style.left = x + "px";
     drop.style.top = y + "px";
 
     rain.appendChild(drop);
 
-    const interval = setInterval(() => {
+    function animate(){
+
+        y += 8;
+
+        drop.style.top = y + "px";
 
         const dropRect = drop.getBoundingClientRect();
 
-        document.querySelectorAll(".fire").forEach(fire => {
+        document.querySelectorAll(".fire").forEach(fire=>{
 
             if(fire.classList.contains("out")) return;
 
@@ -146,35 +128,36 @@ function createDrop(){
 
                 fire.classList.add("out");
 
-                setTimeout(() => {
+                setTimeout(()=>{
 
                     fire.remove();
+
                     createFire();
 
                 },200);
 
                 drop.remove();
 
-                clearInterval(interval);
-
             }
 
         });
 
-    },20);
+        if(!drop.parentNode) return;
 
-    setTimeout(() => {
+        if(y > window.innerHeight){
 
-        clearInterval(interval);
+            drop.remove();
 
-        drop.remove();
+            return;
 
-    },800);
+        }
+
+        requestAnimationFrame(animate);
+
+    }
+
+    requestAnimationFrame(animate);
 
 }
 
-// ---------------------------
-// Regen
-// ---------------------------
-
-setInterval(createDrop, 80);
+setInterval(createDrop,90);
