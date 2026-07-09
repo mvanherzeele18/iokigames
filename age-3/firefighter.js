@@ -105,7 +105,7 @@ function createDrop(){
 
     function animate(){
 
-        y += 8;
+        y += 4;
 
         drop.style.top = y + "px";
 
