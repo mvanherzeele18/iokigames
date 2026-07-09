@@ -48,8 +48,11 @@ function moveSponge(x, y) {
 
     const gameRect = game.getBoundingClientRect();
 
-    sponge.style.left = (x - gameRect.left) + "px";
-    sponge.style.top = (y - gameRect.top) + "px";
+    const spongeWidth = sponge.offsetWidth;
+    const spongeHeight = sponge.offsetHeight;
+
+    sponge.style.left = (x - gameRect.left - spongeWidth / 2) + "px";
+    sponge.style.top = (y - gameRect.top - spongeHeight / 2) + "px";
 
 }
 
