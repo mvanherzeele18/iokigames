@@ -76,7 +76,10 @@ function clean(x,y){
     ctx.globalCompositeOperation = "destination-out";
 
     ctx.beginPath();
-    ctx.arc(cx,cy,45,0,Math.PI*2);
+    const CLEAN_RADIUS =
+        window.innerWidth < 700 ? 25 : 45;
+
+    ctx.arc(cx, cy, CLEAN_RADIUS, 0, Math.PI * 2);
     ctx.fill();
 
     setTimeout(()=>{
