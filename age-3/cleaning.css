@@ -118,12 +118,6 @@ body{
 
 }
 
-#clean-window{
-
-    object-fit:cover;
-
-}
-
 #dirty-window{
 
     touch-action:none;
