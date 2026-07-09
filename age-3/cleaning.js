@@ -14,15 +14,15 @@ const dirtyImage = new Image();
 dirtyImage.src = "../assets/images/window-dirty.png";
 
 // ---------------------------
-// Canvas instellen
+// Canvas
 // ---------------------------
 
-function resizeCanvas() {
+function resizeCanvas(){
 
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
 
     ctx.globalCompositeOperation = "source-over";
 
@@ -38,21 +38,18 @@ function resizeCanvas() {
 
 dirtyImage.onload = resizeCanvas;
 
-window.addEventListener("resize", resizeCanvas);
+window.addEventListener("resize",resizeCanvas);
 
 // ---------------------------
-// Spons verplaatsen
+// Spons
 // ---------------------------
 
-function moveSponge(x, y) {
+function moveSponge(x,y){
 
     const gameRect = game.getBoundingClientRect();
 
-    const spongeWidth = sponge.offsetWidth;
-    const spongeHeight = sponge.offsetHeight;
-
-    sponge.style.left = (x - gameRect.left - spongeWidth / 2) + "px";
-    sponge.style.top = (y - gameRect.top - spongeHeight / 2) + "px";
+    sponge.style.left = (x - gameRect.left) + "px";
+    sponge.style.top = (y - gameRect.top) + "px";
 
 }
 
@@ -60,39 +57,36 @@ function moveSponge(x, y) {
 // Schoonmaken
 // ---------------------------
 
-function clean(x, y) {
+function clean(x,y){
 
     const rect = canvas.getBoundingClientRect();
 
     const cx = x - rect.left;
     const cy = y - rect.top;
 
-    // Alleen binnen het raam poetsen
-    if (
+    if(
         cx < 0 ||
         cy < 0 ||
         cx > canvas.width ||
         cy > canvas.height
-    ) {
+    ){
         return;
     }
 
-    // Maak schoon
     ctx.globalCompositeOperation = "destination-out";
 
     ctx.beginPath();
-    ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+    ctx.arc(cx,cy,45,0,Math.PI*2);
     ctx.fill();
 
-    // Na 10 seconden opnieuw vuil
-    setTimeout(() => {
+    setTimeout(()=>{
 
         ctx.globalCompositeOperation = "source-over";
 
         ctx.save();
 
         ctx.beginPath();
-        ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+        ctx.arc(cx,cy,45,0,Math.PI*2);
         ctx.clip();
 
         ctx.drawImage(
@@ -105,7 +99,7 @@ function clean(x, y) {
 
         ctx.restore();
 
-    }, 5000);
+    },5000);
 
 }
 
@@ -113,11 +107,11 @@ function clean(x, y) {
 // Muis
 // ---------------------------
 
-window.addEventListener("mousemove", (e) => {
+window.addEventListener("mousemove",(e)=>{
 
-    moveSponge(e.clientX, e.clientY);
+    moveSponge(e.clientX,e.clientY);
 
-    clean(e.clientX, e.clientY);
+    clean(e.clientX,e.clientY);
 
 });
 
@@ -125,24 +119,24 @@ window.addEventListener("mousemove", (e) => {
 // Touch
 // ---------------------------
 
-window.addEventListener("touchstart", (e) => {
+window.addEventListener("touchstart",(e)=>{
 
     const touch = e.touches[0];
 
-    moveSponge(touch.clientX, touch.clientY);
+    moveSponge(touch.clientX,touch.clientY);
 
-    clean(touch.clientX, touch.clientY);
+    clean(touch.clientX,touch.clientY);
 
 });
 
-window.addEventListener("touchmove", (e) => {
+window.addEventListener("touchmove",(e)=>{
 
     e.preventDefault();
 
     const touch = e.touches[0];
 
-    moveSponge(touch.clientX, touch.clientY);
+    moveSponge(touch.clientX,touch.clientY);
 
-    clean(touch.clientX, touch.clientY);
+    clean(touch.clientX,touch.clientY);
 
-}, { passive: false });
+},{passive:false});
