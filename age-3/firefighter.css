@@ -8,10 +8,6 @@ body{
 
 }
 
-/* ===========================
-   Speelveld
-=========================== */
-
 #game{
 
     position:relative;
@@ -22,9 +18,6 @@ body{
     overflow:hidden;
 
 }
-/* ===========================
-   Terugknop
-=========================== */
 
 .back-button{
 
@@ -92,10 +85,7 @@ body{
     pointer-events:none;
 
 }
-
-/* ===========================
-   Gras
-=========================== */
+/* Gras */
 
 #ground{
 
@@ -109,13 +99,11 @@ body{
 
     background:#74c365;
 
-    border-top:6px solid #63af56;
+    border-top:5px solid #63af56;
 
 }
 
-/* ===========================
-   Regenwolk
-=========================== */
+/* Regenwolk */
 
 #rain-cloud{
 
@@ -129,8 +117,8 @@ body{
     transform:translateX(-50%);
 
     user-select:none;
-    -webkit-user-drag:none;
     -webkit-user-select:none;
+    -webkit-user-drag:none;
 
     -webkit-tap-highlight-color:transparent;
 
@@ -146,9 +134,7 @@ body{
 
 }
 
-/* ===========================
-   Regendruppels
-=========================== */
+/* Regendruppels */
 
 .raindrop{
 
@@ -157,39 +143,17 @@ body{
     width:8px;
     height:18px;
 
-    background:#5bbcff;
+    background:#4eb8ff;
 
     border-radius:50%;
 
     pointer-events:none;
 
-    animation:rain .8s linear forwards;
-
     z-index:90;
 
 }
 
-@keyframes rain{
-
-    from{
-
-        opacity:1;
-
-    }
-
-    to{
-
-        transform:translateY(260px);
-
-        opacity:0;
-
-    }
-
-}
-
-/* ===========================
-   Vuurtjes
-=========================== */
+/* Vuurtjes */
 
 .fire{
 
@@ -204,9 +168,9 @@ body{
 
     font-size:58px;
 
-    user-select:none;
-
     transition:.2s;
+
+    user-select:none;
 
     z-index:50;
 
@@ -220,26 +184,7 @@ body{
 
 }
 
-/* ===========================
-   Mobiel
-=========================== */
 
-@media(max-width:700px){
 
-    #rain-cloud{
 
-        width:145px;
 
-    }
-
-    .fire{
-
-        width:60px;
-        height:60px;
-
-        font-size:50px;
-
-    }
-   
-
-}
