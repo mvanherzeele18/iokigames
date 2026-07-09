@@ -125,11 +125,11 @@ h1{
 =========================== */
 
 .logo{
-    margin-bottom:20px;
+    margin-bottom:5px;
 }
 
 .logo img{
-    width:200px;
+    width:300px;
     max-width:80%;
     user-select:none;
     pointer-events:none;
