@@ -147,12 +147,12 @@ for(let i=0;i<6;i++){
         180+i*95,
         220,
 
-        100,
-        80,
+        120,
+        60,
 
         {
 
-            restitution:0.1,
+            restitution:0.03,
 
             friction:0.7,
 
