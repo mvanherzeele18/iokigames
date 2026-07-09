@@ -160,17 +160,14 @@ body{
     position:absolute;
 
     width:70px;
-    height:70px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:58px;
-
-    transition:.2s;
 
     user-select:none;
+    -webkit-user-select:none;
+    -webkit-user-drag:none;
+
+    pointer-events:none;
+
+    transition:.2s;
 
     z-index:50;
 
