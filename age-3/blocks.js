@@ -9,15 +9,28 @@ const {
     World,
     Bodies,
     Mouse,
-    MouseConstraint
+    MouseConstraint,
+    Body,
+    Events
 } = Matter;
+
+// ---------------------------
+// Speelveld
+// ---------------------------
+
+const game = document.getElementById("game");
+
+const WIDTH = game.clientWidth;
+const HEIGHT = game.clientHeight;
+
+const GROUND_HEIGHT = 120;
+const FLOOR_THICKNESS = 80;
 
 // ---------------------------
 // Engine
 // ---------------------------
 
 const engine = Engine.create();
-
 const world = engine.world;
 
 world.gravity.y = 1;
@@ -30,12 +43,12 @@ const render = Render.create({
 
     element: document.getElementById("world"),
 
-    engine: engine,
+    engine,
 
     options:{
 
-        width:window.innerWidth,
-        height:window.innerHeight,
+        width: WIDTH,
+        height: HEIGHT,
 
         wireframes:false,
 
@@ -55,22 +68,22 @@ Runner.run(runner, engine);
 // Muren
 // ---------------------------
 
-const FLOOR_THICKNESS = 80;
-const GROUND_HEIGHT = 120;
-
 const ground = Bodies.rectangle(
 
-    window.innerWidth / 2,
-    window.innerHeight - GROUND_HEIGHT + FLOOR_THICKNESS / 2,
+    WIDTH / 2,
+    HEIGHT - GROUND_HEIGHT + FLOOR_THICKNESS / 2,
 
-    window.innerWidth,
+    WIDTH,
     FLOOR_THICKNESS,
 
     {
-        isStatic: true,
-        render: {
-            visible: false
+
+        isStatic:true,
+
+        render:{
+            visible:false
         }
+
     }
 
 );
@@ -78,50 +91,59 @@ const ground = Bodies.rectangle(
 const leftWall = Bodies.rectangle(
 
     -40,
-    window.innerHeight/2,
+    HEIGHT / 2,
 
     80,
-    window.innerHeight,
+    HEIGHT,
 
     {
+
         isStatic:true,
+
         render:{
             visible:false
         }
+
     }
 
 );
 
 const rightWall = Bodies.rectangle(
 
-    window.innerWidth+40,
-    window.innerHeight/2,
+    WIDTH + 40,
+    HEIGHT / 2,
 
     80,
-    window.innerHeight,
+    HEIGHT,
 
     {
+
         isStatic:true,
+
         render:{
             visible:false
         }
+
     }
 
 );
 
 const ceiling = Bodies.rectangle(
 
-    window.innerWidth / 2,
+    WIDTH / 2,
     -40,
 
-    window.innerWidth,
+    WIDTH,
     80,
 
     {
-        isStatic: true,
-        render: {
-            visible: false
+
+        isStatic:true,
+
+        render:{
+            visible:false
         }
+
     }
 
 );
@@ -143,7 +165,7 @@ const colors=[
 
 ];
 
-const spacing = window.innerWidth / 7;
+const spacing = WIDTH / 7;
 
 for(let i=0;i<6;i++){
 
@@ -159,7 +181,9 @@ for(let i=0;i<6;i++){
 
             restitution:0.03,
 
-            friction:0.7,
+            friction:0.8,
+
+            density:0.002,
 
             render:{
 
@@ -179,20 +203,18 @@ for(let i=0;i<6;i++){
 // Slepen
 // ---------------------------
 
-const mouse=Mouse.create(render.canvas);
+const mouse = Mouse.create(render.canvas);
 
-const mouseConstraint=MouseConstraint.create(engine,{
+const mouseConstraint = MouseConstraint.create(engine,{
 
-    mouse:mouse,
+    mouse,
 
     constraint:{
 
         stiffness:0.2,
 
         render:{
-
             visible:false
-
         }
 
     }
@@ -201,7 +223,37 @@ const mouseConstraint=MouseConstraint.create(engine,{
 
 World.add(world,mouseConstraint);
 
-render.mouse=mouse;
+render.mouse = mouse;
+
+// ---------------------------
+// Onder gras blokkeren
+// ---------------------------
+
+Events.on(engine,"beforeUpdate",()=>{
+
+    const limit = HEIGHT - GROUND_HEIGHT;
+
+    world.bodies.forEach(body=>{
+
+        if(body.isStatic) return;
+
+        if(body.position.y > limit){
+
+            Body.setPosition(body,{
+                x:body.position.x,
+                y:limit
+            });
+
+            Body.setVelocity(body,{
+                x:body.velocity.x,
+                y:0
+            });
+
+        }
+
+    });
+
+});
 
 // ---------------------------
 // Scherm draaien
@@ -210,26 +262,5 @@ render.mouse=mouse;
 window.addEventListener("resize",()=>{
 
     location.reload();
-
-});
-
-Matter.Events.on(engine, "beforeUpdate", () => {
-
-    const limit = window.innerHeight - GROUND_HEIGHT;
-
-    world.bodies.forEach(body => {
-
-        if(body.isStatic) return;
-
-        if(body.position.y > limit){
-
-            Matter.Body.setPosition(body, {
-                x: body.position.x,
-                y: limit
-            });
-
-        }
-
-    });
 
 });
