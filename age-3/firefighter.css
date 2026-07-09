@@ -1,0 +1,189 @@
+/* ===========================
+   Brandweer
+=========================== */
+
+body{
+
+    overflow:hidden;
+
+}
+
+#game{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+}
+
+.back-button{
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    z-index:1000;
+
+}
+
+.back-button:hover{
+
+    transform:scale(1.08);
+
+}
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+/* Gras */
+
+#ground{
+
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+    height:28%;
+
+    background:#74c365;
+
+    border-top:5px solid #63af56;
+
+}
+
+/* Regenwolk */
+
+#rain-cloud{
+
+    position:absolute;
+
+    top:120px;
+    left:50%;
+
+    width:170px;
+
+    transform:translateX(-50%);
+
+    user-select:none;
+    -webkit-user-select:none;
+    -webkit-user-drag:none;
+
+    -webkit-tap-highlight-color:transparent;
+
+    cursor:grab;
+
+    z-index:100;
+
+}
+
+#rain-cloud:active{
+
+    cursor:grabbing;
+
+}
+
+/* Regendruppels */
+
+.raindrop{
+
+    position:absolute;
+
+    width:8px;
+    height:18px;
+
+    background:#4eb8ff;
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:90;
+
+}
+
+/* Vuurtjes */
+
+.fire{
+
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:58px;
+
+    transition:.2s;
+
+    user-select:none;
+
+    z-index:50;
+
+}
+
+.fire.out{
+
+    transform:scale(.2);
+
+    opacity:0;
+
+}
+
+
+
+
