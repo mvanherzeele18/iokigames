@@ -39,7 +39,12 @@ function createToy(){
 
     // Alleen op de vloer
     const minY = toysContainer.clientHeight * 0.55;
-    const maxY = toysContainer.clientHeight - TOY_SIZE - 30;
+    
+    // Hoogte van de speelgoedkist
+    const boxHeight = toyBox.offsetHeight;
+    
+    // 20 px ruimte boven de kist
+    const maxY = toysContainer.clientHeight - boxHeight - TOY_SIZE - 20;
 
     toy.style.left = Math.random()*maxX + "px";
     toy.style.top = minY + Math.random()*(maxY-minY) + "px";
