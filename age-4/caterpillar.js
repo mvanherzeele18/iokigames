@@ -14,7 +14,7 @@ const joystickStick = document.getElementById("joystick-stick");
 // ---------------------------
 
 const SEGMENT_SIZE = 34;
-const SPEED = 3;
+const SPEED = 1;
 
 let dx = 0;
 let dy = 0;
