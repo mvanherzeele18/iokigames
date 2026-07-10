@@ -48,15 +48,10 @@ function spawnFruit(){
 
     let x;
 
-    if(Math.random() < 0.5){
-
-        x = 120 + Math.random() * 70;
-
-    }else{
-
-        x = field.clientWidth - 200 + Math.random() * 70;
-
-    }
+    const fruitWidth = 55;
+    
+    const x =
+        Math.random() * (field.clientWidth - fruitWidth);
 
     const y = 95;
 
