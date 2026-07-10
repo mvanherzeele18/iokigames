@@ -87,37 +87,7 @@ body{
 }
 
 /* ---------------------------
-   Instrument
---------------------------- */
-
-#instrument{
-
-    position:absolute;
-
-    left:50%;
-    top:45%;
-
-    transform:translate(-50%,-50%);
-
-    width:min(90vw,700px);
-
-    display:flex;
-    justify-content:center;
-
-}
-
-#xylophone{
-
-    width:100%;
-    max-width:600px;
-
-    user-select:none;
-    -webkit-user-drag:none;
-
-}
-
-/* ---------------------------
-   Toetsen
+   Knoppen
 --------------------------- */
 
 #keys{
@@ -125,31 +95,39 @@ body{
     position:absolute;
 
     left:50%;
-    bottom:40px;
+    top:50%;
 
-    transform:translateX(-50%);
+    transform:translate(-50%,-50%);
 
-    width:min(90vw,700px);
+    display:grid;
 
-    display:flex;
+    grid-template-columns:repeat(4,120px);
 
-    gap:12px;
+    gap:25px;
 
 }
 
 .key{
 
-    flex:1;
+    position:relative;
 
-    height:90px;
+    width:120px;
+    height:120px;
 
     border:none;
 
-    border-radius:18px;
+    border-radius:25px;
+
+    color:white;
+
+    font-size:28px;
+    font-weight:bold;
 
     cursor:pointer;
 
-    transition:transform .1s;
+    transition:.1s;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.2);
 
     -webkit-tap-highlight-color:transparent;
 
@@ -167,36 +145,49 @@ body{
 
 }
 
-.red{
-    background:#ff4d4d;
+.red{background:#ff5c5c;}
+.orange{background:#ff9d3c;}
+.yellow{background:#ffd93d;color:#333;}
+.green{background:#57cc5b;}
+.blue{background:#4d96ff;}
+.indigo{background:#5d6dff;}
+.purple{background:#b266ff;}
+.pink{background:#ff70c8;}
+
+/* ---------------------------
+   Muzieknoten
+--------------------------- */
+
+.music-note{
+
+    position:absolute;
+
+    font-size:40px;
+
+    pointer-events:none;
+
+    animation:floatNote 1.2s ease-out forwards;
+
+    z-index:100;
+
 }
 
-.orange{
-    background:#ff9933;
-}
+@keyframes floatNote{
 
-.yellow{
-    background:#ffd633;
-}
+    0%{
 
-.green{
-    background:#66cc66;
-}
+        opacity:1;
+        transform:translate(-50%,0) scale(1);
 
-.blue{
-    background:#4d94ff;
-}
+    }
 
-.indigo{
-    background:#6666ff;
-}
+    100%{
 
-.purple{
-    background:#b366ff;
-}
+        opacity:0;
+        transform:translate(-50%,-120px) scale(1.6) rotate(-15deg);
 
-.pink{
-    background:#ff66b3;
+    }
+
 }
 
 /* ---------------------------
@@ -205,28 +196,25 @@ body{
 
 @media(max-width:700px){
 
-    #instrument{
-
-        width:95%;
-
-    }
-
     #keys{
 
-        width:95%;
+        grid-template-columns:repeat(4,70px);
 
-        gap:6px;
-
-        bottom:70px;
+        gap:12px;
 
     }
 
     .key{
 
+        width:70px;
         height:70px;
 
-        border-radius:14px;
+        font-size:20px;
+
+        border-radius:18px;
 
     }
+
+}
 
 }
