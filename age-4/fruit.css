@@ -121,24 +121,25 @@ body{
 
     position:absolute;
 
-    top:20px;
+    top:-80px;
 
-    width:180px;
+    width:220px;
 
     user-select:none;
     -webkit-user-drag:none;
+    pointer-events:none;
 
 }
 
 .tree.left{
 
-    left:40px;
+    left:20px;
 
 }
 
 .tree.right{
 
-    right:40px;
+    right:20px;
 
 }
 
