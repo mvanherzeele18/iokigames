@@ -8,6 +8,9 @@ const startButton = document.getElementById("start-button");
 
 const wagonButtons = document.querySelectorAll(".wagon-button");
 
+let wagonCount = 0;
+let trainMoving = false;
+const MAX_WAGONS = 4;
 // ---------------------------
 // Wagons toevoegen
 // ---------------------------
@@ -16,17 +19,23 @@ wagonButtons.forEach(button => {
 
     button.addEventListener("click", () => {
 
+        if (trainMoving) return;
+
+        if (wagonCount >= MAX_WAGONS) return;
+
         const color = button.dataset.color;
 
         const wagon = document.createElement("img");
 
-        wagon.src = ../assets/images/train/wagon-${color}.png;
+        wagon.src = `../assets/images/train/wagon-${color}.png`;
 
         wagon.className = "wagon";
 
         wagon.draggable = false;
 
         train.appendChild(wagon);
+
+        wagonCount++;
 
     });
 
@@ -38,6 +47,10 @@ wagonButtons.forEach(button => {
 
 startButton.addEventListener("click", () => {
 
+    if (trainMoving) return;
+
+    trainMoving = true;
+    
     startButton.disabled = true;
 
     const distance = train.offsetWidth + 400;
@@ -55,6 +68,8 @@ startButton.addEventListener("click", () => {
             >
         ;
 
+        wagonCount = 0;
+        
         // Trein rechts buiten beeld zetten
         train.style.transition = "none";
         train.style.transform = translateX(${window.innerWidth + 300}px);
@@ -68,6 +83,7 @@ startButton.addEventListener("click", () => {
                 train.style.transform = "translateX(0)";
 
                 startButton.disabled = false;
+                trainMoving = false;
 
             });
 
