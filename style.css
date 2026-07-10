@@ -28,6 +28,8 @@ body{
 =========================== */
 
 .container{
+    -webkit-tap-highlight-color: transparent;
+    
     width:90%;
     max-width:1000px;
 
@@ -70,7 +72,8 @@ h1{
 }
 
 .age-button{
-
+    -webkit-tap-highlight-color: transparent;
+   
     text-decoration:none;
 
     background:white;
