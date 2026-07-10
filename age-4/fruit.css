@@ -133,13 +133,13 @@ body{
 
 .tree.left{
 
-    left:50px;
+    left:-100px;
 
 }
 
 .tree.right{
 
-    right:50px;
+    right:-100px;
 
 }
 
