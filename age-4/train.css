@@ -338,6 +338,8 @@ body{
 
     #controls{
 
+        bottom:70px;
+       
         gap:10px;
 
         width:95%;
