@@ -29,7 +29,7 @@ body{
 =========================== */
 
 .back-button{
-
+    -webkit-tap-highlight-color: transparent;
     position:absolute;
 
     top:20px;
@@ -119,7 +119,7 @@ body{
 }
 
 #animal-image{
-
+    -webkit-tap-highlight-color: transparent;
     width:350px;
 
     max-width:70vw;
@@ -157,7 +157,7 @@ body{
 =========================== */
 
 #play-sound{
-
+    -webkit-tap-highlight-color: transparent;
     margin-top:20px;
 
     padding:15px 35px;
@@ -193,7 +193,7 @@ body{
 =========================== */
 
 .arrow{
-
+    -webkit-tap-highlight-color: transparent;
     position:absolute;
 
     top:50%;
