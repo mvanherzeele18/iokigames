@@ -5,10 +5,6 @@
 const toysContainer = document.getElementById("toys");
 const toyBox = document.getElementById("toy-box");
 
-// ---------------------------
-// Speelgoed
-// ---------------------------
-
 const toyImages = [
 
     "teddy.png",
@@ -28,22 +24,25 @@ const TOY_SIZE = 80;
 // Nieuw speeltje
 // ---------------------------
 
-function createToy() {
+function createToy(){
 
     const toy = document.createElement("img");
 
     toy.className = "toy";
 
     toy.src = "../assets/images/cleanup/" +
-        toyImages[Math.floor(Math.random() * toyImages.length)];
+        toyImages[Math.floor(Math.random()*toyImages.length)];
 
     toy.draggable = false;
 
-    toy.style.left =
-        Math.random() * (toysContainer.clientWidth - TOY_SIZE) + "px";
+    const maxX = toysContainer.clientWidth - TOY_SIZE;
 
-    toy.style.top =
-        Math.random() * (toysContainer.clientHeight - TOY_SIZE - 120) + "px";
+    // Alleen op de vloer
+    const minY = toysContainer.clientHeight * 0.55;
+    const maxY = toysContainer.clientHeight - TOY_SIZE - 30;
+
+    toy.style.left = Math.random()*maxX + "px";
+    toy.style.top = minY + Math.random()*(maxY-minY) + "px";
 
     toysContainer.appendChild(toy);
 
@@ -55,13 +54,14 @@ function createToy() {
 // Slepen
 // ---------------------------
 
-function makeDraggable(toy) {
+function makeDraggable(toy){
 
     let dragging = false;
+
     let offsetX = 0;
     let offsetY = 0;
 
-    function start(x, y) {
+    function start(x,y){
 
         dragging = true;
 
@@ -74,20 +74,26 @@ function makeDraggable(toy) {
 
     }
 
-    function move(x, y) {
+    function move(x,y){
 
-        if (!dragging) return;
+        if(!dragging) return;
 
         const room = toysContainer.getBoundingClientRect();
 
-        toy.style.left = (x - room.left - offsetX) + "px";
-        toy.style.top = (y - room.top - offsetY) + "px";
+        let left = x - room.left - offsetX;
+        let top = y - room.top - offsetY;
+
+        left = Math.max(0, Math.min(left, room.width - TOY_SIZE));
+        top = Math.max(0, Math.min(top, room.height - TOY_SIZE));
+
+        toy.style.left = left + "px";
+        toy.style.top = top + "px";
 
     }
 
-    function end() {
+    function end(){
 
-        if (!dragging) return;
+        if(!dragging) return;
 
         dragging = false;
 
@@ -96,68 +102,60 @@ function makeDraggable(toy) {
         const toyRect = toy.getBoundingClientRect();
         const boxRect = toyBox.getBoundingClientRect();
 
-        if (
+        if(
 
             toyRect.left < boxRect.right &&
             toyRect.right > boxRect.left &&
             toyRect.top < boxRect.bottom &&
             toyRect.bottom > boxRect.top
 
-        ) {
+        ){
 
             new Audio("../assets/sounds/pop.mp3").play();
 
             toy.remove();
 
-            setTimeout(createToy, 2000);
+            setTimeout(createToy,2000);
 
         }
 
     }
 
-    // -----------------------
-    // Muis
-    // -----------------------
+    toy.addEventListener("mousedown",e=>{
 
-    toy.addEventListener("mousedown", (e) => {
-
-        start(e.clientX, e.clientY);
+        start(e.clientX,e.clientY);
 
     });
 
-    window.addEventListener("mousemove", (e) => {
+    window.addEventListener("mousemove",e=>{
 
-        move(e.clientX, e.clientY);
+        move(e.clientX,e.clientY);
 
     });
 
-    window.addEventListener("mouseup", end);
+    window.addEventListener("mouseup",end);
 
-    // -----------------------
-    // Touch
-    // -----------------------
-
-    toy.addEventListener("touchstart", (e) => {
+    toy.addEventListener("touchstart",e=>{
 
         const touch = e.touches[0];
 
-        start(touch.clientX, touch.clientY);
+        start(touch.clientX,touch.clientY);
 
     });
 
-    window.addEventListener("touchmove", (e) => {
+    window.addEventListener("touchmove",e=>{
 
-        if (!dragging) return;
+        if(!dragging) return;
 
         e.preventDefault();
 
         const touch = e.touches[0];
 
-        move(touch.clientX, touch.clientY);
+        move(touch.clientX,touch.clientY);
 
-    }, { passive: false });
+    },{passive:false});
 
-    window.addEventListener("touchend", end);
+    window.addEventListener("touchend",end);
 
 }
 
@@ -165,7 +163,7 @@ function makeDraggable(toy) {
 // Start
 // ---------------------------
 
-for (let i = 0; i < 6; i++) {
+for(let i=0;i<6;i++){
 
     createToy();
 
