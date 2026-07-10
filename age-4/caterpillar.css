@@ -131,6 +131,11 @@ body{
 
     position:absolute;
 
+    width:34px;
+    height:34px;
+
+    border-radius:50%;
+
 }
 
 .head{
@@ -233,10 +238,12 @@ body{
 
     .head,
     .segment{
-
+   
         width:28px;
         height:28px;
-
+    
+        border-radius:50%;
+   
     }
 
     .leaf{
