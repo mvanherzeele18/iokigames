@@ -1,0 +1,281 @@
+/* =====================================
+   Ioki Games - Rups
+===================================== */
+
+body{
+
+    overflow:hidden;
+
+}
+
+#game{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+}
+
+.back-button{
+
+    -webkit-tap-highlight-color: transparent;
+   
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    z-index:1000;
+
+}
+
+.back-button:hover{
+
+    transform:scale(1.08);
+
+}
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+
+/* ---------------------------
+   Speelveld
+--------------------------- */
+
+#field{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:min(90vw,900px);
+    height:min(70vh,550px);
+
+    background:#8dd96d;
+
+    border:8px solid #5c8f3f;
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+}
+
+/* ---------------------------
+   Rups
+--------------------------- */
+
+#caterpillar{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    display:flex;
+
+    gap:4px;
+
+    align-items:center;
+
+}
+
+.head,
+.segment{
+
+    width:34px;
+    height:34px;
+
+    border-radius:50%;
+
+}
+
+.head{
+
+    background:#4caf50;
+
+    border:3px solid #2f7a34;
+
+}
+
+.segment{
+
+    background:#73d13d;
+
+    border:3px solid #55aa2f;
+
+}
+
+/* ---------------------------
+   Blaadjes
+--------------------------- */
+
+#leaves{
+
+    position:absolute;
+
+    inset:0;
+
+}
+
+.leaf{
+
+    position:absolute;
+
+    width:40px;
+    height:40px;
+
+    background:url("../assets/images/caterpillar/leaf.png");
+
+    background-size:contain;
+    background-repeat:no-repeat;
+
+}
+
+/* ---------------------------
+   Joystick
+--------------------------- */
+
+#joystick{
+
+    position:absolute;
+
+    left:40px;
+    bottom:40px;
+
+    z-index:100;
+
+}
+
+#joystick-base{
+
+    width:140px;
+    height:140px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.35);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+#joystick-stick{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    background:#4caf50;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.25);
+
+}
+
+/* ---------------------------
+   Mobiel
+--------------------------- */
+
+@media(max-width:700px){
+
+    #field{
+
+        width:95%;
+        height:60vh;
+
+    }
+
+    .head,
+    .segment{
+
+        width:28px;
+        height:28px;
+
+    }
+
+    .leaf{
+
+        width:30px;
+        height:30px;
+
+    }
+
+    #joystick{
+
+        left:20px;
+        bottom:25px;
+
+    }
+
+    #joystick-base{
+
+        width:110px;
+        height:110px;
+
+    }
+
+    #joystick-stick{
+
+        width:50px;
+        height:50px;
+
+    }
+
+}
