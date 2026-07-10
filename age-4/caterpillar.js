@@ -13,13 +13,31 @@ const joystickStick = document.getElementById("joystick-stick");
 // Rups
 // ---------------------------
 
-let x = field.clientWidth / 2;
-let y = field.clientHeight / 2;
+const SEGMENT_SIZE = 34;
+const SPEED = 3;
 
 let dx = 0;
 let dy = 0;
 
-const SPEED = 3;
+const segments = [
+
+    {
+        x: field.clientWidth / 2,
+        y: field.clientHeight / 2
+    }
+
+];
+
+for(let i = 0; i < 3; i++){
+
+    segments.push({
+
+        x: field.clientWidth / 2 - (i + 1) * SEGMENT_SIZE,
+        y: field.clientHeight / 2
+
+    });
+
+}
 
 // ---------------------------
 // Blaadjes
@@ -60,6 +78,15 @@ for(let i=0;i<3;i++){
 // ---------------------------
 
 function grow(){
+
+    const last = segments[segments.length - 1];
+
+    segments.push({
+
+        x: last.x,
+        y: last.y
+
+    });
 
     const segment = document.createElement("div");
 
@@ -173,30 +200,69 @@ window.addEventListener("touchmove",(e)=>{
 
 function update(){
 
-    x += dx * SPEED;
-    y += dy * SPEED;
+    // Vorige posities bewaren
 
-    x = Math.max(0,Math.min(field.clientWidth-34,x));
-    y = Math.max(0,Math.min(field.clientHeight-34,y));
+    const previous = segments.map(segment => ({
 
-    caterpillar.style.left = x + "px";
-    caterpillar.style.top = y + "px";
+        x: segment.x,
+        y: segment.y
 
-    const headRect =
-        caterpillar.querySelector(".head").getBoundingClientRect();
+    }));
+
+    // Kop bewegen
+
+    segments[0].x += dx * SPEED;
+    segments[0].y += dy * SPEED;
+
+    segments[0].x = Math.max(
+        0,
+        Math.min(field.clientWidth - SEGMENT_SIZE, segments[0].x)
+    );
+
+    segments[0].y = Math.max(
+        0,
+        Math.min(field.clientHeight - SEGMENT_SIZE, segments[0].y)
+    );
+
+    // Lichaam volgt
+
+    for(let i = 1; i < segments.length; i++){
+
+        segments[i].x = previous[i - 1].x;
+        segments[i].y = previous[i - 1].y;
+
+    }
+
+    // HTML updaten
+
+    const parts = caterpillar.children;
+
+    for(let i = 0; i < parts.length; i++){
+
+        parts[i].style.position = "absolute";
+
+        parts[i].style.left = segments[i].x + "px";
+        parts[i].style.top = segments[i].y + "px";
+
+    }
+
+    // Blaadjes eten
+
+    const head = segments[0];
 
     document.querySelectorAll(".leaf").forEach(leaf=>{
 
-        const rect = leaf.getBoundingClientRect();
+        const lx = leaf.offsetLeft;
+        const ly = leaf.offsetTop;
 
-        const overlap = !(
-            headRect.right < rect.left ||
-            headRect.left > rect.right ||
-            headRect.bottom < rect.top ||
-            headRect.top > rect.bottom
+        const distance = Math.hypot(
+
+            head.x - lx,
+            head.y - ly
+
         );
 
-        if(overlap){
+        if(distance < 30){
 
             leaf.remove();
 
