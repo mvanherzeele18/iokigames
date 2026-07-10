@@ -10,6 +10,20 @@ const ctx = canvas.getContext("2d");
 const sponge = document.getElementById("sponge");
 const container = document.getElementById("window-container");
 
+// ---------------------------
+// Geluiden
+// ---------------------------
+
+const wipeSound = new Audio("../assets/sounds/wipe.mp3");
+
+wipeSound.loop = true;
+
+let wipeTimeout;
+
+// ---------------------------
+// Afbeeldingen
+// ---------------------------
+
 const dirtyImage = new Image();
 dirtyImage.src = "../assets/images/window-dirty.png";
 
@@ -54,6 +68,30 @@ function moveSponge(x,y){
 }
 
 // ---------------------------
+// Poetsgeluid
+// ---------------------------
+
+function playWipeSound(){
+
+    if(wipeSound.paused){
+
+        wipeSound.currentTime = 0;
+        wipeSound.play();
+
+    }
+
+    clearTimeout(wipeTimeout);
+
+    wipeTimeout = setTimeout(()=>{
+
+        wipeSound.pause();
+        wipeSound.currentTime = 0;
+
+    },150);
+
+}
+
+// ---------------------------
 // Schoonmaken
 // ---------------------------
 
@@ -73,13 +111,17 @@ function clean(x,y){
         return;
     }
 
+    playWipeSound();
+
     ctx.globalCompositeOperation = "destination-out";
 
     ctx.beginPath();
+
     const CLEAN_RADIUS =
         window.innerWidth < 700 ? 25 : 45;
 
     ctx.arc(cx, cy, CLEAN_RADIUS, 0, Math.PI * 2);
+
     ctx.fill();
 
     setTimeout(()=>{
@@ -89,7 +131,9 @@ function clean(x,y){
         ctx.save();
 
         ctx.beginPath();
-        ctx.arc(cx,cy,45,0,Math.PI*2);
+
+        ctx.arc(cx, cy, CLEAN_RADIUS, 0, Math.PI * 2);
+
         ctx.clip();
 
         ctx.drawImage(
@@ -143,3 +187,14 @@ window.addEventListener("touchmove",(e)=>{
     clean(touch.clientX,touch.clientY);
 
 },{passive:false});
+
+// ---------------------------
+// Stop geluid als touch eindigt
+// ---------------------------
+
+window.addEventListener("touchend",()=>{
+
+    wipeSound.pause();
+    wipeSound.currentTime = 0;
+
+});
