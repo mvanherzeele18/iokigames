@@ -1,0 +1,259 @@
+/* =====================================
+   Ioki Games - Fruit
+===================================== */
+
+body{
+
+    overflow:hidden;
+
+}
+
+#game{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+}
+
+.back-button{
+
+    -webkit-tap-highlight-color: transparent;
+   
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    z-index:1000;
+
+}
+
+.back-button:hover{
+
+    transform:scale(1.08);
+
+}
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+
+/* ---------------------------
+   Speelveld
+--------------------------- */
+
+#field{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:min(90vw,900px);
+    height:min(70vh,550px);
+
+    background:linear-gradient(#8fd7ff,#dff6ff);
+
+    border:8px solid #8b5a2b;
+    border-radius:30px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+}
+
+/* ---------------------------
+   Bomen
+--------------------------- */
+
+.tree{
+
+    position:absolute;
+
+    top:20px;
+
+    width:180px;
+
+    user-select:none;
+    -webkit-user-drag:none;
+
+}
+
+.tree.left{
+
+    left:40px;
+
+}
+
+.tree.right{
+
+    right:40px;
+
+}
+
+/* ---------------------------
+   Fruit
+--------------------------- */
+
+#fruits{
+
+    position:absolute;
+
+    inset:0;
+
+}
+
+.fruit{
+
+    position:absolute;
+
+    width:55px;
+
+    user-select:none;
+    -webkit-user-drag:none;
+
+}
+
+/* ---------------------------
+   Gras
+--------------------------- */
+
+#grass{
+
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    height:90px;
+
+    background:#57c84d;
+
+}
+
+/* ---------------------------
+   Mand
+--------------------------- */
+
+#basket{
+
+    position:absolute;
+
+    bottom:35px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:120px;
+
+    user-select:none;
+    -webkit-user-drag:none;
+
+    z-index:20;
+
+}
+
+/* ---------------------------
+   Mobiel
+--------------------------- */
+
+@media(max-width:700px){
+
+    #field{
+
+        width:95%;
+        height:60vh;
+
+    }
+
+    .tree{
+
+        width:120px;
+
+    }
+
+    .tree.left{
+
+        left:10px;
+
+    }
+
+    .tree.right{
+
+        right:10px;
+
+    }
+
+    .fruit{
+
+        width:40px;
+
+    }
+
+    #basket{
+
+        width:90px;
+
+        bottom:30px;
+
+    }
+
+    #grass{
+
+        height:70px;
+
+    }
+
+}
