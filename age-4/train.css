@@ -1,0 +1,277 @@
+/* =====================================
+   Ioki Games - Trein
+===================================== */
+
+body{
+
+    overflow:hidden;
+
+}
+
+#game{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+}
+
+.back-button{
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    z-index:1000;
+
+}
+
+.back-button:hover{
+
+    transform:scale(1.08);
+
+}
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+
+/* ---------------------------
+   Trein
+--------------------------- */
+
+#train-area{
+
+    position:absolute;
+
+    left:50%;
+    top:45%;
+
+    transform:translate(-50%,-50%);
+
+    width:min(90vw,1000px);
+    height:220px;
+
+    background:#ffffff;
+
+    border:8px solid #8b5a2b;
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+    z-index:10;
+
+}
+
+#train{
+
+    position:absolute;
+
+    left:40px;
+    bottom:30px;
+
+    display:flex;
+    align-items:flex-end;
+    gap:8px;
+
+    transition:transform 4s linear;
+
+}
+
+#locomotive{
+
+    width:140px;
+
+    user-select:none;
+    -webkit-user-drag:none;
+
+}
+
+.wagon{
+
+    width:110px;
+
+    user-select:none;
+    -webkit-user-drag:none;
+
+}
+
+/* ---------------------------
+   Knoppen
+--------------------------- */
+
+#controls{
+
+    position:absolute;
+
+    left:50%;
+    bottom:40px;
+
+    transform:translateX(-50%);
+
+    display:flex;
+    gap:20px;
+
+    align-items:center;
+
+    z-index:20;
+
+}
+
+.wagon-button,
+#start-button{
+
+    border:none;
+
+    border-radius:18px;
+
+    background:white;
+
+    padding:12px;
+
+    cursor:pointer;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.wagon-button{
+
+    width:90px;
+    height:90px;
+
+}
+
+.wagon-button img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:contain;
+
+    pointer-events:none;
+
+}
+
+#start-button{
+
+    padding:20px 30px;
+
+    font-size:24px;
+    font-weight:bold;
+
+    color:white;
+
+    background:#4CAF50;
+
+}
+
+.wagon-button:hover,
+#start-button:hover{
+
+    transform:scale(1.05);
+
+}
+
+/* ---------------------------
+   Mobiel
+--------------------------- */
+
+@media(max-width:700px){
+
+    #train-area{
+
+        height:180px;
+
+    }
+
+    #locomotive{
+
+        width:100px;
+
+    }
+
+    .wagon{
+
+        width:80px;
+
+    }
+
+    #controls{
+
+        gap:10px;
+
+        width:95%;
+
+    }
+
+    .wagon-button{
+
+        width:65px;
+        height:65px;
+
+        padding:8px;
+
+    }
+
+    #start-button{
+
+        font-size:18px;
+
+        padding:14px 18px;
+
+    }
+
+}
