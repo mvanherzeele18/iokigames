@@ -5,6 +5,7 @@
 const cloud = document.getElementById("rain-cloud");
 const rain = document.getElementById("rain");
 const fires = document.getElementById("fires");
+const extinguishSound = new Audio("../assets/sounds/extinguish.mp3");
 
 const FIRE_COUNT = 4;
 
@@ -131,6 +132,9 @@ function createDrop(){
 
                 setTimeout(()=>{
 
+                    extinguishSound.currentTime = 0;
+                    extinguishSound.play();
+                    
                     fire.remove();
 
                     createFire();
