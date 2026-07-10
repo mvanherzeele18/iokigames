@@ -10,7 +10,9 @@ const wagonButtons = document.querySelectorAll(".wagon-button");
 
 let wagonCount = 0;
 let trainMoving = false;
+
 const MAX_WAGONS = 4;
+
 // ---------------------------
 // Wagons toevoegen
 // ---------------------------
@@ -18,7 +20,7 @@ const MAX_WAGONS = 4;
 wagonButtons.forEach(button => {
 
     button.addEventListener("click", () => {
-
+        
         if (trainMoving) return;
 
         if (wagonCount >= MAX_WAGONS) return;
@@ -27,7 +29,7 @@ wagonButtons.forEach(button => {
 
         const wagon = document.createElement("img");
 
-        wagon.src = `../assets/images/train/wagon-${color}.png`;
+        wagon.src = "../assets/images/train/wagon-" + color + ".png";
 
         wagon.className = "wagon";
 
@@ -50,31 +52,26 @@ startButton.addEventListener("click", () => {
     if (trainMoving) return;
 
     trainMoving = true;
-    
+
     startButton.disabled = true;
 
     const distance = train.offsetWidth + 400;
 
-    train.style.transform = translateX(-${distance}px);
+    train.style.transition = "transform 4s linear";
+    train.style.transform = "translateX(-" + distance + "px)";
 
     setTimeout(() => {
 
         // Alles verwijderen behalve de locomotief
-        train.innerHTML = 
-            <img
-                id="locomotive"
-                src="../assets/images/train/locomotive.png"
-                alt="Locomotief"
-            >
-        ;
+        train.innerHTML =
+            '<img id="locomotive" src="../assets/images/train/locomotive.png" alt="Locomotief">';
 
         wagonCount = 0;
-        
-        // Trein rechts buiten beeld zetten
-        train.style.transition = "none";
-        train.style.transform = translateX(${window.innerWidth + 300}px);
 
-        // Browser de tijd geven om de positie toe te passen
+        // Nieuwe trein rechts buiten beeld zetten
+        train.style.transition = "none";
+        train.style.transform = "translateX(" + (window.innerWidth + 300) + "px)";
+
         requestAnimationFrame(() => {
 
             requestAnimationFrame(() => {
