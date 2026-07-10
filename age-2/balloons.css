@@ -37,7 +37,7 @@ body{
 =========================== */
 
 .back-button{
-
+    -webkit-tap-highlight-color: transparent;
     position:fixed;
 
     top:20px;
@@ -115,7 +115,7 @@ body{
 =========================== */
 
 .balloon{
-
+    -webkit-tap-highlight-color: transparent;
     position:absolute;
 
     bottom:-140px;
