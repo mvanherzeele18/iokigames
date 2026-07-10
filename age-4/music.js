@@ -6,14 +6,14 @@ const keys = document.querySelectorAll(".key");
 
 const sounds = {
 
-    do:new Audio("../assets/sounds/music/do.mp3"),
-    re:new Audio("../assets/sounds/music/re.mp3"),
-    mi:new Audio("../assets/sounds/music/mi.mp3"),
-    fa:new Audio("../assets/sounds/music/fa.mp3"),
-    sol:new Audio("../assets/sounds/music/sol.mp3"),
-    la:new Audio("../assets/sounds/music/la.mp3"),
-    si:new Audio("../assets/sounds/music/si.mp3"),
-    do2:new Audio("../assets/sounds/music/do2.mp3")
+    do:new Audio("../assets/sounds/music/do.wav"),
+    re:new Audio("../assets/sounds/music/re.wav"),
+    mi:new Audio("../assets/sounds/music/mi.wav"),
+    fa:new Audio("../assets/sounds/music/fa.wav"),
+    sol:new Audio("../assets/sounds/music/sol.wav"),
+    la:new Audio("../assets/sounds/music/la.wav"),
+    si:new Audio("../assets/sounds/music/si.wav"),
+    do2:new Audio("../assets/sounds/music/do2.wav")
 
 };
 
