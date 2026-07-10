@@ -4,79 +4,54 @@
 
 const keys = document.querySelectorAll(".key");
 
-// ---------------------------
-// Geluiden
-// ---------------------------
-
 const sounds = {
 
-    do: new Audio("../assets/sounds/music/do.mp3"),
-    re: new Audio("../assets/sounds/music/re.mp3"),
-    mi: new Audio("../assets/sounds/music/mi.mp3"),
-    fa: new Audio("../assets/sounds/music/fa.mp3"),
-    sol: new Audio("../assets/sounds/music/sol.mp3"),
-    la: new Audio("../assets/sounds/music/la.mp3"),
-    si: new Audio("../assets/sounds/music/si.mp3"),
-    do2: new Audio("../assets/sounds/music/do2.mp3")
+    do:new Audio("../assets/sounds/music/do.mp3"),
+    re:new Audio("../assets/sounds/music/re.mp3"),
+    mi:new Audio("../assets/sounds/music/mi.mp3"),
+    fa:new Audio("../assets/sounds/music/fa.mp3"),
+    sol:new Audio("../assets/sounds/music/sol.mp3"),
+    la:new Audio("../assets/sounds/music/la.mp3"),
+    si:new Audio("../assets/sounds/music/si.mp3"),
+    do2:new Audio("../assets/sounds/music/do2.mp3")
 
 };
 
-// ---------------------------
-// Muzieknoot
-// ---------------------------
+function createMusicNote(button){
 
-function createMusicNote(x, y){
+    const rect = button.getBoundingClientRect();
 
     const note = document.createElement("div");
 
     note.className = "music-note";
 
-    note.innerHTML = "♪";
+    const notes = ["♪","♫","♬"];
 
-    note.style.left = x + "px";
-    note.style.top = y + "px";
+    note.textContent = notes[Math.floor(Math.random()*notes.length)];
 
-    document.getElementById("game").appendChild(note);
+    note.style.left = (rect.left + rect.width/2) + "px";
+    note.style.top = (rect.top + 20) + "px";
 
-    setTimeout(() => {
+    document.body.appendChild(note);
+
+    setTimeout(()=>{
 
         note.remove();
 
-    }, 1000);
+    },1200);
 
 }
 
-// ---------------------------
-// Noot spelen
-// ---------------------------
+keys.forEach(button=>{
 
-function playNote(button){
+    button.addEventListener("click",()=>{
 
-    const note = button.dataset.note;
+        const note = button.dataset.note;
 
-    sounds[note].currentTime = 0;
-    sounds[note].play();
+        sounds[note].currentTime = 0;
+        sounds[note].play();
 
-    const rect = button.getBoundingClientRect();
-
-    createMusicNote(
-
-        rect.left + rect.width / 2,
-        rect.top
-
-    );
-
-}
-
-// ---------------------------
-// Events
-// ---------------------------
-
-keys.forEach(button => {
-
-    button.addEventListener("click", () => {
-
-        playNote(button);
+        createMusicNote(button);
 
     });
 
