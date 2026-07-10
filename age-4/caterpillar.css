@@ -121,26 +121,15 @@ body{
 
     position:absolute;
 
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    display:flex;
-
-    gap:4px;
-
-    align-items:center;
+    left:0;
+    top:0;
 
 }
 
 .head,
 .segment{
 
-    width:34px;
-    height:34px;
-
-    border-radius:50%;
+    position:absolute;
 
 }
 
