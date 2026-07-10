@@ -97,7 +97,7 @@ body{
     position:absolute;
 
     left:50%;
-    top:45%;
+    top:52%;
 
     transform:translate(-50%,-50%);
 
@@ -147,6 +147,68 @@ body{
 .wagon{
 
     width:110px;
+
+    user-select:none;
+    -webkit-user-drag:none;
+
+}
+
+/* ---------------------------
+   Voorbeeldtrein
+--------------------------- */
+
+#example-area{
+
+    position:absolute;
+
+    left:50%;
+    top:18%;
+
+    transform:translateX(-50%);
+
+    width:min(70vw,650px);
+    height:90px;
+
+    background:white;
+
+    border:6px solid #8b5a2b;
+    border-radius:20px;
+
+    overflow:hidden;
+
+    display:flex;
+    align-items:flex-end;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.15);
+
+    z-index:10;
+
+}
+
+#example-train{
+
+    display:flex;
+    align-items:flex-end;
+
+    gap:6px;
+
+    margin-left:20px;
+    margin-bottom:8px;
+
+}
+
+#example-locomotive{
+
+    width:70px;
+
+    user-select:none;
+    -webkit-user-drag:none;
+
+}
+
+.example-wagon{
+
+    width:55px;
 
     user-select:none;
     -webkit-user-drag:none;
@@ -242,6 +304,26 @@ body{
 
     }
 
+    #example-area{
+
+        height:70px;
+   
+        width:90%;
+   
+    }
+   
+    #example-locomotive{
+   
+        width:55px;
+   
+    }
+   
+    .example-wagon{
+   
+        width:42px;
+   
+    }
+   
     #locomotive{
 
         width:100px;
