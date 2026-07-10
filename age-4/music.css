@@ -145,14 +145,14 @@ body{
 
 }
 
-.red{background:#ff5c5c;}
-.orange{background:#ff9d3c;}
+.red{background:#ff5c5c;color:#333;}
+.orange{background:#ff9d3c;color:#333;}
 .yellow{background:#ffd93d;color:#333;}
-.green{background:#57cc5b;}
-.blue{background:#4d96ff;}
-.indigo{background:#5d6dff;}
-.purple{background:#b266ff;}
-.pink{background:#ff70c8;}
+.green{background:#57cc5b;color:#333;}
+.blue{background:#4d96ff;color:#333;}
+.indigo{background:#5d6dff;color:#333;}
+.purple{background:#b266ff;color:#333;}
+.pink{background:#ff70c8;color:#333;}
 
 /* ---------------------------
    Muzieknoten
