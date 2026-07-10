@@ -3,29 +3,84 @@
 // =====================================
 
 const train = document.getElementById("train");
+const exampleTrain = document.getElementById("example-train");
 
 const startButton = document.getElementById("start-button");
-
 const wagonButtons = document.querySelectorAll(".wagon-button");
 
-let wagonCount = 0;
+const colors = [
+    "red",
+    "blue",
+    "green",
+    "yellow"
+];
+
+let playerTrain = [];
+let targetTrain = [];
+
 let trainMoving = false;
 
 const MAX_WAGONS = 4;
 
 // ---------------------------
+// Nieuwe opdracht
+// ---------------------------
+
+function newChallenge(){
+
+    targetTrain = [];
+
+    exampleTrain.innerHTML =
+        '<img id="example-locomotive" src="../assets/images/train/locomotive.png">';
+
+    const amount = Math.floor(Math.random() * 4) + 1;
+
+    for(let i = 0; i < amount; i++){
+
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        targetTrain.push(color);
+
+        const wagon = document.createElement("img");
+
+        wagon.src = "../assets/images/train/wagon-" + color + ".png";
+
+        wagon.className = "example-wagon";
+
+        exampleTrain.appendChild(wagon);
+
+    }
+
+}
+
+// ---------------------------
+// Trein resetten
+// ---------------------------
+
+function resetPlayerTrain(){
+
+    playerTrain = [];
+
+    train.innerHTML =
+        '<img id="locomotive" src="../assets/images/train/locomotive.png">';
+
+}
+
+// ---------------------------
 // Wagons toevoegen
 // ---------------------------
 
-wagonButtons.forEach(button => {
+wagonButtons.forEach(button=>{
 
-    button.addEventListener("click", () => {
-        
-        if (trainMoving) return;
+    button.addEventListener("click",()=>{
 
-        if (wagonCount >= MAX_WAGONS) return;
+        if(trainMoving) return;
+
+        if(playerTrain.length >= MAX_WAGONS) return;
 
         const color = button.dataset.color;
+
+        playerTrain.push(color);
 
         const wagon = document.createElement("img");
 
@@ -33,59 +88,126 @@ wagonButtons.forEach(button => {
 
         wagon.className = "wagon";
 
-        wagon.draggable = false;
-
         train.appendChild(wagon);
-
-        wagonCount++;
 
     });
 
 });
 
 // ---------------------------
-// Trein laten rijden
+// Vergelijken
 // ---------------------------
 
-startButton.addEventListener("click", () => {
+function correctTrain(){
 
-    if (trainMoving) return;
+    if(playerTrain.length !== targetTrain.length){
 
-    trainMoving = true;
+        return false;
 
-    startButton.disabled = true;
+    }
 
-    const distance = train.offsetWidth + 400;
+    for(let i=0;i<targetTrain.length;i++){
 
-    train.style.transition = "transform 4s linear";
-    train.style.transform = "translateX(-" + distance + "px)";
+        if(playerTrain[i] !== targetTrain[i]){
 
-    setTimeout(() => {
+            return false;
 
-        // Alles verwijderen behalve de locomotief
-        train.innerHTML =
-            '<img id="locomotive" src="../assets/images/train/locomotive.png" alt="Locomotief">';
+        }
 
-        wagonCount = 0;
+    }
 
-        // Nieuwe trein rechts buiten beeld zetten
-        train.style.transition = "none";
-        train.style.transform = "translateX(" + (window.innerWidth + 300) + "px)";
+    return true;
 
-        requestAnimationFrame(() => {
+}
 
-            requestAnimationFrame(() => {
+// ---------------------------
+// Schudden
+// ---------------------------
 
-                train.style.transition = "transform 1.5s linear";
-                train.style.transform = "translateX(0)";
+function shakeTrain(){
 
-                startButton.disabled = false;
-                trainMoving = false;
+    train.animate([
+
+        {transform:"translateX(0)"},
+        {transform:"translateX(-12px)"},
+        {transform:"translateX(12px)"},
+        {transform:"translateX(-12px)"},
+        {transform:"translateX(12px)"},
+        {transform:"translateX(0)"}
+
+    ],{
+
+        duration:500
+
+    });
+
+}
+
+// ---------------------------
+// Start
+// ---------------------------
+
+startButton.addEventListener("click",()=>{
+
+    if(trainMoving) return;
+
+    if(correctTrain()){
+
+        trainMoving = true;
+
+        startButton.disabled = true;
+
+        const distance = train.offsetWidth + 400;
+
+        train.style.transition = "transform 4s linear";
+        train.style.transform = "translateX(-" + distance + "px)";
+
+        setTimeout(()=>{
+
+            resetPlayerTrain();
+
+            newChallenge();
+
+            train.style.transition = "none";
+            train.style.transform =
+                "translateX(" + (window.innerWidth + 300) + "px)";
+
+            requestAnimationFrame(()=>{
+
+                requestAnimationFrame(()=>{
+
+                    train.style.transition =
+                        "transform 1.5s linear";
+
+                    train.style.transform = "translateX(0)";
+
+                    trainMoving = false;
+                    startButton.disabled = false;
+
+                });
 
             });
 
-        });
+        },4000);
 
-    }, 4000);
+    }
+
+    else{
+
+        shakeTrain();
+
+        setTimeout(()=>{
+
+            resetPlayerTrain();
+
+        },500);
+
+    }
 
 });
+
+// ---------------------------
+// Eerste opdracht
+// ---------------------------
+
+newChallenge();
