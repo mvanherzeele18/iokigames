@@ -98,7 +98,7 @@ const animals = [
         image: "../assets/images/animals/ape.png",
         speech: "../assets/sounds/animals/ape_name.mp3",
         sound: "../assets/sounds/animals/ape.mp3",
-        volume: 0.8
+        volume: 0.3
     },    
 
     {
@@ -106,7 +106,7 @@ const animals = [
         image: "../assets/images/animals/bear.png",
         speech: "../assets/sounds/animals/bear_name.mp3",
         sound: "../assets/sounds/animals/bear.mp3",
-        volume: 0.8
+        volume: 0.5
     },    
 
     {
