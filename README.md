@@ -3,4 +3,4 @@
 <br>Dieren: Freepik/Magnific
 <br>Geluiden: Pixabay
 
-<br> Nieuw idee: Rups
+<br> Nieuw ideeën: Trein, Rups, Muziek, Fruit
