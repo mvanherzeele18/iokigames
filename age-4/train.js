@@ -33,7 +33,7 @@ function newChallenge(){
     exampleTrain.innerHTML =
         '<img id="example-locomotive" src="../assets/images/train/locomotive.png">';
 
-    const amount = Math.floor(Math.random() * 4) + 1;
+    const amount = Math.floor(Math.random() * 2) + 3;
 
     for(let i = 0; i < amount; i++){
 
