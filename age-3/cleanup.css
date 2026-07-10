@@ -140,7 +140,7 @@ body{
 
     inset:0;
 
-    z-index:20;
+    z-index:30;
 
 }
 
@@ -184,7 +184,7 @@ body{
     user-select:none;
     -webkit-user-drag:none;
 
-    z-index:30;
+    z-index:20;
 
 }
 
