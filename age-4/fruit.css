@@ -121,9 +121,9 @@ body{
 
     position:absolute;
 
-    top:-80px;
+    top:0px;
 
-    width:220px;
+    width:400px;
 
     user-select:none;
     -webkit-user-drag:none;
@@ -133,13 +133,13 @@ body{
 
 .tree.left{
 
-    left:20px;
+    left:2px;
 
 }
 
 .tree.right{
 
-    right:20px;
+    right:2px;
 
 }
 
