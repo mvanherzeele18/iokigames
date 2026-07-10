@@ -6,10 +6,6 @@ const field = document.getElementById("field");
 const fruitsContainer = document.getElementById("fruits");
 const basket = document.getElementById("basket");
 
-// ---------------------------
-// Geluid
-// ---------------------------
-
 const catchSound = new Audio("../assets/sounds/catch.mp3");
 
 // ---------------------------
@@ -17,24 +13,30 @@ const catchSound = new Audio("../assets/sounds/catch.mp3");
 // ---------------------------
 
 const fruitTypes = [
-
     "apple",
     "banana",
     "orange",
     "pear",
     "strawberry"
-
 ];
 
 const fruits = [];
 
 // ---------------------------
-// Fruit maken
+// Mand
+// ---------------------------
+
+let dragging = false;
+
+// ---------------------------
+// Fruit laten vallen
 // ---------------------------
 
 function spawnFruit(){
 
     const fruit = document.createElement("img");
+
+    fruit.className = "fruit";
 
     const type =
         fruitTypes[Math.floor(Math.random() * fruitTypes.length)];
@@ -42,16 +44,24 @@ function spawnFruit(){
     fruit.src =
         "../assets/images/fruit/" + type + ".png";
 
-    fruit.className = "fruit";
+    // Linker of rechter boom
 
-    const leftTree = Math.random() < 0.5;
+    let x;
 
-    const startX = leftTree
-        ? 90 + Math.random() * 80
-        : field.clientWidth - 170 + Math.random() * 80;
+    if(Math.random() < 0.5){
 
-    fruit.style.left = startX + "px";
-    fruit.style.top = "80px";
+        x = 120 + Math.random() * 70;
+
+    }else{
+
+        x = field.clientWidth - 200 + Math.random() * 70;
+
+    }
+
+    const y = 95;
+
+    fruit.style.left = x + "px";
+    fruit.style.top = y + "px";
 
     fruitsContainer.appendChild(fruit);
 
@@ -59,8 +69,8 @@ function spawnFruit(){
 
         element: fruit,
 
-        x: startX,
-        y: 80,
+        x: x,
+        y: y,
 
         speed: 2 + Math.random() * 2
 
@@ -71,7 +81,7 @@ function spawnFruit(){
 setInterval(spawnFruit,1200);
 
 // ---------------------------
-// Mand besturen
+// Mand bewegen
 // ---------------------------
 
 function moveBasket(clientX){
@@ -80,32 +90,63 @@ function moveBasket(clientX){
 
     let x = clientX - rect.left;
 
-    const basketWidth = basket.offsetWidth;
-
-    x -= basketWidth / 2;
+    x -= basket.offsetWidth / 2;
 
     x = Math.max(
         0,
-        Math.min(field.clientWidth - basketWidth, x)
+        Math.min(field.clientWidth - basket.offsetWidth, x)
     );
 
     basket.style.left = x + "px";
-
     basket.style.transform = "none";
 
 }
 
+// ---------------------------
 // Muis
+// ---------------------------
 
-field.addEventListener("mousemove",(e)=>{
+basket.addEventListener("mousedown",()=>{
+
+    dragging = true;
+
+});
+
+window.addEventListener("mouseup",()=>{
+
+    dragging = false;
+
+});
+
+window.addEventListener("mousemove",(e)=>{
+
+    if(!dragging) return;
 
     moveBasket(e.clientX);
 
 });
 
+// ---------------------------
 // Touch
+// ---------------------------
 
-field.addEventListener("touchmove",(e)=>{
+basket.addEventListener("touchstart",(e)=>{
+
+    dragging = true;
+
+    e.preventDefault();
+
+},{passive:false});
+
+window.addEventListener("touchend",()=>{
+
+    dragging = false;
+
+});
+
+window.addEventListener("touchmove",(e)=>{
+
+    if(!dragging) return;
 
     e.preventDefault();
 
@@ -114,7 +155,7 @@ field.addEventListener("touchmove",(e)=>{
 },{passive:false});
 
 // ---------------------------
-// Update
+// Spel
 // ---------------------------
 
 function update(){
