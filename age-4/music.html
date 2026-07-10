@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Muziek - Ioki Games</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="music.css">
+
+</head>
+
+<body>
+
+<div id="game">
+
+    <a href="index.html" class="back-button">⬅</a>
+
+    <div class="logo">
+        Ioki Games
+    </div>
+
+    <div id="instrument">
+
+        <img
+            src="../assets/images/music/xylophone.png"
+            alt="Xylofoon"
+            id="xylophone">
+
+    </div>
+
+    <div id="keys">
+
+        <button class="key red" data-note="do"></button>
+        <button class="key orange" data-note="re"></button>
+        <button class="key yellow" data-note="mi"></button>
+        <button class="key green" data-note="fa"></button>
+        <button class="key blue" data-note="sol"></button>
+        <button class="key indigo" data-note="la"></button>
+        <button class="key purple" data-note="si"></button>
+        <button class="key pink" data-note="do2"></button>
+
+    </div>
+
+</div>
+
+<script src="../script.js"></script>
+
+<script>
+
+createClouds(5, "../assets/images/cloud.png");
+
+</script>
+
+<script src="music.js"></script>
+
+</body>
+
+</html>
