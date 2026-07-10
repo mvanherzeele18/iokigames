@@ -20,7 +20,7 @@ wagonButtons.forEach(button => {
 
         const wagon = document.createElement("img");
 
-        wagon.src = `../assets/images/train/wagon-${color}.png`;
+        wagon.src = ../assets/images/train/wagon-${color}.png;
 
         wagon.className = "wagon";
 
@@ -42,22 +42,22 @@ startButton.addEventListener("click", () => {
 
     const distance = train.offsetWidth + 400;
 
-    train.style.transform = `translateX(-${distance}px)`;
+    train.style.transform = translateX(-${distance}px);
 
     setTimeout(() => {
 
         // Alles verwijderen behalve de locomotief
-        train.innerHTML = `
+        train.innerHTML = 
             <img
                 id="locomotive"
                 src="../assets/images/train/locomotive.png"
                 alt="Locomotief"
             >
-        `;
+        ;
 
         // Trein rechts buiten beeld zetten
         train.style.transition = "none";
-        train.style.transform = `translateX(${window.innerWidth + 300}px)`;
+        train.style.transform = translateX(${window.innerWidth + 300}px);
 
         // Browser de tijd geven om de positie toe te passen
         requestAnimationFrame(() => {
