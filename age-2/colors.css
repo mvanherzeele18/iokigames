@@ -29,6 +29,7 @@ body{
 =========================== */
 
 .back-button{
+    -webkit-tap-highlight-color: transparent;
     position:fixed;
     top:20px;
     left:20px;
@@ -127,6 +128,7 @@ body{
 .color,
 #eraser,
 #clear{
+    -webkit-tap-highlight-color: transparent;
     width:70px;
     height:70px;
     border:none;
