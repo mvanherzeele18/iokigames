@@ -297,12 +297,6 @@ body{
 
 @media(max-width:700px){
 
-    body{
-
-        overflow-y:auto;
-
-    }
-
     .screen{
 
         width:90%;
@@ -310,8 +304,6 @@ body{
         top:56%;
 
         max-height:80vh;
-
-        overflow-y:auto;
 
     }
 
