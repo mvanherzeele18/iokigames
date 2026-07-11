@@ -120,7 +120,7 @@ body{
 
 .mole:active{
 
-    transform:translateX(-50%) scale(.9);
+    transform:scale(.95);
 
 }
 
