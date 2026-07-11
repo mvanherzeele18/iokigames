@@ -120,15 +120,15 @@ h1{
 
 .emoji{
 
+    width:5rem;
+    height:5rem;
+
     font-size:5rem;
 
-}
+    object-fit:contain;
 
-.emoji-image {
-    width: 5rem;
-    height: 5rem;
-    margin-right: 10px;
-    vertical-align: middle;
+    flex-shrink:0;
+
 }
 
 /* ===========================
@@ -168,10 +168,6 @@ h1{
         font-size:4rem;
     }
    
-    .emoji-image {
-        width: 4rem;
-        height: 4rem;
-    }
 }
 /* ===========================
    Wolken
