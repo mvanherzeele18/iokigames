@@ -72,13 +72,16 @@ h1{
 }
 
 .age-button{
+
     -webkit-tap-highlight-color: transparent;
 
     position:relative;
-   
+
     text-decoration:none;
 
     background:white;
+
+    border:5px solid transparent;
 
     border-radius:30px;
 
@@ -100,8 +103,8 @@ h1{
 
     transition:.25s;
 
-    box-shadow:
-        0 10px 20px rgba(0,0,0,.15);
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+
 }
 
 .age-button:hover{
@@ -117,6 +120,12 @@ h1{
 .age-button:active{
 
     transform:scale(.97);
+
+}
+
+.age-button.new{
+
+    border-color:#e53935;
 
 }
 
