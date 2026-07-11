@@ -87,8 +87,8 @@ body{
 
     position:relative;
 
-    width:170px;
-    height:120px;
+    width:140px;
+    height:140px;
 
     background:url("../assets/images/moles/hole.png");
 
@@ -96,28 +96,25 @@ body{
     background-repeat:no-repeat;
     background-position:center;
 
-    user-select:none;
-
 }
 
 .mole{
 
     position:absolute;
 
-    left:50%;
-    bottom:25px;
+    left:0;
+    top:0;
 
-    transform:translateX(-50%);
+    width:140px;
+    height:140px;
 
-    width:95px;
+    object-fit:contain;
 
     cursor:pointer;
 
     user-select:none;
     -webkit-user-drag:none;
     -webkit-tap-highlight-color:transparent;
-
-    transition:transform .15s;
 
 }
 
