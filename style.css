@@ -73,6 +73,8 @@ h1{
 
 .age-button{
     -webkit-tap-highlight-color: transparent;
+
+    position:relative;
    
     text-decoration:none;
 
