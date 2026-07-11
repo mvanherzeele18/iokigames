@@ -297,11 +297,21 @@ body{
 
 @media(max-width:700px){
 
+    body{
+
+        overflow-y:auto;
+
+    }
+
     .screen{
 
         width:90%;
 
-        top:58%;
+        top:60%;
+
+        max-height:80vh;
+
+        overflow-y:auto;
 
     }
 
@@ -318,6 +328,8 @@ body{
         grid-template-columns:1fr;
 
         gap:15px;
+
+        padding-bottom:20px;
 
     }
 
