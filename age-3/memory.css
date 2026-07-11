@@ -134,7 +134,7 @@ body{
 }
 
 .choice-button{
-
+    -webkit-tap-highlight-color: transparent;
     height:170px;
 
     border:none;
@@ -212,7 +212,7 @@ body{
 --------------------------- */
 
 .card{
-
+    -webkit-tap-highlight-color: transparent;
     position:relative;
 
     width:120px;
@@ -227,7 +227,7 @@ body{
 }
 
 .card.flipped{
-
+    -webkit-tap-highlight-color: transparent;
     transform:rotateY(180deg);
 
 }
@@ -254,7 +254,7 @@ body{
 }
 
 .card-front{
-
+    -webkit-tap-highlight-color: transparent;
     background:white;
 
     font-size:3rem;
@@ -262,7 +262,7 @@ body{
 }
 
 .card-back{
-
+    -webkit-tap-highlight-color: transparent;
     background:white;
 
     transform:rotateY(180deg);
