@@ -1,0 +1,218 @@
+/* ===========================
+   Whack-a-Mole
+=========================== */
+
+body{
+    overflow:hidden;
+}
+
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+}
+
+/* Terugknop */
+
+.back-button{
+    position:absolute;
+    top:20px;
+    left:20px;
+    width:65px;
+    height:65px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:white;
+    border-radius:50%;
+    text-decoration:none;
+    color:#333;
+    font-size:2rem;
+    font-weight:bold;
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+    transition:.2s;
+    z-index:1000;
+}
+
+.back-button:hover{
+    transform:scale(1.08);
+}
+
+/* Logo */
+
+.logo{
+    position:fixed;
+    top:25px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:2rem;
+    font-weight:bold;
+    color:white;
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+    z-index:1000;
+    pointer-events:none;
+}
+
+/* Gras */
+
+#ground{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:120px;
+    background:#74c365;
+    border-top:5px solid #63af56;
+    z-index:5;
+}
+
+/* Wereld */
+
+#world{
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding-bottom:140px;
+    box-sizing:border-box;
+    z-index:10;
+}
+
+/* Raster met gaten */
+
+#mole-grid{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    grid-template-rows:repeat(2, minmax(0, 1fr));
+    gap:40px;
+    width:80vw;
+    max-width:600px;
+}
+
+/* Gat */
+
+.hole{
+    position:relative;
+    width:100%;
+    aspect-ratio:1/1;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+}
+
+/* Bovenzijde van het gat */
+
+.hole-top{
+    position:absolute;
+    bottom:0;
+    width:80%;
+    height:35%;
+    background:#5b3b2a;
+    border-radius:50%;
+    box-shadow:0 6px 12px rgba(0,0,0,.35);
+    z-index:2;
+}
+
+/* Mol */
+
+.mole{
+    position:absolute;
+    bottom:0;
+    width:55%;
+    height:55%;
+    background:#8b5a3c;
+    border-radius:50% 50% 40% 40%;
+    box-shadow:0 4px 10px rgba(0,0,0,.3);
+    transform:translateY(100%);
+    z-index:1;
+}
+
+/* Mol gezicht (optioneel, via pseudo-elementen) */
+
+.mole::before{
+    content:"";
+    position:absolute;
+    top:30%;
+    left:50%;
+    transform:translateX(-50%);
+    width:60%;
+    height:45%;
+    background:#f5d3b3;
+    border-radius:50%;
+}
+
+.mole::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translateX(-50%);
+    width:26%;
+    height:18%;
+    background:#e89c7a;
+    border-radius:50%;
+}
+
+/* ===========================
+   Mobiel
+=========================== */
+
+@media (max-width: 768px){
+
+    /* Raster iets smaller en met grotere gaten */
+    #mole-grid{
+        width: 90vw;
+        gap: 25px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Gaten groter zodat kinderen makkelijk kunnen tikken */
+    .hole{
+        aspect-ratio: 1/1;
+    }
+
+    /* Bovenzijde van het gat iets groter */
+    .hole-top{
+        width: 85%;
+        height: 40%;
+    }
+
+    /* Mol groter en iets hoger */
+    .mole{
+        width: 65%;
+        height: 65%;
+    }
+
+    /* Logo iets kleiner */
+    .logo{
+        font-size: 1.6rem;
+        top: 20px;
+    }
+
+    /* Terugknop iets kleiner */
+    .back-button{
+        width: 55px;
+        height: 55px;
+        font-size: 1.6rem;
+    }
+
+    /* Gras iets lager zodat het raster meer ruimte krijgt */
+    #ground{
+        height: 90px;
+    }
+
+    /* Wereld padding aanpassen */
+    #world{
+        padding-bottom: 110px;
+    }
+}
+
+
+/* Logo en terugknop erboven */
+
+.logo,
+.back-button{
+    z-index:1000;
+}
