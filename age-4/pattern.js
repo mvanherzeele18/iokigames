@@ -148,8 +148,6 @@ Object.keys(buttons).forEach(color=>{
 
             setTimeout(()=>{
 
-                alert("Goed geprobeerd!");
-
                 sequence = [];
 
                 playerSequence = [];
