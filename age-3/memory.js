@@ -122,13 +122,15 @@ function createCards(){
         card.dataset.value = value;
 
         card.innerHTML =
-            '<div class="card-front">❓</div>' +
+            '<div class="card-front">' +
+                '<img src="../assets/images/logo.png">' +
+            '</div>' +
             '<div class="card-back">' +
-            '<img src="../assets/images/memory/' +
-            selectedTheme +
-            '/' +
-            value +
-            '.png">' +
+                '<img src="../assets/images/memory/' +
+                selectedTheme +
+                '/' +
+                value +
+                '.png">' +
             '</div>';
 
         card.addEventListener("click", flipCard);
