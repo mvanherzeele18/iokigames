@@ -15,6 +15,8 @@ body{
     width:100vw;
     height:100vh;
 
+    overflow:hidden;
+
 }
 
 .back-button{
@@ -87,63 +89,6 @@ body{
 }
 
 /* ---------------------------
-   Speelveld
---------------------------- */
-
-#field{
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    width:min(90vw,900px);
-    height:min(70vh,550px);
-
-    background:linear-gradient(#8fd7ff,#dff6ff);
-
-    border:8px solid #8b5a2b;
-    border-radius:30px;
-
-    overflow:hidden;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.2);
-
-}
-
-/* ---------------------------
-   Bomen
---------------------------- */
-
-.tree{
-
-    position:absolute;
-
-    top:0px;
-
-    width:400px;
-
-    user-select:none;
-    -webkit-user-drag:none;
-    pointer-events:none;
-
-}
-
-.tree.left{
-
-    left:-100px;
-
-}
-
-.tree.right{
-
-    right:-100px;
-
-}
-
-/* ---------------------------
    Fruit
 --------------------------- */
 
@@ -159,50 +104,42 @@ body{
 
     position:absolute;
 
-    width:55px;
+    width:60px;
 
     user-select:none;
     -webkit-user-drag:none;
+    pointer-events:none;
 
 }
 
 /* ---------------------------
-   Gras
---------------------------- */
-
-#grass{
-
-    position:absolute;
-
-    left:0;
-    right:0;
-    bottom:0;
-
-    height:90px;
-
-    background:#57c84d;
-
-}
-
-/* ---------------------------
-   Mand
+   Basket
 --------------------------- */
 
 #basket{
 
     position:absolute;
 
-    bottom:35px;
+    bottom:30px;
     left:50%;
 
     transform:translateX(-50%);
 
-    width:120px;
+    width:140px;
+
+    z-index:100;
+
+    cursor:grab;
 
     user-select:none;
     -webkit-user-drag:none;
+    -webkit-tap-highlight-color:transparent;
 
-    z-index:20;
+}
+
+#basket:active{
+
+    cursor:grabbing;
 
 }
 
@@ -212,48 +149,17 @@ body{
 
 @media(max-width:700px){
 
-    #field{
-
-        width:95%;
-        height:60vh;
-
-    }
-
-    .tree{
-
-        width:300px;
-
-    }
-
-    .tree.left{
-
-        left:-100px;
-
-    }
-
-    .tree.right{
-
-        right:-100px;
-
-    }
-
     .fruit{
 
-        width:40px;
+        width:45px;
 
     }
 
     #basket{
 
-        width:90px;
+        width:100px;
 
-        bottom:30px;
-
-    }
-
-    #grass{
-
-        height:70px;
+        bottom:20px;
 
     }
 
