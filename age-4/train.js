@@ -2,6 +2,9 @@
 // Ioki Games - Trein
 // =====================================
 
+const trainSound = new Audio("../assets/sounds/train.mp3");
+const wrongSound = new Audio("../assets/sounds/wrong.mp3");
+
 const train = document.getElementById("train");
 const exampleTrain = document.getElementById("example-train");
 
@@ -155,6 +158,9 @@ startButton.addEventListener("click",()=>{
 
         trainMoving = true;
 
+        trainSound.currentTime = 0;
+        trainSound.play();
+        
         startButton.disabled = true;
 
         const distance = train.offsetWidth + 400;
@@ -196,6 +202,9 @@ startButton.addEventListener("click",()=>{
 
         shakeTrain();
 
+        wrongSound.currentTime = 0;
+        wrongSound.play();
+        
         setTimeout(()=>{
 
             resetPlayerTrain();
