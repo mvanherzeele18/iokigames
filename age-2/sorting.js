@@ -3,7 +3,6 @@
 // =====================================
 
 const object = document.getElementById("object");
-
 const baskets = document.querySelectorAll(".basket");
 
 const correctSound = new Audio("../assets/sounds/pop.mp3");
@@ -15,59 +14,26 @@ const wrongSound = new Audio("../assets/sounds/wrong.mp3");
 
 const objects = [
 
-    {
-        image:"apple-red.png",
-        color:"red"
-    },
+    { image:"apple-red.png", color:"red" },
+    { image:"strawberry-red.png", color:"red" },
+    { image:"ball-red.png", color:"red" },
 
-    {
-        image:"strawberry-red.png",
-        color:"red"
-    },
+    { image:"banana-yellow.png", color:"yellow" },
+    { image:"duck-yellow.png", color:"yellow" },
+    { image:"star-yellow.png", color:"yellow" },
 
-    {
-        image:"ball-red.png",
-        color:"red"
-    },
-
-    {
-        image:"banana-yellow.png",
-        color:"yellow"
-    },
-
-    {
-        image:"duck-yellow.png",
-        color:"yellow"
-    },
-
-    {
-        image:"star-yellow.png",
-        color:"yellow"
-    },
-
-    {
-        image:"fish-blue.png",
-        color:"blue"
-    },
-
-    {
-        image:"car-blue.png",
-        color:"blue"
-    },
-
-    {
-        image:"balloon-blue.png",
-        color:"blue"
-    }
+    { image:"fish-blue.png", color:"blue" },
+    { image:"car-blue.png", color:"blue" },
+    { image:"balloon-blue.png", color:"blue" }
 
 ];
 
 let currentObject;
 
-let startX;
-let startY;
-
 let dragging = false;
+
+let startX = 0;
+let startY = 0;
 
 // ---------------------------
 // Nieuw voorwerp
@@ -83,28 +49,24 @@ function newObject(){
         currentObject.image;
 
     object.style.transition = "none";
-
-    object.style.left = "0px";
-    object.style.top = "0px";
-
-    object.style.transform = "";
+    object.style.transform = "translate(0,0)";
 
 }
 
 // ---------------------------
-// Start slepen
+// Slepen starten
 // ---------------------------
 
 object.addEventListener("pointerdown", e => {
 
     dragging = true;
 
+    object.style.transition = "none";
+
     startX = e.clientX;
     startY = e.clientY;
 
     object.setPointerCapture(e.pointerId);
-
-    object.style.cursor = "grabbing";
 
 });
 
@@ -136,27 +98,23 @@ object.addEventListener("pointerup", e => {
 
     object.releasePointerCapture(e.pointerId);
 
-    object.style.cursor = "grab";
+    const objectRect = object.getBoundingClientRect();
+
+    const centerX = objectRect.left + objectRect.width / 2;
+    const centerY = objectRect.top + objectRect.height / 2;
 
     let correct = false;
 
     baskets.forEach(basket => {
 
-        const basketRect = basket.getBoundingClientRect();
-        const objectRect = object.getBoundingClientRect();
-
-        const centerX =
-            objectRect.left + objectRect.width / 2;
-
-        const centerY =
-            objectRect.top + objectRect.height / 2;
+        const rect = basket.getBoundingClientRect();
 
         if(
 
-            centerX >= basketRect.left &&
-            centerX <= basketRect.right &&
-            centerY >= basketRect.top &&
-            centerY <= basketRect.bottom
+            centerX >= rect.left &&
+            centerX <= rect.right &&
+            centerY >= rect.top &&
+            centerY <= rect.bottom
 
         ){
 
@@ -170,16 +128,17 @@ object.addEventListener("pointerup", e => {
 
     });
 
+    // -----------------------
+    // Juist
+    // -----------------------
+
     if(correct){
 
         correctSound.currentTime = 0;
         correctSound.play();
 
-        object.style.transition =
-            "transform .25s";
-
-        object.style.transform =
-            "scale(0)";
+        object.style.transition = "transform .25s";
+        object.style.transform = "scale(0)";
 
         setTimeout(() => {
 
@@ -189,6 +148,10 @@ object.addEventListener("pointerup", e => {
 
     }
 
+    // -----------------------
+    // Fout
+    // -----------------------
+
     else{
 
         wrongSound.currentTime = 0;
@@ -196,23 +159,34 @@ object.addEventListener("pointerup", e => {
 
         object.animate([
 
-            {transform:object.style.transform},
-            {transform:object.style.transform + " translateX(-10px)"},
-            {transform:object.style.transform + " translateX(10px)"},
-            {transform:object.style.transform + " translateX(-10px)"},
-            {transform:"translate(0,0)"}
+            { transform: object.style.transform },
+
+            { transform: object.style.transform + " translateX(-10px)" },
+
+            { transform: object.style.transform + " translateX(10px)" },
+
+            { transform: object.style.transform + " translateX(-10px)" },
+
+            { transform: object.style.transform }
 
         ],{
 
-            duration:350
+            duration:300
 
         });
 
-        object.style.transition =
-            "transform .3s";
+        setTimeout(() => {
 
-        object.style.transform =
-            "translate(0,0)";
+            object.style.transition = "transform .25s";
+            object.style.transform = "translate(0,0)";
+
+            setTimeout(() => {
+
+                object.style.transition = "none";
+
+            },250);
+
+        },300);
 
     }
 
