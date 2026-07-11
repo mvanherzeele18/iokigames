@@ -120,14 +120,7 @@ h1{
 
 .emoji{
 
-    width:5rem;
-    height:5rem;
-
     font-size:5rem;
-
-    object-fit:contain;
-
-    flex-shrink:0;
 
 }
 
