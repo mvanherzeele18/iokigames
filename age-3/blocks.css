@@ -36,7 +36,7 @@ canvas{
 
 
 .back-button{
-
+    -webkit-tap-highlight-color: transparent;
     position:absolute;
 
     top:20px;
