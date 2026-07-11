@@ -1,74 +1,90 @@
-// ===============================
-// Whack-a-Mole – Variant B
-// ===============================
+// =====================================
+// Ioki Games - Mollen
+// =====================================
 
-// Alle mollen selecteren
 const holes = document.querySelectorAll(".hole");
-const moles = document.querySelectorAll(".mole");
 
-// Aantal mollen tegelijk
-const ACTIVE_MOLES = 2;
+const popSound = new Audio("../assets/sounds/pop.mp3");
 
-// Tijd dat een mol zichtbaar blijft
-const MOLE_UP_TIME = 1200; // 1.2s
+let currentHole = null;
+let currentMole = null;
 
-// Minimale tijd tussen nieuwe mollen
-const MOLE_INTERVAL = 900;
+// ---------------------------
+// Mol tonen
+// ---------------------------
 
-// Houd bij welke mollen actief zijn
-let active = [];
+function showMole(){
 
-// Mol omhoog laten komen
-function showMole(mole) {
-    mole.style.transition = "transform 0.25s ease-out";
-    mole.style.transform = "translateY(0%)"; // omhoog
-}
+    // Oude mol verwijderen
 
-// Mol omlaag laten gaan
-function hideMole(mole) {
-    mole.style.transition = "transform 0.25s ease-in";
-    mole.style.transform = "translateY(100%)"; // omlaag
-}
+    if(currentMole){
 
-// Kies willekeurige mollen
-function pickRandomMoles() {
-    const available = [...moles].filter(m => !active.includes(m));
-    const chosen = [];
+        currentMole.remove();
 
-    while (chosen.length < ACTIVE_MOLES && available.length > 0) {
-        const index = Math.floor(Math.random() * available.length);
-        chosen.push(available.splice(index, 1)[0]);
     }
 
-    return chosen;
+    // Willekeurig gat kiezen
+
+    const randomIndex =
+        Math.floor(Math.random() * holes.length);
+
+    currentHole = holes[randomIndex];
+
+    // Mol maken
+
+    currentMole = document.createElement("img");
+
+    currentMole.src =
+        "../assets/images/moles/mole.png";
+
+    currentMole.className = "mole";
+
+    currentHole.appendChild(currentMole);
+
+    // Klikken op mol
+
+    currentMole.addEventListener("click",hitMole);
+    currentMole.addEventListener("touchstart",hitMole,{passive:true});
+
+    // Na 1 seconde verdwijnt hij
+
+    setTimeout(()=>{
+
+        if(currentMole){
+
+            currentMole.remove();
+
+            currentMole = null;
+
+        }
+
+    },1000);
+
 }
 
-// Start een mol-cyclus
-function startMoleCycle() {
-    const chosen = pickRandomMoles();
+// ---------------------------
+// Mol geraakt
+// ---------------------------
 
-    chosen.forEach(mole => {
-        active.push(mole);
-        showMole(mole);
+function hitMole(){
 
-        // Automatisch weer omlaag
-        setTimeout(() => {
-            hideMole(mole);
-            active = active.filter(m => m !== mole);
-        }, MOLE_UP_TIME);
-    });
+    if(!currentMole) return;
 
-    // Nieuwe cyclus
-    setTimeout(startMoleCycle, MOLE_INTERVAL);
+    popSound.currentTime = 0;
+    popSound.play();
+
+    currentMole.remove();
+
+    currentMole = null;
+
 }
 
-// Tik op mol → direct omlaag
-moles.forEach(mole => {
-    mole.addEventListener("pointerdown", () => {
-        hideMole(mole);
-        active = active.filter(m => m !== mole);
-    });
-});
+// ---------------------------
+// Nieuwe mol
+// ---------------------------
 
-// Start spel
-startMoleCycle();
+setInterval(showMole,1500);
+
+// Eerste mol
+
+showMole();
