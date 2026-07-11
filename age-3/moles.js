@@ -46,20 +46,6 @@ function showMole(){
     currentMole.addEventListener("click",hitMole);
     currentMole.addEventListener("touchstart",hitMole,{passive:true});
 
-    // Na 1 seconde verdwijnt hij
-
-    setTimeout(()=>{
-
-        if(currentMole){
-
-            currentMole.remove();
-
-            currentMole = null;
-
-        }
-
-    },1000);
-
 }
 
 // ---------------------------
@@ -76,14 +62,9 @@ function hitMole(){
     currentMole.remove();
 
     currentMole = null;
-
+    
+    setTimeout(showMole,300);
 }
-
-// ---------------------------
-// Nieuwe mol
-// ---------------------------
-
-setInterval(showMole,1500);
 
 // Eerste mol
 
