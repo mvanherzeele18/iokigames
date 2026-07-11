@@ -147,6 +147,8 @@ function flipCard(){
 
     if(lockBoard) return;
 
+    if(this.classList.contains("matched")) return;
+
     if(this === firstCard) return;
 
     this.classList.add("flipped");
@@ -177,6 +179,9 @@ function checkMatch(){
 
     if(match){
 
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+        
         firstCard = null;
         secondCard = null;
 
