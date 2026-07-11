@@ -6,11 +6,8 @@ const themeScreen = document.getElementById("theme-screen");
 const amountScreen = document.getElementById("amount-screen");
 const memoryBoard = document.getElementById("memory-board");
 
-const themeButtons =
-    document.querySelectorAll("[data-theme]");
-
-const amountButtons =
-    document.querySelectorAll("[data-cards]");
+const themeButtons = document.querySelectorAll("[data-theme]");
+const amountButtons = document.querySelectorAll("[data-cards]");
 
 let selectedTheme = "";
 let selectedCards = 0;
@@ -46,8 +43,7 @@ amountButtons.forEach(button => {
 
     button.addEventListener("click", () => {
 
-        selectedCards =
-            Number(button.dataset.cards);
+        selectedCards = Number(button.dataset.cards);
 
         startGame();
 
@@ -62,10 +58,12 @@ amountButtons.forEach(button => {
 function startGame(){
 
     amountScreen.classList.add("hidden");
-
     memoryBoard.classList.remove("hidden");
 
     matchedPairs = 0;
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
 
     createCards();
 
@@ -81,35 +79,38 @@ function createCards(){
 
     const pairCount = selectedCards / 2;
 
+    let images = [1,2,3,4,5];
+
+    images.sort(() => Math.random() - 0.5);
+
+    images = images.slice(0, pairCount);
+
     let cards = [];
 
-    for(let i = 1; i <= pairCount; i++){
+    images.forEach(image => {
 
-        cards.push(i);
-        cards.push(i);
+        cards.push(image);
+        cards.push(image);
 
-    }
+    });
 
     cards.sort(() => Math.random() - 0.5);
 
     if(selectedCards === 6){
 
-        memoryBoard.style.gridTemplateColumns =
-            "repeat(3,1fr)";
+        memoryBoard.style.gridTemplateColumns = "repeat(3,1fr)";
 
     }
 
     else if(selectedCards === 8){
 
-        memoryBoard.style.gridTemplateColumns =
-            "repeat(4,1fr)";
+        memoryBoard.style.gridTemplateColumns = "repeat(4,1fr)";
 
     }
 
     else{
 
-        memoryBoard.style.gridTemplateColumns =
-            "repeat(5,1fr)";
+        memoryBoard.style.gridTemplateColumns = "repeat(5,1fr)";
 
     }
 
@@ -118,7 +119,6 @@ function createCards(){
         const card = document.createElement("div");
 
         card.className = "card";
-
         card.dataset.value = value;
 
         card.innerHTML =
@@ -153,10 +153,9 @@ function flipCard(){
 
     this.classList.add("flipped");
 
-    if(!firstCard){
+    if(firstCard === null){
 
         firstCard = this;
-
         return;
 
     }
@@ -174,42 +173,39 @@ function flipCard(){
 function checkMatch(){
 
     const match =
-        firstCard.dataset.value ===
-        secondCard.dataset.value;
+        firstCard.dataset.value === secondCard.dataset.value;
 
     if(match){
 
         firstCard.classList.add("matched");
         secondCard.classList.add("matched");
-        
+
         firstCard = null;
         secondCard = null;
 
         matchedPairs++;
 
         if(matchedPairs === selectedCards / 2){
-        
+
             setTimeout(() => {
-        
-                // Bord verbergen
+
                 memoryBoard.classList.add("hidden");
                 memoryBoard.innerHTML = "";
-        
-                // Terug naar eerste scherm
+
                 amountScreen.classList.add("hidden");
                 themeScreen.classList.remove("hidden");
-        
-                // Variabelen resetten
+
                 selectedTheme = "";
                 selectedCards = 0;
-        
+
                 firstCard = null;
                 secondCard = null;
+
                 matchedPairs = 0;
                 lockBoard = false;
-        
+
             },1000);
-        
+
         }
 
     }
