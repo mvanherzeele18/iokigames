@@ -188,6 +188,7 @@ function checkMatch(){
         
                 // Bord verbergen
                 memoryBoard.classList.add("hidden");
+                memoryBoard.innerHTML = "";
         
                 // Terug naar eerste scherm
                 amountScreen.classList.add("hidden");
