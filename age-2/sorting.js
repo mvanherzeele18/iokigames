@@ -16,7 +16,7 @@ const objects = [
 
     { image:"apple-red.png", color:"red" },
     { image:"strawberry-red.png", color:"red" },
-    { image:"ball-red.png", color:"red" },
+    { image:"balloon-red.png", color:"red" },
 
     { image:"banana-yellow.png", color:"yellow" },
     { image:"duck-yellow.png", color:"yellow" },
