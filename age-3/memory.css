@@ -351,12 +351,12 @@ body{
 
     }
 
-    .card{
-
-        width:65px;
-        height:65px;
-
-    }
+   .card{
+   
+       width:min(18vw,65px);
+       height:min(18vw,65px);
+   
+   }
 
     .card-front{
 
