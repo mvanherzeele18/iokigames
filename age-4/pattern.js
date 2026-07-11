@@ -20,9 +20,9 @@ const buttons = {
 const sounds = {
 
     red: new Audio("../assets/sounds/music/do.wav"),
-    blue: new Audio("../assets/sounds/mi.wav"),
-    green: new Audio("../assets/sounds/sol.wav"),
-    yellow: new Audio("../assets/sounds/do2.wav"),
+    blue: new Audio("../assets/sounds/music/mi.wav"),
+    green: new Audio("../assets/sounds/music/sol.wav"),
+    yellow: new Audio("../assets/sounds/music/do2.wav"),
     wrong: new Audio("../assets/sounds/wrong.mp3")
 
 };
