@@ -183,14 +183,27 @@ function checkMatch(){
         matchedPairs++;
 
         if(matchedPairs === selectedCards / 2){
-
+        
             setTimeout(() => {
-
-                amountScreen.classList.remove("hidden");
+        
+                // Bord verbergen
                 memoryBoard.classList.add("hidden");
-
+        
+                // Terug naar eerste scherm
+                amountScreen.classList.add("hidden");
+                themeScreen.classList.remove("hidden");
+        
+                // Variabelen resetten
+                selectedTheme = "";
+                selectedCards = 0;
+        
+                firstCard = null;
+                secondCard = null;
+                matchedPairs = 0;
+                lockBoard = false;
+        
             },1000);
-
+        
         }
 
     }
