@@ -99,7 +99,7 @@ body{
     position:absolute;
 
     left:50%;
-    top:52%;
+    top:56%;
 
     transform:translate(-50%,-50%);
 
@@ -297,15 +297,25 @@ body{
 
 @media(max-width:700px){
 
+    .screen{
+
+        width:90%;
+
+        top:58%;
+
+    }
+
     .screen h1{
 
-        font-size:2.2rem;
+        font-size:2rem;
 
-        margin-bottom:25px;
+        margin-bottom:20px;
 
     }
 
     .button-grid{
+
+        grid-template-columns:1fr;
 
         gap:15px;
 
@@ -313,7 +323,7 @@ body{
 
     .choice-button{
 
-        height:120px;
+        height:90px;
 
         border-radius:20px;
 
@@ -321,23 +331,23 @@ body{
 
     .choice-button:not(.amount){
 
-        font-size:3rem;
+        font-size:2.5rem;
 
     }
 
     .choice-button span{
 
-        font-size:1rem;
+        font-size:1.2rem;
 
     }
 
     .amount{
 
-        font-size:3rem;
+        font-size:2.8rem;
 
     }
 
-        .card{
+    .card{
 
         width:65px;
         height:65px;
@@ -363,5 +373,5 @@ body{
         height:75%;
 
     }
-   
+
 }
