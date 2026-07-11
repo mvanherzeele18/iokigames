@@ -125,8 +125,8 @@ h1{
 }
 
 .emoji-image {
-    width: 40px;
-    height: 40px;
+    width: 5rem;
+    height: 5rem;
     margin-right: 10px;
     vertical-align: middle;
 }
@@ -167,7 +167,11 @@ h1{
     .emoji{
         font-size:4rem;
     }
-
+   
+    .emoji-image {
+        width: 4rem;
+        height: 4rem;
+    }
 }
 /* ===========================
    Wolken
