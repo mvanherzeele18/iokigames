@@ -2,7 +2,7 @@
 // Ioki Games - Fruit
 // =====================================
 
-const field = document.getElementById("field");
+const game = document.getElementById("game");
 const fruitsContainer = document.getElementById("fruits");
 const basket = document.getElementById("basket");
 
@@ -13,30 +13,30 @@ const catchSound = new Audio("../assets/sounds/catch.mp3");
 // ---------------------------
 
 const fruitTypes = [
+
     "apple",
     "banana",
     "orange",
     "pear",
     "strawberry"
+
 ];
 
 const fruits = [];
 
 // ---------------------------
-// Mand
+// Basket
 // ---------------------------
 
 let dragging = false;
 
 // ---------------------------
-// Fruit laten vallen
+// Fruit maken
 // ---------------------------
 
 function spawnFruit(){
 
     const fruit = document.createElement("img");
-
-    fruit.className = "fruit";
 
     const type =
         fruitTypes[Math.floor(Math.random() * fruitTypes.length)];
@@ -44,19 +44,12 @@ function spawnFruit(){
     fruit.src =
         "../assets/images/fruit/" + type + ".png";
 
-    // Linker of rechter boom
+    fruit.className = "fruit";
 
-    let x;
-
-    const fruitWidth = 55;
-    
-    const x =
-        Math.random() * (field.clientWidth - fruitWidth);
-
-    const y = 95;
+    const x = Math.random() * (window.innerWidth - 60);
 
     fruit.style.left = x + "px";
-    fruit.style.top = y + "px";
+    fruit.style.top = "-70px";
 
     fruitsContainer.appendChild(fruit);
 
@@ -65,7 +58,7 @@ function spawnFruit(){
         element: fruit,
 
         x: x,
-        y: y,
+        y: -70,
 
         speed: 2 + Math.random() * 2
 
@@ -73,23 +66,19 @@ function spawnFruit(){
 
 }
 
-setInterval(spawnFruit,1200);
+setInterval(spawnFruit,1000);
 
 // ---------------------------
-// Mand bewegen
+// Basket bewegen
 // ---------------------------
 
 function moveBasket(clientX){
 
-    const rect = field.getBoundingClientRect();
-
-    let x = clientX - rect.left;
-
-    x -= basket.offsetWidth / 2;
+    let x = clientX - basket.offsetWidth / 2;
 
     x = Math.max(
         0,
-        Math.min(field.clientWidth - basket.offsetWidth, x)
+        Math.min(window.innerWidth - basket.offsetWidth, x)
     );
 
     basket.style.left = x + "px";
@@ -190,7 +179,7 @@ function update(){
 
         }
 
-        if(fruit.y > field.clientHeight){
+        if(fruit.y > window.innerHeight){
 
             fruit.element.remove();
 
