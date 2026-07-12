@@ -42,7 +42,7 @@ function spawnFruit(){
 
     gameArea.appendChild(fruit);
 
-    const height = 300 + Math.random()*250;
+    const height = window.innerHeight + 200;
     const duration = 2200 + Math.random()*400;
 
     fruit.animate(
