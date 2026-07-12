@@ -126,13 +126,13 @@ body{
 
     transform:translateX(-50%);
 
-    width:min(900px,90vw);
+    display:grid;
 
-    display:flex;
+    grid-template-columns:repeat(3,120px);
+
+    gap:20px;
 
     justify-content:center;
-
-    gap:30px;
 
 }
 
@@ -214,12 +214,14 @@ body{
     }
 
     #shapes{
-
+    
         bottom:40px;
-
+    
+        grid-template-columns:repeat(3,80px);
+    
         gap:15px;
-
-    }
+    
+    } 
 
     .target,
     .shape{
