@@ -101,39 +101,39 @@ function newRound(){
 
     });
 
-    // Onderaan willekeurige volgorde
-
-    shuffle([...selected]).forEach(shape=>{
-
+    // Onderaan alle vormen in willekeurige volgorde
+    
+    shuffle([...shapes]).forEach(shape=>{
+    
         const piece = document.createElement("div");
-
+    
         piece.className = "shape";
         piece.dataset.shape = shape;
-
+    
         piece.draggable = true;
-
+    
         const img = document.createElement("img");
-
+    
         img.src = `../assets/images/shapes/${shape}.png`;
-
+    
         piece.appendChild(img);
-
+    
         piece.addEventListener("dragstart",()=>{
-
+    
             draggedShape = piece;
-
+    
             piece.classList.add("dragging");
-
+    
         });
-
+    
         piece.addEventListener("dragend",()=>{
-
+    
             piece.classList.remove("dragging");
-
+    
         });
-
+    
         shapesContainer.appendChild(piece);
-
+    
     });
 
 }
@@ -144,7 +144,13 @@ function newRound(){
 
 function checkFinished(){
 
-    if(shapesContainer.children.length === 0){
+    const completed = [...targetsContainer.children].every(target =>
+
+        !target.querySelector("img").src.includes("-shadow")
+
+    );
+
+    if(completed){
 
         setTimeout(newRound,500);
 
