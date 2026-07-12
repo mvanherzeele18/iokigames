@@ -30,8 +30,9 @@ function spawnFruit(){
 
     const fruit = document.createElement("img");
 
-    fruit.src = "../assets/images/cut/" +
-        fruits[Math.floor(Math.random()*fruits.length)];
+    fruit.src =
+        "../assets/images/cut/" +
+        fruits[Math.floor(Math.random() * fruits.length)];
 
     fruit.className = "fruit";
 
@@ -43,27 +44,22 @@ function spawnFruit(){
     gameArea.appendChild(fruit);
 
     const height = window.innerHeight + 200;
-    const duration = 2200 + Math.random()*400;
+    const duration = 2200 + Math.random() * 400;
 
     fruit.animate(
 
         [
-
             {
-                transform:"translateY(0)"
+                transform: "translateY(0)"
             },
-
             {
-                transform:"translateY(-"+height+"px)"
+                transform: "translateY(-" + height + "px)"
             }
-
         ],
 
         {
-
-            duration:duration,
-            easing:"ease-out"
-
+            duration: duration,
+            easing: "ease-out"
         }
 
     );
@@ -72,15 +68,15 @@ function spawnFruit(){
 
         fruit.remove();
 
-    },duration);
+    }, duration);
 
 }
 
 // ---------------------------
-// Snijden
+// Fruit snijden
 // ---------------------------
 
-function slice(x,y){
+function slice(x, y){
 
     trail.style.display = "block";
 
@@ -88,6 +84,8 @@ function slice(x,y){
     trail.style.top = y + "px";
 
     document.querySelectorAll(".fruit").forEach(fruit=>{
+
+        if(fruit.dataset.cut) return;
 
         const rect = fruit.getBoundingClientRect();
 
@@ -100,16 +98,17 @@ function slice(x,y){
 
         ){
 
-            if(fruit.dataset.cut) return;
-
             fruit.dataset.cut = "true";
 
             sliceSound.currentTime = 0;
             sliceSound.play();
 
-            fruit.style.transition = ".2s";
+            fruit.style.transition =
+                "transform .2s, opacity .2s";
+
             fruit.style.transform =
                 "scale(1.4) rotate(25deg)";
+
             fruit.style.opacity = "0";
 
             setTimeout(()=>{
@@ -125,28 +124,32 @@ function slice(x,y){
 }
 
 // ---------------------------
-// Vinger / muis
+// Besturing
 // ---------------------------
 
 window.addEventListener("pointermove",e=>{
 
     if(!playing) return;
 
-    if(e.buttons===0 && e.pointerType==="mouse") return;
+    // Alleen slepen met de muis
+    if(e.pointerType === "mouse" && e.buttons !== 1){
 
-    slice(e.clientX,e.clientY);
+        trail.style.display = "none";
+        return;
 
-});
-
-window.addEventListener("pointerdown",e=>{
-
-    if(!playing) return;
+    }
 
     slice(e.clientX,e.clientY);
 
 });
 
 window.addEventListener("pointerup",()=>{
+
+    trail.style.display = "none";
+
+});
+
+window.addEventListener("pointercancel",()=>{
 
     trail.style.display = "none";
 
