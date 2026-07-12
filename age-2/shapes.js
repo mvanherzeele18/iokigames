@@ -19,6 +19,9 @@ const shapes = [
 
 let draggedShape = null;
 
+let offsetX = 0;
+let offsetY = 0;
+
 // ---------------------------
 // Schudden
 // ---------------------------
@@ -38,7 +41,7 @@ function shuffle(array){
 }
 
 // ---------------------------
-// Nieuwe opdracht
+// Nieuwe ronde
 // ---------------------------
 
 function newRound(){
@@ -63,28 +66,109 @@ function newRound(){
 
         target.appendChild(img);
 
-        target.addEventListener("dragover",e=>{
+        targetsContainer.appendChild(target);
 
-            e.preventDefault();
+    });
 
-        });
+    // Alle vormen onderaan
 
-        target.addEventListener("drop",()=>{
+    shuffle([...shapes]).forEach(shape=>{
 
-            if(!draggedShape) return;
+        const piece = document.createElement("div");
 
-            if(draggedShape.dataset.shape === target.dataset.shape){
+        piece.className = "shape";
+        piece.dataset.shape = shape;
+
+        const img = document.createElement("img");
+
+        img.src = `../assets/images/shapes/${shape}.png`;
+
+        piece.appendChild(img);
+
+        piece.addEventListener("pointerdown",startDrag);
+
+        shapesContainer.appendChild(piece);
+
+    });
+
+}
+
+// ---------------------------
+// Slepen
+// ---------------------------
+
+function startDrag(e){
+
+    draggedShape = e.currentTarget;
+
+    draggedShape.classList.add("dragging");
+
+    const rect = draggedShape.getBoundingClientRect();
+
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+
+    draggedShape.style.position = "fixed";
+    draggedShape.style.zIndex = "1000";
+
+    moveShape(e);
+
+    document.addEventListener("pointermove",moveShape);
+    document.addEventListener("pointerup",stopDrag);
+
+}
+
+function moveShape(e){
+
+    if(!draggedShape) return;
+
+    draggedShape.style.left = (e.clientX - offsetX) + "px";
+    draggedShape.style.top = (e.clientY - offsetY) + "px";
+
+}
+
+function stopDrag(){
+
+    if(!draggedShape) return;
+
+    const shapeRect = draggedShape.getBoundingClientRect();
+
+    let placed = false;
+
+    document.querySelectorAll(".target").forEach(target=>{
+
+        if(placed) return;
+
+        if(!target.querySelector("img")) return;
+
+        const targetRect = target.getBoundingClientRect();
+
+        const centerX = shapeRect.left + shapeRect.width/2;
+        const centerY = shapeRect.top + shapeRect.height/2;
+
+        if(
+
+            centerX > targetRect.left &&
+            centerX < targetRect.right &&
+            centerY > targetRect.top &&
+            centerY < targetRect.bottom
+
+        ){
+
+            if(target.dataset.shape === draggedShape.dataset.shape){
 
                 correctSound.currentTime = 0;
                 correctSound.play();
 
                 target.innerHTML = "";
 
-                const placed = draggedShape.querySelector("img");
+                const img = draggedShape.querySelector("img");
 
-                target.appendChild(placed);
+                target.appendChild(img);
 
                 draggedShape.remove();
+
+                placed = true;
 
                 checkFinished();
 
@@ -95,46 +179,29 @@ function newRound(){
 
             }
 
-        });
-
-        targetsContainer.appendChild(target);
+        }
 
     });
 
-    // Onderaan alle vormen in willekeurige volgorde
-    
-    shuffle([...shapes]).forEach(shape=>{
-    
-        const piece = document.createElement("div");
-    
-        piece.className = "shape";
-        piece.dataset.shape = shape;
-    
-        piece.draggable = true;
-    
-        const img = document.createElement("img");
-    
-        img.src = `../assets/images/shapes/${shape}.png`;
-    
-        piece.appendChild(img);
-    
-        piece.addEventListener("dragstart",()=>{
-    
-            draggedShape = piece;
-    
-            piece.classList.add("dragging");
-    
-        });
-    
-        piece.addEventListener("dragend",()=>{
-    
-            piece.classList.remove("dragging");
-    
-        });
-    
-        shapesContainer.appendChild(piece);
-    
-    });
+    if(!placed){
+
+        draggedShape.style.position = "";
+        draggedShape.style.left = "";
+        draggedShape.style.top = "";
+        draggedShape.style.zIndex = "";
+
+    }
+
+    if(draggedShape){
+
+        draggedShape.classList.remove("dragging");
+
+    }
+
+    draggedShape = null;
+
+    document.removeEventListener("pointermove",moveShape);
+    document.removeEventListener("pointerup",stopDrag);
 
 }
 
@@ -144,11 +211,13 @@ function newRound(){
 
 function checkFinished(){
 
-    const completed = [...targetsContainer.children].every(target =>
+    const completed = [...targetsContainer.children].every(target=>{
 
-        !target.querySelector("img").src.includes("-shadow")
+        const img = target.querySelector("img");
 
-    );
+        return img && !img.src.includes("-shadow");
+
+    });
 
     if(completed){
 
