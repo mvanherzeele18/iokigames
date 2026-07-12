@@ -18,9 +18,10 @@ const shapes = [
 ];
 
 let draggedShape = null;
-
-let offsetX = 0;
-let offsetY = 0;
+let startX = 0;
+let startY = 0;
+let currentX = 0;
+let currentY = 0;
 
 // ---------------------------
 // Schudden
@@ -51,7 +52,7 @@ function newRound(){
 
     const selected = shuffle([...shapes]).slice(0,3);
 
-    // Targets
+    // Bovenaan 3 schaduwen
 
     selected.forEach(shape=>{
 
@@ -62,7 +63,8 @@ function newRound(){
 
         const img = document.createElement("img");
 
-        img.src = `../assets/images/shapes/${shape}-shadow.png`;
+        img.src =
+            `../assets/images/shapes/${shape}-shadow.png`;
 
         target.appendChild(img);
 
@@ -70,7 +72,7 @@ function newRound(){
 
     });
 
-    // Alle vormen onderaan
+    // Onderaan alle 6 vormen
 
     shuffle([...shapes]).forEach(shape=>{
 
@@ -81,127 +83,153 @@ function newRound(){
 
         const img = document.createElement("img");
 
-        img.src = `../assets/images/shapes/${shape}.png`;
+        img.src =
+            `../assets/images/shapes/${shape}.png`;
 
         piece.appendChild(img);
 
-        piece.addEventListener("pointerdown",startDrag);
+        // Slepen starten
 
-        shapesContainer.appendChild(piece);
+        piece.addEventListener("pointerdown",e=>{
 
-    });
+            draggedShape = piece;
 
-}
+            piece.classList.add("dragging");
 
-// ---------------------------
-// Slepen
-// ---------------------------
+            startX = e.clientX;
+            startY = e.clientY;
 
-function startDrag(e){
+            currentX = 0;
+            currentY = 0;
 
-    draggedShape = e.currentTarget;
+            piece.style.transition = "none";
 
-    draggedShape.classList.add("dragging");
+            piece.setPointerCapture(e.pointerId);
 
-    const rect = draggedShape.getBoundingClientRect();
+        });
 
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
+        // Slepen
 
-    draggedShape.style.position = "fixed";
-    draggedShape.style.zIndex = "1000";
+        piece.addEventListener("pointermove",e=>{
 
-    moveShape(e);
+            if(draggedShape !== piece) return;
 
-    document.addEventListener("pointermove",moveShape);
-    document.addEventListener("pointerup",stopDrag);
+            currentX = e.clientX - startX;
+            currentY = e.clientY - startY;
 
-}
+            piece.style.transform =
+                `translate(${currentX}px, ${currentY}px)`;
 
-function moveShape(e){
+        });
+        
+        // Loslaten
 
-    if(!draggedShape) return;
+        piece.addEventListener("pointerup",e=>{
 
-    draggedShape.style.left = (e.clientX - offsetX) + "px";
-    draggedShape.style.top = (e.clientY - offsetY) + "px";
+            if(draggedShape !== piece) return;
 
-}
+            piece.releasePointerCapture(e.pointerId);
 
-function stopDrag(){
+            const pieceRect = piece.getBoundingClientRect();
 
-    if(!draggedShape) return;
+            const centerX = pieceRect.left + pieceRect.width / 2;
+            const centerY = pieceRect.top + pieceRect.height / 2;
 
-    const shapeRect = draggedShape.getBoundingClientRect();
+            let correct = false;
 
-    let placed = false;
+            document.querySelectorAll(".target").forEach(target=>{
 
-    document.querySelectorAll(".target").forEach(target=>{
+                const rect = target.getBoundingClientRect();
 
-        if(placed) return;
+                if(
 
-        if(!target.querySelector("img")) return;
+                    centerX >= rect.left &&
+                    centerX <= rect.right &&
+                    centerY >= rect.top &&
+                    centerY <= rect.bottom
 
-        const targetRect = target.getBoundingClientRect();
+                ){
 
-        const centerX = shapeRect.left + shapeRect.width/2;
-        const centerY = shapeRect.top + shapeRect.height/2;
+                    if(
 
-        if(
+                        target.dataset.shape === piece.dataset.shape &&
+                        target.querySelector("img").src.includes("-shadow")
 
-            centerX > targetRect.left &&
-            centerX < targetRect.right &&
-            centerY > targetRect.top &&
-            centerY < targetRect.bottom
+                    ){
 
-        ){
+                        correct = true;
 
-            if(target.dataset.shape === draggedShape.dataset.shape){
+                        correctSound.currentTime = 0;
+                        correctSound.play();
 
-                correctSound.currentTime = 0;
-                correctSound.play();
+                        target.innerHTML = "";
 
-                target.innerHTML = "";
+                        const img = piece.querySelector("img");
 
-                const img = draggedShape.querySelector("img");
+                        target.appendChild(img);
 
-                target.appendChild(img);
+                        piece.remove();
 
-                draggedShape.remove();
+                    }
 
-                placed = true;
+                }
 
-                checkFinished();
+            });
 
-            }else{
+            // -----------------------
+            // Fout
+            // -----------------------
+
+            if(!correct){
 
                 wrongSound.currentTime = 0;
                 wrongSound.play();
 
+                piece.animate([
+
+                    { transform: piece.style.transform },
+
+                    { transform: piece.style.transform + " translateX(-10px)" },
+
+                    { transform: piece.style.transform + " translateX(10px)" },
+
+                    { transform: piece.style.transform + " translateX(-10px)" },
+
+                    { transform: piece.style.transform }
+
+                ],{
+
+                    duration:300
+
+                });
+
+                setTimeout(()=>{
+
+                    piece.style.transition = "transform .25s";
+
+                    piece.style.transform = "translate(0,0)";
+
+                    setTimeout(()=>{
+
+                        piece.style.transition = "none";
+
+                    },250);
+
+                },300);
+
             }
 
-        }
+            piece.classList.remove("dragging");
+
+            draggedShape = null;
+
+            checkFinished();
+
+        });
+
+        shapesContainer.appendChild(piece);
 
     });
-
-    if(!placed){
-
-        draggedShape.style.position = "";
-        draggedShape.style.left = "";
-        draggedShape.style.top = "";
-        draggedShape.style.zIndex = "";
-
-    }
-
-    if(draggedShape){
-
-        draggedShape.classList.remove("dragging");
-
-    }
-
-    draggedShape = null;
-
-    document.removeEventListener("pointermove",moveShape);
-    document.removeEventListener("pointerup",stopDrag);
 
 }
 
@@ -211,15 +239,10 @@ function stopDrag(){
 
 function checkFinished(){
 
-    const completed = [...targetsContainer.children].every(target=>{
+    const completed =
+        document.querySelectorAll(".target img:not([src*='-shadow'])").length;
 
-        const img = target.querySelector("img");
-
-        return img && !img.src.includes("-shadow");
-
-    });
-
-    if(completed){
+    if(completed === 3){
 
         setTimeout(newRound,500);
 
