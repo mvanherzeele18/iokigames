@@ -1,0 +1,234 @@
+/* =====================================
+   Ioki Games - Vormen
+===================================== */
+
+body{
+
+    overflow:hidden;
+
+}
+
+#game{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+}
+
+/* ===========================
+   Terugknop
+=========================== */
+
+.back-button{
+    -webkit-tap-highlight-color: transparent;
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    z-index:1000;
+
+}
+
+.back-button:hover{
+
+    transform:scale(1.08);
+
+}
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+
+/* ---------------------------
+   Bovenste balk
+--------------------------- */
+
+#targets{
+
+    position:absolute;
+
+    top:28%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:min(900px,90vw);
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:30px;
+
+}
+
+/* ---------------------------
+   Onderste balk
+--------------------------- */
+
+#shapes{
+
+    position:absolute;
+
+    bottom:70px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:min(900px,90vw);
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:30px;
+
+}
+
+/* ---------------------------
+   Vakken
+--------------------------- */
+
+.target,
+.shape{
+
+    width:120px;
+    height:120px;
+
+    background:white;
+
+    border-radius:20px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+}
+
+.target{
+
+    border:4px dashed #bbbbbb;
+
+}
+
+/* ---------------------------
+   Afbeeldingen
+--------------------------- */
+
+.target img,
+.shape img{
+
+    width:75%;
+    height:75%;
+
+    object-fit:contain;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+}
+
+.shape{
+
+    cursor:grab;
+
+    -webkit-tap-highlight-color:transparent;
+
+}
+
+.shape.dragging{
+
+    opacity:.7;
+
+    cursor:grabbing;
+
+}
+
+/* ---------------------------
+   Mobiel
+--------------------------- */
+
+@media(max-width:700px){
+
+    #targets{
+
+        top:24%;
+
+        gap:15px;
+
+    }
+
+    #shapes{
+
+        bottom:40px;
+
+        gap:15px;
+
+    }
+
+    .target,
+    .shape{
+
+        width:80px;
+        height:80px;
+
+        border-radius:15px;
+
+    }
+
+}
