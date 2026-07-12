@@ -226,7 +226,7 @@ body{
 
     #shapes{
 
-        bottom:40px;
+        bottom:80px;
 
         grid-template-columns:repeat(3,80px);
 
