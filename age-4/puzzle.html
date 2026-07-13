@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="nl">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Puzzel - Ioki Games</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="puzzle.css">
+
+</head>
+
+<body>
+
+<div id="game">
+
+    <!-- Terug -->
+    <a href="index.html" class="back-button">⬅</a>
+
+    <!-- Logo -->
+    <div class="logo">
+        Ioki Games
+    </div>
+
+    <!-- Categorie -->
+
+    <div
+        id="category-screen"
+        class="screen"
+    >
+
+        <h1>Kies een categorie</h1>
+
+        <div class="button-grid">
+
+            <button
+                class="choice-button category"
+                data-category="animals"
+            >
+                🐶
+                <span>Dieren</span>
+            </button>
+
+            <button
+                class="choice-button category"
+                data-category="cars"
+            >
+                🚗
+                <span>Wagens</span>
+            </button>
+
+            <button
+                class="choice-button category"
+                data-category="fruit"
+            >
+                🍎
+                <span>Fruit</span>
+            </button>
+
+            <button
+                class="choice-button category"
+                data-category="toys"
+            >
+                🧸
+                <span>Speelgoed</span>
+            </button>
+
+            <button
+                class="choice-button category"
+                data-category="food"
+            >
+                🍕
+                <span>Eten</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Grootte -->
+
+    <div
+        id="size-screen"
+        class="screen hidden"
+    >
+
+        <h1>Aantal stukjes</h1>
+
+        <div class="button-grid">
+
+            <button
+                class="choice-button amount"
+                data-size="2"
+            >
+
+                4
+
+            </button>
+
+            <button
+                class="choice-button amount"
+                data-size="3"
+            >
+
+                9
+
+            </button>
+
+            <button
+                class="choice-button amount"
+                data-size="4"
+            >
+
+                16
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Puzzel -->
+
+    <div
+        id="puzzle-board"
+        class="hidden"
+    ></div>
+
+</div>
+
+<script src="../script.js"></script>
+
+<script>
+
+createClouds(5,"../assets/images/cloud.png");
+
+</script>
+
+<script src="puzzle.js"></script>
+
+</body>
+
+</html>
