@@ -1,0 +1,281 @@
+/* =====================================
+   Ioki Games - Puzzels
+===================================== */
+
+body{
+
+    overflow:hidden;
+
+}
+
+#game{
+
+    position:relative;
+
+    width:100vw;
+    height:100vh;
+
+}
+
+/* ===========================
+   Terugknop
+=========================== */
+
+.back-button{
+    -webkit-tap-highlight-color: transparent;
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    z-index:1000;
+
+}
+
+.back-button:hover{
+
+    transform:scale(1.08);
+
+}
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+
+/* ---------------------------
+   Schermen
+--------------------------- */
+
+.screen{
+
+    position:absolute;
+
+    left:50%;
+    top:52%;
+
+    transform:translate(-50%,-50%);
+
+    width:min(900px,90vw);
+
+    text-align:center;
+
+}
+
+.screen h1{
+
+    font-size:3rem;
+
+    margin-bottom:35px;
+
+    color:#333;
+
+}
+
+/* ---------------------------
+   Knoppen
+--------------------------- */
+
+.button-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+
+    gap:25px;
+
+}
+
+.choice-button{
+
+    -webkit-tap-highlight-color:transparent;
+
+    height:170px;
+
+    border:none;
+
+    border-radius:25px;
+
+    background:white;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.choice-button:hover{
+
+    transform:scale(1.05);
+
+}
+
+.category{
+
+    font-size:4rem;
+
+}
+
+.category span{
+
+    font-size:1.3rem;
+
+    font-weight:bold;
+
+}
+
+.amount{
+
+    font-size:4rem;
+
+    font-weight:bold;
+
+}
+
+/* ---------------------------
+   Puzzel
+--------------------------- */
+
+#puzzle-board{
+
+    position:absolute;
+
+    left:50%;
+    top:52%;
+
+    transform:translate(-50%,-50%);
+
+    display:grid;
+
+    gap:2px;
+
+    background:#333;
+
+    padding:2px;
+
+    border-radius:12px;
+
+}
+
+.piece{
+
+    background-repeat:no-repeat;
+
+    background-size:100%;
+
+    touch-action:none;
+
+    user-select:none;
+
+    cursor:grab;
+
+}
+
+.hidden{
+
+    display:none;
+
+}
+
+/* ---------------------------
+   Mobiel
+--------------------------- */
+
+@media(max-width:700px){
+
+    .screen h1{
+
+        font-size:2.2rem;
+
+        margin-bottom:25px;
+
+    }
+
+    .button-grid{
+
+        gap:15px;
+
+    }
+
+    .choice-button{
+
+        height:120px;
+
+    }
+
+    .category{
+
+        font-size:3rem;
+
+    }
+
+    .category span{
+
+        font-size:1rem;
+
+    }
+
+    .amount{
+
+        font-size:3rem;
+
+    }
+
+}
