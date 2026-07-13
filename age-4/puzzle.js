@@ -307,17 +307,21 @@ function checkSolved() {
     // 5 seconden wachten
     setTimeout(() => {
 
-        // puzzel verbergen
+        // puzzelbord verbergen
         puzzleBoard.classList.add("hidden");
 
-        // schermen resetten
+        // alle stukjes resetten zodat ze niet blijven zweven
+        pieces.forEach(piece => {
+            piece.element.style.transform = "translate(0,0)";
+        });
+
+        // size-screen verbergen
         sizeScreen.classList.add("hidden");
 
-        // terug naar categorie
+        // categorie-scherm tonen
         categoryScreen.classList.remove("hidden");
 
     }, 5000);
 
 }
-
 
