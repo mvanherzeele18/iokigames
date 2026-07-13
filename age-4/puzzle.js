@@ -300,10 +300,20 @@ function checkSolved() {
         piece.currentCol === piece.correctCol
     );
 
-    if (solved) {
-        correctSound.play();
-        // hier kun je later iets mooiers doen dan alert
-        alert("Goed gedaan!");
-    }
+    if (!solved) return;
+
+    correctSound.play();
+
+    // 5 seconden wachten
+    setTimeout(() => {
+
+        // puzzel verbergen
+        puzzleBoard.classList.add("hidden");
+
+        // terug naar categorie
+        categoryScreen.classList.remove("hidden");
+
+    }, 5000);
 
 }
+
