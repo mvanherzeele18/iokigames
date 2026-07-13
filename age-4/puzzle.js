@@ -80,10 +80,11 @@ function startPuzzle() {
 
     puzzleBoard.style.gridTemplateColumns = `repeat(${gridSize},1fr)`;
 
-    imagePath = `../assets/images/puzzles/${category}/${Math.floor(Math.random() * 5) + 1}.png`;
+    imagePath =
+        `../assets/images/puzzles/${category}/${Math.floor(Math.random() * 5) + 1}.png`;
 
     buildPieces();
-    enableDragging(); // ⭐ BELANGRIJK
+    enableDragging(); // ⭐ drag pas NA stukjes
 }
 
 // -------------------------------------
@@ -94,7 +95,9 @@ function buildPieces() {
 
     pieces = [];
 
+    // Juiste volgorde
     for (let row = 0; row < gridSize; row++) {
+
         for (let col = 0; col < gridSize; col++) {
 
             pieces.push({
@@ -107,6 +110,7 @@ function buildPieces() {
             });
 
         }
+
     }
 
     shuffle(pieces);
@@ -119,13 +123,16 @@ function buildPieces() {
         piece.currentCol = index % gridSize;
 
         const div = document.createElement("div");
+
         div.className = "piece";
 
         div.style.width = pieceSize + "px";
         div.style.height = pieceSize + "px";
 
         div.style.backgroundImage = `url(${imagePath})`;
+
         div.style.backgroundSize = `${boardSize}px ${boardSize}px`;
+
         div.style.backgroundPosition =
             `${-piece.correctCol * pieceSize}px ${-piece.correctRow * pieceSize}px`;
 
@@ -144,23 +151,29 @@ function buildPieces() {
 // -------------------------------------
 
 function shuffle(array) {
+
     for (let i = array.length - 1; i > 0; i--) {
+
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+
+        [array[i], array[j]] =
+        [array[j], array[i]];
+
     }
+
 }
 
 // =====================================
 // Deel 2 - Drag Engine
 // =====================================
 
-// ⭐ BELANGRIJK: listeners toevoegen NADAT de stukjes bestaan
 function enableDragging() {
 
     pieces.forEach(piece => {
 
         const element = piece.element;
 
+        // Drag starten
         element.addEventListener("pointerdown", e => {
 
             draggedPiece = piece;
@@ -169,12 +182,14 @@ function enableDragging() {
             startY = e.clientY;
 
             element.classList.add("dragging");
+
             element.style.transition = "none";
 
             element.setPointerCapture(e.pointerId);
 
         });
 
+        // Slepen
         element.addEventListener("pointermove", e => {
 
             if (draggedPiece !== piece) return;
@@ -183,18 +198,23 @@ function enableDragging() {
             const dy = e.clientY - startY;
 
             element.style.zIndex = 1000;
-            element.style.transform = `translate(${dx}px,${dy}px) scale(1.05)`;
+
+            element.style.transform =
+                `translate(${dx}px,${dy}px) scale(1.05)`;
 
         });
 
+        // Loslaten
         element.addEventListener("pointerup", e => {
 
             if (draggedPiece !== piece) return;
 
             element.releasePointerCapture(e.pointerId);
+
             element.classList.remove("dragging");
 
             const rect = element.getBoundingClientRect();
+
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
 
@@ -204,7 +224,8 @@ function enableDragging() {
 
                 if (other === piece) return;
 
-                const otherRect = other.element.getBoundingClientRect();
+                const otherRect =
+                    other.element.getBoundingClientRect();
 
                 if (
                     centerX >= otherRect.left &&
@@ -222,7 +243,9 @@ function enableDragging() {
             }
 
             element.style.transition = "transform .25s";
+
             element.style.transform = "translate(0,0)";
+
             element.style.zIndex = "";
 
             draggedPiece = null;
@@ -237,6 +260,50 @@ function enableDragging() {
 // Stukjes wisselen
 // -------------------------------------
 
-function swapPieces(a, b) {
+function swapPieces(pieceA, pieceB) {
 
-    const tempRow
+    const tempRow = pieceA.currentRow;
+    const tempCol = pieceA.currentCol;
+
+    pieceA.currentRow = pieceB.currentRow;
+    pieceA.currentCol = pieceB.currentCol;
+
+    pieceB.currentRow = tempRow;
+    pieceB.currentCol = tempCol;
+
+    // volgorde in array wisselen
+    const indexA = pieces.indexOf(pieceA);
+    const indexB = pieces.indexOf(pieceB);
+
+    pieces[indexA] = pieceB;
+    pieces[indexB] = pieceA;
+
+    // DOM opnieuw opbouwen
+    puzzleBoard.innerHTML = "";
+
+    pieces.forEach(piece => {
+        puzzleBoard.appendChild(piece.element);
+    });
+
+    checkSolved();
+
+}
+
+// -------------------------------------
+// Check of puzzel klaar is
+// -------------------------------------
+
+function checkSolved() {
+
+    const solved = pieces.every(piece =>
+        piece.currentRow === piece.correctRow &&
+        piece.currentCol === piece.correctCol
+    );
+
+    if (solved) {
+        correctSound.play();
+        // hier kun je later iets mooiers doen dan alert
+        alert("Goed gedaan!");
+    }
+
+}
