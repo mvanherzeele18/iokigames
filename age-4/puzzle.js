@@ -310,10 +310,14 @@ function checkSolved() {
         // puzzel verbergen
         puzzleBoard.classList.add("hidden");
 
+        // schermen resetten
+        sizeScreen.classList.add("hidden");
+
         // terug naar categorie
         categoryScreen.classList.remove("hidden");
 
     }, 5000);
 
 }
+
 
