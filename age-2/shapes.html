@@ -52,7 +52,18 @@ createClouds(5,"../assets/images/cloud.png");
 
 </script>
 
-<script src="shapes.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+    import { startGameTimer, stopGameTimer } from "../timer.js";
+    
+    checkGameAccess("shapes").then(access => {
+        if (!access) return;
+    
+        startGameTimer();   // ⭐ timer start
+    
+        import("./shapes.js");
+    });
+</script>
 
 </body>
 
