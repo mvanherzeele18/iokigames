@@ -247,6 +247,108 @@ h1{
 
 }
 
+.popup-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+    animation:fadeIn .2s;
+
+}
+
+.popup{
+
+    background:white;
+
+    width:min(90%,380px);
+
+    border-radius:30px;
+
+    padding:35px;
+
+    text-align:center;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+
+    animation:popupShow .25s;
+
+}
+
+.popup-icon{
+
+    font-size:60px;
+
+    margin-bottom:10px;
+
+}
+
+.popup h2{
+
+    margin:10px 0;
+
+}
+
+.popup p{
+
+    margin:20px 0 30px;
+
+    line-height:1.6;
+
+}
+
+.popup button{
+
+    width:100%;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes popupShow{
+
+    from{
+
+        transform:scale(.9);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
 /* ===========================
    Logo
 =========================== */
