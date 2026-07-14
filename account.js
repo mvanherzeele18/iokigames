@@ -69,6 +69,8 @@ const GAME_NAMES={
 
     cut:"Snijden",
 
+    puzzle:"Puzzel",
+
 };
 
 onAuthStateChanged(auth,async user=>{
@@ -142,7 +144,8 @@ onAuthStateChanged(auth,async user=>{
         "music",
         "fruit",
         "pattern",
-        "cut"
+        "cut",
+        "puzzle",
     
     ];
     
