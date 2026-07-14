@@ -167,7 +167,8 @@ h1{
 }
 
 .button{
-
+    -webkit-tap-highlight-color: transparent;
+   
     width:100%;
 
     padding:18px;
