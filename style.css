@@ -166,7 +166,7 @@ h1{
 
 }
 
-button{
+.button{
 
     width:100%;
 
@@ -190,25 +190,25 @@ button{
 
 }
 
-button:first-of-type{
+.button:first-of-type{
 
     margin-top:0;
 
 }
 
-button:hover{
+.button:hover{
 
     transform:translateY(-2px);
 
 }
 
-button:active{
+.button:active{
 
     transform:scale(.98);
 
 }
 
-button:disabled{
+.button:disabled{
 
     opacity:.6;
 
