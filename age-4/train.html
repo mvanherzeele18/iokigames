@@ -96,7 +96,15 @@ createClouds(5, "../assets/images/cloud.png");
 
 </script>
 
-<script src="train.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("train").then(access => {
+        if (!access) return;
+
+        import("./train.js");
+    });
+</script>
 
 </body>
 
