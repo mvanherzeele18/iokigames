@@ -52,7 +52,15 @@ createClouds(5,"../assets/images/cloud.png");
 
 </script>
 
-<script src="numbers.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("numbers").then(access => {
+        if (!access) return;
+
+        import("./numbers.js");
+    });
+</script>
 
 </body>
 
