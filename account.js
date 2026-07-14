@@ -115,14 +115,6 @@ onAuthStateChanged(auth,async user=>{
     
     }
 
-    else{
-
-        screenLabel.textContent=
-
-        used+" / "+limit+" min";
-
-    }
-
     gamesList.innerHTML="";
 
     const games=
@@ -171,13 +163,3 @@ backButton.addEventListener("click",()=>{
     window.location.href="index.html";
 
 });
-
-function formatName(text){
-
-    return text
-
-    .replace(/_/g," ")
-
-    .replace(/\b\w/g,l=>l.toUpperCase());
-
-}
