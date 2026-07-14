@@ -44,7 +44,7 @@ export function showPopup(type, message, onClose = null) {
 
             <p>${message}</p>
 
-            <button id="popup-close">
+            <button id="popup-close" class="button">
 
                 OK
 
