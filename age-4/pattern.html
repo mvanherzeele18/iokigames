@@ -56,7 +56,15 @@ createClouds(5,"../assets/images/cloud.png");
 
 </script>
 
-<script src="pattern.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("pattern").then(access => {
+        if (!access) return;
+
+        import("./pattern.js");
+    });
+</script>
 
 </body>
 
