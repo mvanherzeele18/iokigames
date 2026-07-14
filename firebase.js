@@ -155,7 +155,7 @@ async function createUserIfNeeded(user){
 
             pendingParentEmail: null,
 
-            dailyLimit: 60,
+            dailyLimit: -1,
 
             playedToday: 0,
 
