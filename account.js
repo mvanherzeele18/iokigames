@@ -25,6 +25,9 @@ document.getElementById("screen-time");
 const gamesList =
 document.getElementById("games-list");
 
+const copyButton =
+document.getElementById("copy-button");
+
 const backButton =
 document.getElementById("back-button");
 
@@ -38,6 +41,7 @@ onAuthStateChanged(auth,async user=>{
     }
 
     const snapshot=
+
     await getDoc(
 
         doc(db,"users",user.uid)
@@ -56,17 +60,13 @@ onAuthStateChanged(auth,async user=>{
     profileLabel.textContent=
     data.profileId;
 
-    // ------------------------
-    // Schermtijd
-    // ------------------------
-
-    let used=
+    const used=
     data.playedToday || 0;
 
-    let limit=
+    const limit=
     data.dailyLimit ?? 60;
 
-    if(limit==-1){
+    if(limit===-1){
 
         screenLabel.textContent=
 
@@ -82,31 +82,20 @@ onAuthStateChanged(auth,async user=>{
 
     }
 
-    // ------------------------
-    // Games
-    // ------------------------
-
     gamesList.innerHTML="";
 
     const games=
     data.games || {};
 
-    for(const game in games){
+    for(const key in games){
+
+        if(!games[key]) continue;
 
         const p=
         document.createElement("p");
 
         p.textContent=
-
-        games[game]
-
-        ?
-
-        "✅ "+capitalize(game)
-
-        :
-
-        "❌ "+capitalize(game);
+        "✅ "+formatName(key);
 
         gamesList.appendChild(p);
 
@@ -114,18 +103,40 @@ onAuthStateChanged(auth,async user=>{
 
 });
 
-function capitalize(text){
+copyButton.addEventListener("click",async()=>{
 
-    return text.charAt(0).toUpperCase()
+    await navigator.clipboard.writeText(
 
-    +
+        profileLabel.textContent
 
-    text.slice(1);
+    );
 
-}
+    copyButton.textContent=
+
+    "✅ Gekopieerd!";
+
+    setTimeout(()=>{
+
+        copyButton.textContent=
+
+        "📋 Kopiëren";
+
+    },2000);
+
+});
 
 backButton.addEventListener("click",()=>{
 
     window.location.href="index.html";
 
 });
+
+function formatName(text){
+
+    return text
+
+    .replace(/_/g," ")
+
+    .replace(/\b\w/g,l=>l.toUpperCase());
+
+}
