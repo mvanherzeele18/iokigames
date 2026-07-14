@@ -115,24 +115,44 @@ onAuthStateChanged(auth,async user=>{
     
     }
 
-    gamesList.innerHTML="";
-
-    const games=
-    data.games || {};
-
-    for(const key in games){
-
-        if(!games[key]) continue;
-
-        const p=
-        document.createElement("p");
-
-        p.textContent=
-        "✅ "+(GAME_NAMES[key] || key);
-
+    gamesList.innerHTML = "";
+    
+    const games = data.games || {};
+    
+    const GAME_ORDER = [
+    
+        "balloons",
+        "animals",
+        "colors",
+        "bubbles",
+        "sorting",
+        "moles",
+        "blocks",
+        "cleanup",
+        "cleaning",
+        "memory",
+        "train",
+        "caterpillar",
+        "music",
+        "fruit",
+        "pattern",
+        "cut"
+    
+    ];
+    
+    GAME_ORDER.forEach(game => {
+    
+        const p = document.createElement("p");
+    
+        const allowed = games[game] === true;
+    
+        p.textContent =
+            (allowed ? "✅ " : "❌ ") +
+            (GAME_NAMES[game] || game);
+    
         gamesList.appendChild(p);
-
-    }
+    
+    });
 
 });
 
