@@ -247,20 +247,6 @@ h1{
 
 }
 
-#games-list{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:8px;
-
-    margin-top:15px;
-
-    text-align:left;
-
-}
-
 /* ===========================
    Logo
 =========================== */
