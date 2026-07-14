@@ -74,13 +74,12 @@
 <script>
     createClouds(6, "../assets/images/cloud.png");
 </script>
-    <script type="module">
-import { auth, onAuthStateChanged, doc, getDoc } from "../firebase.js";
+<script type="module">
+import { auth, db, onAuthStateChanged, doc, getDoc } from "../firebase.js";
 
 onAuthStateChanged(auth, async user => {
 
     if (!user) {
-        // niet ingelogd → terug naar home
         window.location.href = "../index.html";
         return;
     }
