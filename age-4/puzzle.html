@@ -144,7 +144,15 @@ createClouds(5,"../assets/images/cloud.png");
 
 </script>
 
-<script src="puzzle.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("puzzle").then(access => {
+        if (!access) return;
+
+        import("./puzzle.js");
+    });
+</script>
 
 </body>
 
