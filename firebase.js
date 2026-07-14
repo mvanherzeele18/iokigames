@@ -178,6 +178,8 @@ async function createUserIfNeeded(user){
                 pattern:true,
                 sorting:true,
                 train:true,
+                numbers:true,
+                shapes:true
             }
 
         }
