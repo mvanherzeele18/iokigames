@@ -43,6 +43,10 @@ const GAME_NAMES={
 
     sorting:"Sorteren",
 
+    numbers:"Nummers",
+
+    shapes:"Vormen",
+
     moles:"Mollen",
 
     blocks:"Blokken",
