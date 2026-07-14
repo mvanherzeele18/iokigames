@@ -5,6 +5,7 @@ import {
 
     doc,
     updateDoc,
+    increment,
     onAuthStateChanged
 
 } from "./firebase.js";
