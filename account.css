@@ -1,0 +1,47 @@
+.card{
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:30px;
+
+    margin:25px 0;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.card h2{
+
+    margin-bottom:20px;
+
+}
+
+.card p{
+
+    margin:10px 0;
+
+}
+
+#profile-id{
+
+    font-size:2rem;
+
+    letter-spacing:3px;
+
+    margin:20px 0;
+
+}
+
+#games-list{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    margin-top:20px;
+
+}
