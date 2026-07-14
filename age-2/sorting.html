@@ -58,7 +58,15 @@ createClouds(5,"../assets/images/cloud.png");
 
 </script>
 
-<script src="sorting.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("sorting").then(access => {
+        if (!access) return;
+
+        import("./sorting.js");
+    });
+</script>
 
 </body>
 
