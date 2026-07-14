@@ -91,8 +91,6 @@ export async function checkGameAccess(gameName){
 
     if(!data.games?.[gameName]){
 
-        alert("Dit spel is uitgeschakeld door je ouder.");
-
         window.location.href="../index.html";
 
         return null;
