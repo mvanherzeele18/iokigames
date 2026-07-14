@@ -28,6 +28,16 @@
 <script src="../script.js"></script>
 
 <script>
+    import { checkGameAccess } from "../../guard.js";
+
+    const session=
+    
+    await checkGameAccess("balloons");
+    
+    if(!session) return;
+</script>
+    
+<script>
     createClouds(6, "../assets/images/cloud.png");
 </script>
 <script src="balloons.js"></script>
