@@ -11,6 +11,8 @@ import {
     increment
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+import { showPopup } from "./popup.js";
+
 let interval = null;
 
 export function startGameTimer() {
@@ -41,9 +43,20 @@ export function startGameTimer() {
 
                     stopGameTimer();
 
-                    alert("Je schermtijd is op voor vandaag.");
+                    showPopup(
+                    
+                        "warning",
+                    
+                        "Je schermtijd is op voor vandaag.",
+                    
+                        () => {
+                    
+                            window.location.href = "../index.html";
+                    
+                        }
+                    
+                    );
 
-                    window.location.href = "../index.html";
                 }
 
             } catch (error) {
