@@ -60,9 +60,12 @@ createClouds(5,"../assets/images/cloud.png");
 
 <script type="module">
     import { checkGameAccess } from "../guard.js";
+    import { startGameTimer } from "../timer.js";
 
     checkGameAccess("sorting").then(access => {
         if (!access) return;
+
+        startGameTimer();
 
         import("./sorting.js");
     });
