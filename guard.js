@@ -11,6 +11,12 @@ import {
 
 } from "./firebase.js";
 
+import {
+
+    showPopup
+
+} from "./popup.js";
+
 function today(){
 
     return new Date().toISOString().split("T")[0];
@@ -91,7 +97,19 @@ export async function checkGameAccess(gameName){
 
     if(!data.games?.[gameName]){
 
-        window.location.href="../index.html";
+        showPopup(
+
+            "error",
+
+            "Dit spel is niet beschikbaar."
+
+        );
+
+        setTimeout(()=>{
+
+            window.location.href="../index.html";
+
+        },5000);
 
         return null;
 
@@ -107,9 +125,19 @@ export async function checkGameAccess(gameName){
 
     ){
 
-        alert("Je schermtijd is op voor vandaag.");
+        showPopup(
 
-        window.location.href="../index.html";
+            "warning",
+
+            "Je schermtijd is op voor vandaag."
+
+        );
+
+        setTimeout(()=>{
+
+            window.location.href="../index.html";
+
+        },5000);
 
         return null;
 
