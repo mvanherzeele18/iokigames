@@ -98,19 +98,19 @@ export async function checkGameAccess(gameName){
     if(!data.games?.[gameName]){
 
         showPopup(
-
+        
             "error",
-
-            "Dit spel is niet beschikbaar."
-
+        
+            "Dit spel is niet beschikbaar.",
+        
+            () => {
+        
+                window.location.href = "../index.html";
+        
+            }
+        
         );
-
-        setTimeout(()=>{
-
-            window.location.href="../index.html";
-
-        },5000);
-
+        
         return null;
 
     }
@@ -126,19 +126,19 @@ export async function checkGameAccess(gameName){
     ){
 
         showPopup(
-
+        
             "warning",
-
-            "Je schermtijd is op voor vandaag."
-
+        
+            "Je schermtijd is op voor vandaag.",
+        
+            () => {
+        
+                window.location.href = "../index.html";
+        
+            }
+        
         );
-
-        setTimeout(()=>{
-
-            window.location.href="../index.html";
-
-        },5000);
-
+        
         return null;
 
     }
