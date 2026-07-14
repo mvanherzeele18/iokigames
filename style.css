@@ -168,26 +168,33 @@ h1{
 
 .button {
     -webkit-tap-highlight-color: transparent;
+    position: relative;
     background: white;
-    color: #333;
     border: 5px solid transparent;
     border-radius: 30px;
-    padding: 20px 30px;
-    font-size: 1.4rem;
+    padding: 35px 20px;
+    color: #333;
+    font-size: 2rem;
     font-weight: bold;
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
     transition: .25s;
     box-shadow: 0 10px 20px rgba(0,0,0,.15);
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .button:hover {
-    transform: translateY(-5px) scale(1.03);
+    transform: translateY(-8px) scale(1.05);
     box-shadow: 0 20px 30px rgba(0,0,0,.2);
 }
 
-/button:active {
+.button:active {
     transform: scale(.97);
 }
+
 
 
 .hidden{
