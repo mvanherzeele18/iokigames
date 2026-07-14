@@ -165,10 +165,6 @@ async function createUserIfNeeded(user){
 
                 memory:true,
 
-                puzzles:true,
-
-                rekenen:true
-
             }
 
         }
