@@ -47,7 +47,15 @@
 createClouds(5, "../assets/images/cloud.png");
 </script>
 
-<script src="bubbles.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("bubbles").then(access => {
+        if (!access) return;
+
+        import("./bubbles.js");
+    });
+</script>
 
 </body>
 
