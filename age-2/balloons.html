@@ -33,9 +33,12 @@
 <!-- ⭐ Guard koppelen -->
 <script type="module">
     import { checkGameAccess } from "../guard.js";
+    import { startGameTimer } from "../timer.js";
 
     checkGameAccess("balloons").then(access => {
         if (!access) return;
+
+        startGameTimer();
 
         import("./balloons.js");
     });
