@@ -179,7 +179,8 @@ async function createUserIfNeeded(user){
                 sorting:true,
                 train:true,
                 numbers:true,
-                shapes:true
+                shapes:true,
+                puzzle:true,
             }
 
         }
