@@ -6,10 +6,12 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Mijn account - Ioki Games</title>
+    <title>Mijn account</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -21,20 +23,14 @@
 
     <div class="logo">
 
-        <img src="assets/images/logo.png"
-             alt="Ioki Games">
+        <img
+            src="assets/images/logo.png"
+            alt="Ioki Games"
+        >
 
     </div>
 
     <h1>Mijn account</h1>
-
-    <p class="subtitle">
-
-        Hier vind je jouw accountgegevens.
-
-    </p>
-
-    <!-- Profiel -->
 
     <div class="card">
 
@@ -44,57 +40,55 @@
 
         </h2>
 
-        <p>
+        <p id="email"></p>
 
-            <strong>E-mailadres</strong><br>
+    </div>
 
-            <span id="email"></span>
+    <div class="card">
 
-        </p>
+        <h3>
 
-        <br>
+            🆔 Profile-ID
 
-        <p>
+        </h3>
 
-            <strong>Profile-ID</strong>
-
-        </p>
-
-        <h2 id="profile-id">
+        <h1 id="profile-id">
 
             ---- ----
 
-        </h2>
+        </h1>
+
+        <button id="copy-button" class="button">
+
+            📋 Kopiëren
+
+        </button>
 
     </div>
 
-    <!-- Schermtijd -->
-
     <div class="card">
 
-        <h2>
+        <h3>
 
             ⏰ Schermtijd
 
+        </h3>
+
+        <h2 id="screen-time">
+
+            Laden...
+
         </h2>
-
-        <h1 id="screen-time">
-
-            0 / 60 min
-
-        </h1>
 
     </div>
 
-    <!-- Games -->
-
     <div class="card">
 
-        <h2>
+        <h3>
 
             🎮 Beschikbare spellen
 
-        </h2>
+        </h3>
 
         <div id="games-list">
 
@@ -102,55 +96,33 @@
 
     </div>
 
-    <!-- Ouders -->
-
     <div class="card">
 
-        <h2>
+        <h3>
 
-            👨‍👩‍👧 Ouders
+            👨‍👩‍👧 Voor ouders
 
-        </h2>
+        </h3>
 
         <p>
 
-            Geef dit <strong>Profile-ID</strong>
-            aan je ouders.
+            Geef je Profile-ID aan je ouders.
 
         </p>
 
         <br>
 
-        <ol style="text-align:left;line-height:1.8;">
+        <a
 
-            <li>
+            href="https://mvanherzeele18.github.io/iokiparent/"
 
-                Geef je Profile-ID aan je ouders.
+            target="_blank"
 
-            </li>
+        >
 
-            <li>
+            mvanherzeele18.github.io/iokiparent
 
-                Zij gaan naar
-
-                <br><br>
-
-                <strong>
-
-                mvanherzeele18.github.io/iokiparent/
-
-                </strong>
-
-            </li>
-
-            <li>
-
-                Daar kunnen ze jouw
-                speeltijd en spellen beheren.
-
-            </li>
-
-        </ol>
+        </a>
 
     </div>
 
@@ -164,8 +136,10 @@
 
 </div>
 
-<script type="module"
-        src="account.js"></script>
+<script
+    type="module"
+    src="account.js"
+></script>
 
 </body>
 
