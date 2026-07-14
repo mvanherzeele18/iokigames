@@ -130,6 +130,8 @@ onAuthStateChanged(auth,async user=>{
         "colors",
         "bubbles",
         "sorting",
+        "numbers",
+        "shapes",
         "moles",
         "blocks",
         "cleanup",
