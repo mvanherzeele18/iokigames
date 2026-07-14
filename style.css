@@ -166,36 +166,61 @@ h1{
 
 }
 
-.button {
-    -webkit-tap-highlight-color: transparent;
-    position: relative;
-    background: white;
-    border: 5px solid transparent;
-    border-radius: 30px;
-    padding: 35px 20px;
-    color: #333;
-    font-size: 2rem;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    transition: .25s;
-    box-shadow: 0 10px 20px rgba(0,0,0,.15);
-    cursor: pointer;
-    text-decoration: none;
+button{
+
+    width:100%;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:15px;
+
+    background:#4BA3FF;
+
+    color:white;
+
+    font-size:1.1rem;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    margin-top:15px;
+
 }
 
-.button:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 20px 30px rgba(0,0,0,.2);
+button:first-of-type{
+
+    margin-top:0;
+
 }
 
-.button:active {
-    transform: scale(.97);
+button:hover{
+
+    transform:translateY(-2px);
+
 }
 
+button:active{
 
+    transform:scale(.98);
+
+}
+
+button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+.secondary{
+
+    background:#888;
+
+}
 
 .hidden{
 
