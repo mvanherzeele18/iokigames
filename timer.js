@@ -1,63 +1,47 @@
 import {
-
     auth,
     db,
-
     doc,
     updateDoc,
-    increment,
     onAuthStateChanged
-
 } from "./firebase.js";
 
 import {
-
     increment
-
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 let interval = null;
 
-export function startGameTimer(){
+export function startGameTimer() {
 
     onAuthStateChanged(auth, user => {
 
-        if(!user) return;
+        if (!user) return;
 
         const userRef = doc(db, "users", user.uid);
 
         interval = setInterval(async () => {
 
-            try{
-
+            try {
                 await updateDoc(userRef, {
-
-                    playedToday: increment(1)
-
+                    playedToday: increment(1)   // ⭐ elke minuut +1
                 });
-
             }
-
-            catch(error){
-
+            catch (error) {
                 console.error(error);
-
             }
 
-        }, 60000);
+        }, 60000); // 60000 ms = 1 minuut
 
     });
 
 }
 
-export function stopGameTimer(){
+export function stopGameTimer() {
 
-    if(interval){
-
+    if (interval) {
         clearInterval(interval);
-
         interval = null;
-
     }
 
 }
