@@ -31,6 +31,42 @@ document.getElementById("copy-button");
 const backButton =
 document.getElementById("back-button");
 
+const GAME_NAMES={
+
+    balloons:"Ballonnen",
+
+    animals:"Dieren",
+
+    colors:"Kleuren",
+
+    bubbles:"Bubbels",
+
+    sorting:"Sorteren",
+
+    moles:"Mollen",
+
+    blocks:"Blokken",
+
+    cleanup:"Opruimen",
+
+    cleaning:"Schoonmaken",
+
+    memory:"Memory",
+    
+    train:"Trein",
+
+    caterpillar:"Rups",
+
+    music:"Muziek",
+
+    fruit:"Fruit",
+
+    pattern:"Patroon",
+
+    cut:"Snijden",
+
+};
+
 onAuthStateChanged(auth,async user=>{
 
     if(!user){
@@ -67,11 +103,16 @@ onAuthStateChanged(auth,async user=>{
     data.dailyLimit ?? 60;
 
     if(limit===-1){
-
+    
+        screenLabel.textContent="Onbeperkt";
+    
+    }
+    else{
+    
         screenLabel.textContent=
-
-        used+" min / Onbeperkt";
-
+    
+        used+" / "+limit+" min";
+    
     }
 
     else{
@@ -95,7 +136,7 @@ onAuthStateChanged(auth,async user=>{
         document.createElement("p");
 
         p.textContent=
-        "✅ "+formatName(key);
+        "✅ "+(GAME_NAMES[key] || key);
 
         gamesList.appendChild(p);
 
