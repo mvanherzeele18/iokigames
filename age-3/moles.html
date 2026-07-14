@@ -56,7 +56,15 @@
 createClouds(5, "../assets/images/cloud.png");
 </script>
 
-<script src="moles.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("moles").then(access => {
+        if (!access) return;
+
+        import("./moles.js");
+    });
+</script>
 
 </body>
 
