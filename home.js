@@ -11,6 +11,8 @@ import {
 
 } from "./firebase.js";
 
+import { showPopup } from "./popup.js";
+
 // -------------------------------------
 // Elementen
 // -------------------------------------
@@ -72,10 +74,12 @@ loginButton.addEventListener("click",async()=>{
 
         console.error(error);
 
-        alert(
-
+        showPopup(
+        
+            "error",
+        
             "Inloggen is mislukt."
-
+        
         );
 
     }
