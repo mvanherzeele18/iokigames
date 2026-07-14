@@ -48,7 +48,15 @@ createClouds(5,"../assets/images/cloud.png");
 
 </script>
 
-<script src="cut.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("cut").then(access => {
+        if (!access) return;
+
+        import("./cut.js");
+    });
+</script>
 
 </body>
 
