@@ -1,7 +1,6 @@
 let popup = null;
 
-export function showPopup(type, message) {
-
+export function showPopup(type, message, onClose = null) {
     if (popup) {
 
         popup.remove();
@@ -59,7 +58,17 @@ export function showPopup(type, message) {
 
     document
         .getElementById("popup-close")
-        .addEventListener("click", closePopup);
+        .addEventListener("click", () => {
+    
+            closePopup();
+    
+            if(typeof onClose === "function"){
+    
+                onClose();
+    
+            }
+    
+        });
 
 }
 
