@@ -60,9 +60,12 @@ createClouds(5, "../assets/images/cloud.png");
 
 <script type="module">
     import { checkGameAccess } from "../guard.js";
+    import { startGameTimer } from "../timer.js";
 
     checkGameAccess("cleanup").then(access => {
         if (!access) return;
+
+        startGameTimer();
 
         import("./cleanup.js");
     });
