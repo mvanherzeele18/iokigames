@@ -25,52 +25,105 @@
 </div>
         <h1>Ioki Games</h1>
 
+    <!-- Login -->
+
+    <div id="login-card">
+
         <p class="subtitle">
+
+            Log in met je Google-account.
+
+        </p>
+
+        <button id="google-login">
+
+            Inloggen met Google
+
+        </button>
+
+    </div>
+
+    <!-- Home -->
+
+    <div
+        id="home"
+        class="hidden"
+    >
+
+        <p class="subtitle">
+
             Kies je leeftijd
+
         </p>
 
         <div class="age-grid">
 
             <a href="age-2/index.html" class="age-button">
-                <!--<span class="new-label">Nieuw spel!</span>-->
+
                 <span class="emoji">🍼</span>
+
                 <span>2 jaar</span>
+
             </a>
 
             <a href="age-3/index.html" class="age-button">
-                <!--<span class="new-label">Nieuw spel!</span>-->
+
                 <span class="emoji">🧸</span>
+
                 <span>3 jaar</span>
+
             </a>
 
             <a href="age-4/index.html" class="age-button">
-                <!--<span class="new-label"> Nieuw spel!</span>-->
-                <span class="emoji">🎨</span>
-                <span>4 jaar</span>
-            </a>
 
-            <!-- 
-            <a href="age-5/index.html" class="age-button">
-                <span class="emoji">🚀</span>
-                <span>5 jaar</span>
-            </a> 
-            -->
+                <span class="emoji">🎨</span>
+
+                <span>4 jaar</span>
+
+            </a>
 
         </div>
 
+        <br>
+
+        <button id="account-button">
+
+            Mijn account
+
+        </button>
+
+        <button
+            id="logout-button"
+            class="secondary"
+        >
+
+            Afmelden
+
+        </button>
+
     </div>
+
+</div>
+
+<script type="module" src="home.js"></script>
+
 <script src="script.js"></script>
 
 <script>
-    createClouds();
+
+createClouds();
+
 </script>
 
 <script>
-  if ("serviceWorker" in navigator) {
+
+if ("serviceWorker" in navigator){
+
     navigator.serviceWorker.register("sw.js");
-  }
+
+}
+
 </script>
 
-    
 </body>
 </html>
