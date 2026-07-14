@@ -100,7 +100,15 @@ createClouds(5,"../assets/images/cloud.png");
 
 </script>
 
-<script src="memory.js"></script>
+<script type="module">
+    import { checkGameAccess } from "../guard.js";
+
+    checkGameAccess("memory").then(access => {
+        if (!access) return;
+
+        import("./memory.js");
+    });
+</script>
 
 </body>
 
