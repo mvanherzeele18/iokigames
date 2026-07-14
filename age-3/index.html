@@ -22,27 +22,27 @@
 
     <div class="age-grid">
         
-        <a href="moles.html" class="age-button">
+        <a href="moles.html" class="age-button" data-game="moles">
             <span class="emoji">🕳️</span>
             <span>Mollen</span>
         </a>
         
-        <a href="blocks.html" class="age-button">
+        <a href="blocks.html" class="age-button" data-game="blocks">
             <span class="emoji">🧱</span>
             <span>Blokken</span>
         </a>
     
-        <a href="cleanup.html" class="age-button">
+        <a href="cleanup.html" class="age-button" data-game="cleanup">
             <span class="emoji">🧹</span>
             <span>Opruimen</span>
         </a>
     
-        <a href="cleaning.html" class="age-button">
+        <a href="cleaning.html" class="age-button" data-game="cleaning">
             <span class="emoji">🧽</span>
             <span>Schoonmaken</span>
         </a>
         
-        <a href="memory.html" class="age-button">
+        <a href="memory.html" class="age-button" data-game="memory">
             <span class="emoji">❓️</span>
             Memory
         </a>
@@ -60,6 +60,33 @@
 
 <script>
     createClouds(6, "../assets/images/cloud.png");
+</script>
+<script type="module">
+import { auth, db, onAuthStateChanged, doc, getDoc } from "../firebase.js";
+
+onAuthStateChanged(auth, async user => {
+
+    if (!user) {
+        window.location.href = "../index.html";
+        return;
+    }
+
+    const snap = await getDoc(doc(db, "users", user.uid));
+    const data = snap.data();
+
+    const allowedGames = data.games || {};
+
+    document.querySelectorAll(".age-button[data-game]").forEach(btn => {
+
+        const gameName = btn.dataset.game;
+
+        if (!allowedGames[gameName]) {
+            btn.style.display = "none";
+        }
+
+    });
+
+});
 </script>
 </body>
 </html>
