@@ -15,7 +15,8 @@ import {
     collection,
     query,
     where,
-    getDocs
+    getDocs,
+    increment
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import {
@@ -227,6 +228,7 @@ export{
 
     doc,
     getDoc,
-    updateDoc
+    updateDoc,
+    increment
 
 };
