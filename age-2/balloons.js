@@ -2,6 +2,14 @@
 // Ballonnen - Ioki Games
 // ===========================
 
+import { checkGameAccess } from "../guard.js";
+
+const session=
+
+await checkGameAccess("memory");
+
+if(!session) return;
+
 // Alle ballonafbeeldingen
 const balloonImages = [
     "../assets/images/balloons/red.png",
