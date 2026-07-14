@@ -237,6 +237,30 @@ h1{
 
 }
 
+.parents-link{
+
+    display:block;
+
+    margin:25px 0 40px;
+
+    word-break:break-word;
+
+}
+
+#games-list{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:8px;
+
+    margin-top:15px;
+
+    text-align:left;
+
+}
+
 /* ===========================
    Logo
 =========================== */
