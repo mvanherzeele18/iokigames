@@ -162,9 +162,22 @@ async function createUserIfNeeded(user){
             lastPlayDate: null,
 
             games:{
-
+                animals:true,
+                balloons:true,
+                blocks:true,
+                bubbles:true,
+                caterpillar:true,
+                cleaning:true,
+                cleanup:true,
+                colors:true,
+                cut:true,
+                fruit:true,
                 memory:true,
-
+                moles:true,
+                music:true,
+                pattern:true,
+                sorting:true,
+                train:true,
             }
 
         }
