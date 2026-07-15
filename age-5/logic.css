@@ -1,10 +1,12 @@
 #game{
 
-    max-width:900px;
+    width:100%;
+
+    max-width:none;
 
     margin:auto;
 
-    padding:20px;
+    padding:10px;
 
     text-align:center;
 
@@ -104,23 +106,21 @@
 
     grid-template-columns:repeat(8,1fr);
 
-    gap:1vw;
+    gap:6px;
 
     width:100%;
 
-    max-width:1200px;
-
-    margin:0 auto 40px;
+    margin:0 auto 35px;
 
 }
 
 .pattern-item{
 
-    aspect-ratio:1/1;
+    aspect-ratio:1;
 
     background:white;
 
-    border-radius:18px;
+    border-radius:12px;
 
     box-shadow:0 5px 15px rgba(0,0,0,.15);
 
@@ -130,7 +130,7 @@
 
     align-items:center;
 
-    font-size:clamp(22px,4vw,60px);
+    font-size:48px;
 
     user-select:none;
 
@@ -184,7 +184,7 @@
 
     #game{
 
-        padding:12px;
+        padding:6px;
 
     }
 
@@ -205,10 +205,10 @@
     }
 
     .pattern-item{
+        
+        font-size:34px;
 
-        border-radius:10px;
-
-        font-size:clamp(18px,6vw,32px);
+        border-radius:8px;
 
     }
 
