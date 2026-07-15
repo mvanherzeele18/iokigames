@@ -1,0 +1,123 @@
+#game{
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:20px;
+
+    text-align:center;
+
+}
+
+.subtitle{
+
+    margin-top:15px;
+
+    margin-bottom:40px;
+
+}
+
+#pattern{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
+
+    max-width:700px;
+
+    margin:0 auto 50px;
+
+}
+
+.pattern-item{
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+    font-size:60px;
+
+    padding:25px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    user-select:none;
+
+}
+
+#answers{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+    max-width:450px;
+
+    margin:auto;
+
+}
+
+.answer-button{
+
+    font-size:55px;
+
+    padding:20px;
+
+    border:none;
+
+    border-radius:20px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.answer-button:hover{
+
+    transform:scale(1.05);
+
+}
+
+.answer-button:active{
+
+    transform:scale(.95);
+
+}
+
+@media(max-width:700px){
+
+    #pattern{
+
+        gap:12px;
+
+    }
+
+    .pattern-item{
+
+        font-size:45px;
+
+        padding:18px;
+
+    }
+
+    .answer-button{
+
+        font-size:45px;
+
+        padding:18px;
+
+    }
+
+}
