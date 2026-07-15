@@ -71,6 +71,8 @@ const GAME_NAMES={
 
     puzzle:"Puzzel",
 
+    logic:"Logica",
+
 };
 
 onAuthStateChanged(auth,async user=>{
@@ -146,6 +148,7 @@ onAuthStateChanged(auth,async user=>{
         "pattern",
         "cut",
         "puzzle",
+        "logic",
     
     ];
     
