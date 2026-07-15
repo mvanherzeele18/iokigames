@@ -92,7 +92,9 @@
 
     margin-top:15px;
 
-    margin-bottom:40px;
+    margin-bottom:35px;
+
+    font-size:1.2rem;
 
 }
 
@@ -102,21 +104,23 @@
 
     grid-template-columns:repeat(8,1fr);
 
-    gap:12px;
+    gap:1vw;
 
-    max-width:1100px;
+    width:100%;
 
-    margin:0 auto 50px;
+    max-width:1200px;
+
+    margin:0 auto 40px;
 
 }
 
 .pattern-item{
 
-    aspect-ratio:1;
+    aspect-ratio:1/1;
 
     background:white;
 
-    border-radius:20px;
+    border-radius:18px;
 
     box-shadow:0 5px 15px rgba(0,0,0,.15);
 
@@ -126,7 +130,7 @@
 
     align-items:center;
 
-    font-size:55px;
+    font-size:clamp(22px,4vw,60px);
 
     user-select:none;
 
@@ -138,9 +142,11 @@
 
     grid-template-columns:repeat(2,1fr);
 
-    gap:20px;
+    gap:2vw;
 
-    max-width:450px;
+    width:90%;
+
+    max-width:650px;
 
     margin:auto;
 
@@ -148,9 +154,9 @@
 
 .answer-button{
 
-    font-size:55px;
+    font-size:clamp(26px,5vw,55px);
 
-    padding:20px;
+    padding:clamp(14px,2vw,22px);
 
     border:none;
 
@@ -164,13 +170,13 @@
 
 .answer-button:hover{
 
-    transform:scale(1.05);
+    transform:scale(1.04);
 
 }
 
 .answer-button:active{
 
-    transform:scale(.95);
+    transform:scale(.96);
 
 }
 
@@ -178,15 +184,15 @@
 
     #game{
 
-        padding:10px;
+        padding:12px;
 
     }
 
     .subtitle{
 
-        margin-bottom:20px;
-
         font-size:1rem;
+
+        margin-bottom:20px;
 
     }
 
@@ -194,35 +200,31 @@
 
         gap:6px;
 
-        margin:0 auto 25px;
+        margin-bottom:25px;
 
     }
 
     .pattern-item{
 
-        font-size:26px;
-
-        padding:8px;
-
         border-radius:10px;
+
+        font-size:clamp(18px,6vw,32px);
 
     }
 
     #answers{
 
-        gap:10px;
+        width:100%;
 
-        max-width:320px;
-
-        margin:20px auto;
+        gap:12px;
 
     }
 
     .answer-button{
 
-        font-size:30px;
+        font-size:clamp(22px,7vw,34px);
 
-        padding:12px;
+        padding:14px;
 
         border-radius:14px;
 
