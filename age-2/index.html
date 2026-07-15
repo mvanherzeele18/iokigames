@@ -66,6 +66,11 @@
     </a>
 
 </div>
+<script src="../script.js"></script>
+
+<script>
+    createClouds(6, "../assets/images/cloud.png");
+</script>
 <script type="module">
 import { auth, db, onAuthStateChanged, doc, getDoc } from "../firebase.js";
 
@@ -92,11 +97,6 @@ onAuthStateChanged(auth, async user => {
     });
 
 });
-</script>
-<script src="../script.js"></script>
-
-<script>
-    createClouds(6, "../assets/images/cloud.png");
 </script>
 </body>
 </html>
