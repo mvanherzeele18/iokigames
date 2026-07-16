@@ -75,6 +75,8 @@ const GAME_NAMES={
 
     bowling:"Bowling",
 
+    bird:"Vogel",
+    
 };
 
 onAuthStateChanged(auth,async user=>{
@@ -152,6 +154,7 @@ onAuthStateChanged(auth,async user=>{
         "puzzle",
         "logic",
         "bowling",
+        "bird",
     
     ];
     
