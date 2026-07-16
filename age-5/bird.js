@@ -145,7 +145,7 @@ function loop() {
 
         ctx.fillStyle = "white";
         ctx.font = "40px Arial";
-        ctx.fillText("Game Over", 100, 300);
+        ctx.fillText("Game Over", 100, 240);
     }
 
     requestAnimationFrame(loop);
