@@ -71,60 +71,64 @@ setInterval(() => {
 function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Bird physics
-    if (running && !gameOverState) {
-        bird.velocity += gravity;
-        bird.y += bird.velocity;
-    }
+    if (!gameOverState) {
+        // Bird physics
+        if (running) {
+            bird.velocity += gravity;
+            bird.y += bird.velocity;
+        }
 
-    // Draw bird
-    ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+        // Draw bird
+        ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
-    // Pipes
-    pipes.forEach(pipe => {
-        pipe.x -= pipeSpeed;
+        // Pipes
+        pipes.forEach(pipe => {
+            pipe.x -= pipeSpeed;
 
-        // Pipe style
-        ctx.fillStyle = "#4CAF50";
-        ctx.strokeStyle = "#2E7D32";
-        ctx.lineWidth = 4;
+            ctx.fillStyle = "#4CAF50";
+            ctx.fillRect(pipe.x, 0, 70, pipe.top);
+            ctx.fillRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
 
-        // Top pipe
-        ctx.fillRect(pipe.x, 0, 70, pipe.top);
-        ctx.strokeRect(pipe.x, 0, 70, pipe.top);
+            // Collision
+            if (
+                bird.x < pipe.x + 70 &&
+                bird.x + bird.width > pipe.x &&
+                (bird.y < pipe.top || bird.y + bird.height > pipe.bottom)
+            ) {
+                showGameOver();
+            }
 
-        // Bottom pipe
-        ctx.fillRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
-        ctx.strokeRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
+            // Score
+            if (!pipe.counted && pipe.x + 70 < bird.x) {
+                score++;
+                pipe.counted = true;
+            }
+        });
 
-        // Collision
-        if (!gameOverState &&
-            bird.x < pipe.x + 70 &&
-            bird.x + bird.width > pipe.x &&
-            (bird.y < pipe.top || bird.y + bird.height > pipe.bottom)
-        ) {
+        // Ground / ceiling
+        if (bird.y < 0 || bird.y > canvas.height) {
             showGameOver();
         }
 
-        // Score
-        if (!pipe.counted && pipe.x + 70 < bird.x) {
-            score++;
-            pipe.counted = true;
-        }
-    });
-
-    // Ground / ceiling
-    if (!gameOverState && (bird.y < 0 || bird.y > canvas.height)) {
-        showGameOver();
+        // Score text
+        ctx.fillStyle = "white";
+        ctx.font = "32px Arial";
+        ctx.fillText(score, 20, 50);
     }
 
-    // Score text
-    ctx.fillStyle = "white";
-    ctx.font = "32px Arial";
-    ctx.fillText(score, 20, 50);
+    // ⭐ Game Over blijft zichtbaar omdat we het elke frame tekenen
+    if (gameOverState) {
+        ctx.fillStyle = "rgba(0,0,0,0.5)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "white";
+        ctx.font = "40px Arial";
+        ctx.fillText("Game Over", 100, 300);
+    }
 
     requestAnimationFrame(loop);
 }
+
 
 loop();
 
@@ -132,38 +136,25 @@ loop();
 // Game over
 // -------------------------------------
 function showGameOver() {
+    if (gameOverState) return; // voorkomt dubbele triggers
+
     gameOverState = true;
 
-    // Game Over overlay
-    ctx.fillStyle = "rgba(0,0,0,0.5)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "white";
-    ctx.font = "40px Arial";
-    ctx.fillText("Game Over", 100, 300);
-
-    // Na 3 seconden opnieuw starten
     setTimeout(() => {
         resetGame();
     }, 3000);
 }
 
 function resetGame() {
-    // Reset bird
     bird.x = 80;
     bird.y = 300;
     bird.velocity = 0;
 
-    // Reset pipes
     pipes = [];
-
-    // Reset score
     score = 0;
 
-    // Reset states
     running = false;
     gameOverState = false;
-
-    // Start opnieuw bij eerste klik
 }
+
 
