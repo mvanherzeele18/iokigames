@@ -1,0 +1,124 @@
+#game{
+
+    width:100%;
+
+    height:100vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    padding:15px;
+
+    box-sizing:border-box;
+
+}
+
+.back-button{
+    -webkit-tap-highlight-color: transparent;
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:65px;
+    height:65px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    border-radius:50%;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.25);
+
+    transition:.2s;
+
+    z-index:1000;
+
+}
+
+.back-button:hover{
+
+    transform:scale(1.08);
+
+}
+/* ===========================
+   Logo
+=========================== */
+
+.logo{
+
+    position:fixed;
+
+    top:25px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:2rem;
+
+    font-weight:bold;
+
+    color:white;
+
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+
+    z-index:1000;
+
+    pointer-events:none;
+
+}
+
+#bowlingCanvas{
+
+    width:min(95vw,700px);
+
+    height:min(80vh,1000px);
+
+    background:#d9b67d;
+
+    border-radius:25px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+
+    touch-action:none;
+
+    display:block;
+
+}
+
+@media(max-width:700px){
+
+    #game{
+
+        padding:8px;
+
+    }
+
+    #bowlingCanvas{
+
+        width:98vw;
+
+        height:78vh;
+
+        border-radius:18px;
+
+    }
+
+}
