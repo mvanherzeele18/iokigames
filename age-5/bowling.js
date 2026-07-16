@@ -184,23 +184,23 @@ function drawPins() {
             ctx.rotate(pin.rotation);
         }
 
-        // Brede bovenkant, smalle onderkant
+        // Correcte pinvorm: smal boven, breed onder
         ctx.fillStyle = "white";
         ctx.strokeStyle = "#ccc";
         ctx.lineWidth = 2;
 
         ctx.beginPath();
 
-        // Bovenkant (breed)
-        ctx.moveTo(-pinWidth * 0.45, -pinHeight * 0.50);
-        ctx.quadraticCurveTo(0, -pinHeight * 0.65, pinWidth * 0.45, -pinHeight * 0.50);
+        // Bovenkant (smal)
+        ctx.moveTo(-pinWidth * 0.20, -pinHeight * 0.50);
+        ctx.quadraticCurveTo(0, -pinHeight * 0.65, pinWidth * 0.20, -pinHeight * 0.50);
 
-        // Middel (iets smaller)
-        ctx.quadraticCurveTo(pinWidth * 0.30, -pinHeight * 0.10, pinWidth * 0.20, pinHeight * 0.20);
+        // Middel (iets breder)
+        ctx.quadraticCurveTo(pinWidth * 0.35, -pinHeight * 0.10, pinWidth * 0.45, pinHeight * 0.20);
 
-        // Onderkant (smal)
-        ctx.quadraticCurveTo(0, pinHeight * 0.55, -pinWidth * 0.20, pinHeight * 0.20);
-        ctx.quadraticCurveTo(-pinWidth * 0.30, -pinHeight * 0.10, -pinWidth * 0.45, -pinHeight * 0.50);
+        // Onderkant (breed)
+        ctx.quadraticCurveTo(0, pinHeight * 0.60, -pinWidth * 0.45, pinHeight * 0.20);
+        ctx.quadraticCurveTo(-pinWidth * 0.35, -pinHeight * 0.10, -pinWidth * 0.20, -pinHeight * 0.50);
 
         ctx.closePath();
         ctx.fill();
@@ -211,13 +211,13 @@ function drawPins() {
         ctx.lineWidth = 3;
 
         ctx.beginPath();
-        ctx.moveTo(-pinWidth * 0.35, -pinHeight * 0.30);
-        ctx.lineTo(pinWidth * 0.35, -pinHeight * 0.30);
+        ctx.moveTo(-pinWidth * 0.30, -pinHeight * 0.30);
+        ctx.lineTo(pinWidth * 0.30, -pinHeight * 0.30);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(-pinWidth * 0.32, -pinHeight * 0.38);
-        ctx.lineTo(pinWidth * 0.32, -pinHeight * 0.38);
+        ctx.moveTo(-pinWidth * 0.28, -pinHeight * 0.38);
+        ctx.lineTo(pinWidth * 0.28, -pinHeight * 0.38);
         ctx.stroke();
 
         ctx.restore();
