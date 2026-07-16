@@ -183,6 +183,7 @@ async function createUserIfNeeded(user){
                 shapes:true,
                 puzzle:true,
                 logic:true,
+                bowling:true,
             }
 
         }
