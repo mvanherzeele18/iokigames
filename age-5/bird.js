@@ -8,7 +8,11 @@ canvas.height = 600;
 // Bird sprite
 // -------------------------------------
 const birdImg = new Image();
-birdImg.src = "../assets/images/bird.png";
+birdImg.src = "../assets/images/bird.png"; // zorg dat dit pad klopt
+
+birdImg.onload = () => {
+    console.log("Bird loaded");
+};
 
 // -------------------------------------
 // Bird
@@ -24,14 +28,14 @@ let bird = {
 // -------------------------------------
 // Game settings
 // -------------------------------------
-let gravity = 0.18;       // veel trager
-let jumpForce = -5;       // zachter
+let gravity = 0.18;
+let jumpForce = -5;
 let pipes = [];
-let pipeGap = 190;        // grote opening
-let pipeSpeed = 1.8;      // trager
+let pipeGap = 190;
+let pipeSpeed = 1.8;
 let score = 0;
 
-let running = false;      // begint pas na eerste klik
+let running = false; // start pas na eerste klik
 
 // -------------------------------------
 // Input
@@ -40,9 +44,7 @@ window.addEventListener("mousedown", flap);
 window.addEventListener("touchstart", flap);
 
 function flap() {
-    if (!running) {
-        running = true;   // start game pas bij eerste klik
-    }
+    running = true;
     bird.velocity = jumpForce;
 }
 
@@ -69,6 +71,7 @@ setInterval(() => {
 function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Bird physics
     if (running) {
         bird.velocity += gravity;
         bird.y += bird.velocity;
@@ -81,22 +84,12 @@ function loop() {
     pipes.forEach(pipe => {
         pipe.x -= pipeSpeed;
 
-        // Pipe style
-        ctx.fillStyle = "#4CAF50";
-        ctx.strokeStyle = "#2E7D32";
-        ctx.lineWidth = 4;
-
         // Top pipe
-        ctx.beginPath();
-        ctx.roundRect(pipe.x, 0, 70, pipe.top, 12);
-        ctx.fill();
-        ctx.stroke();
+        ctx.fillStyle = "#4CAF50";
+        ctx.fillRect(pipe.x, 0, 70, pipe.top);
 
         // Bottom pipe
-        ctx.beginPath();
-        ctx.roundRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom, 12);
-        ctx.fill();
-        ctx.stroke();
+        ctx.fillRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
 
         // Collision
         if (
