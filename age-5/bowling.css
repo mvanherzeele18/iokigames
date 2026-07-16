@@ -87,6 +87,8 @@
 
 #bowlingCanvas{
 
+    margin-top: 60px;
+    
     width:min(95vw,700px);
 
     height:min(80vh,1000px);
