@@ -10,32 +10,29 @@ canvas.height = 600;
 const birdImg = new Image();
 birdImg.src = "../assets/images/bird.png"; // zorg dat dit pad klopt
 
-birdImg.onload = () => {
-    console.log("Bird loaded");
-};
-
 // -------------------------------------
 // Bird
 // -------------------------------------
 let bird = {
     x: 80,
     y: 300,
-    width: 40,
-    height: 40,
+    width: 55,   // GROTER
+    height: 55,  // GROTER
     velocity: 0
 };
 
 // -------------------------------------
 // Game settings
 // -------------------------------------
-let gravity = 0.18;
+let gravity = 0.15;       // TRAGER
 let jumpForce = -5;
 let pipes = [];
-let pipeGap = 190;
-let pipeSpeed = 1.8;
+let pipeGap = 200;        // GROTERE OPENING
+let pipeSpeed = 2;
 let score = 0;
 
-let running = false; // start pas na eerste klik
+let running = false;      // start pas na eerste klik
+let gameOverState = false;
 
 // -------------------------------------
 // Input
@@ -44,6 +41,8 @@ window.addEventListener("mousedown", flap);
 window.addEventListener("touchstart", flap);
 
 function flap() {
+    if (gameOverState) return;
+
     running = true;
     bird.velocity = jumpForce;
 }
@@ -52,18 +51,19 @@ function flap() {
 // Pipes
 // -------------------------------------
 function spawnPipe() {
-    const topHeight = Math.random() * (canvas.height - pipeGap - 120) + 60;
+    const topHeight = Math.random() * (canvas.height - pipeGap - 150) + 60;
 
     pipes.push({
         x: canvas.width,
         top: topHeight,
-        bottom: topHeight + pipeGap
+        bottom: topHeight + pipeGap,
+        counted: false // voor score
     });
 }
 
 setInterval(() => {
-    if (running) spawnPipe();
-}, 2200);
+    if (running && !gameOverState) spawnPipe();
+}, 2000);
 
 // -------------------------------------
 // Game loop
@@ -72,7 +72,7 @@ function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Bird physics
-    if (running) {
+    if (running && !gameOverState) {
         bird.velocity += gravity;
         bird.y += bird.velocity;
     }
@@ -84,31 +84,38 @@ function loop() {
     pipes.forEach(pipe => {
         pipe.x -= pipeSpeed;
 
-        // Top pipe
+        // Pipe style
         ctx.fillStyle = "#4CAF50";
+        ctx.strokeStyle = "#2E7D32";
+        ctx.lineWidth = 4;
+
+        // Top pipe
         ctx.fillRect(pipe.x, 0, 70, pipe.top);
+        ctx.strokeRect(pipe.x, 0, 70, pipe.top);
 
         // Bottom pipe
         ctx.fillRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
+        ctx.strokeRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
 
         // Collision
-        if (
+        if (!gameOverState &&
             bird.x < pipe.x + 70 &&
             bird.x + bird.width > pipe.x &&
             (bird.y < pipe.top || bird.y + bird.height > pipe.bottom)
         ) {
-            gameOver();
+            showGameOver();
         }
 
         // Score
-        if (pipe.x + 70 === bird.x) {
+        if (!pipe.counted && pipe.x + 70 < bird.x) {
             score++;
+            pipe.counted = true;
         }
     });
 
     // Ground / ceiling
-    if (bird.y < 0 || bird.y > canvas.height) {
-        gameOver();
+    if (!gameOverState && (bird.y < 0 || bird.y > canvas.height)) {
+        showGameOver();
     }
 
     // Score text
@@ -124,8 +131,8 @@ loop();
 // -------------------------------------
 // Game over
 // -------------------------------------
-function gameOver() {
-    running = false;
+function showGameOver() {
+    gameOverState = true;
 
     ctx.fillStyle = "rgba(0,0,0,0.5)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -134,7 +141,6 @@ function gameOver() {
     ctx.font = "40px Arial";
     ctx.fillText("Game Over", 100, 300);
 
-    setTimeout(() => {
-        window.location.reload();
-    }, 1500);
+    // NIET resetten
+    // NIET reloaden
 }
