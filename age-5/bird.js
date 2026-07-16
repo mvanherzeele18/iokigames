@@ -134,6 +134,7 @@ loop();
 function showGameOver() {
     gameOverState = true;
 
+    // Game Over overlay
     ctx.fillStyle = "rgba(0,0,0,0.5)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -141,6 +142,28 @@ function showGameOver() {
     ctx.font = "40px Arial";
     ctx.fillText("Game Over", 100, 300);
 
-    // NIET resetten
-    // NIET reloaden
+    // Na 3 seconden opnieuw starten
+    setTimeout(() => {
+        resetGame();
+    }, 3000);
 }
+
+function resetGame() {
+    // Reset bird
+    bird.x = 80;
+    bird.y = 300;
+    bird.velocity = 0;
+
+    // Reset pipes
+    pipes = [];
+
+    // Reset score
+    score = 0;
+
+    // Reset states
+    running = false;
+    gameOverState = false;
+
+    // Start opnieuw bij eerste klik
+}
+
