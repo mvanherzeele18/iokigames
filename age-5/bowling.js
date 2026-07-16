@@ -40,14 +40,17 @@ const pinHeight = canvas.height * 0.11;
 // Pin layout
 function createPins() {
     pins = [];
-    const startY = canvas.height * 0.25 + lane.yOffset; // lager geplaatst
+
     const centerX = canvas.width / 2;
 
+    // De driehoek moet omgekeerd → breedste rij bovenaan
+    const startY = canvas.height * 0.25 + lane.yOffset;
+
     const rows = [
-        [0],
-        [-1, 1],
-        [-2, 0, 2],
-        [-3, -1, 1, 3]
+        [-3, -1, 1, 3],   // 4 pins bovenaan
+        [-2, 0, 2],       // 3 pins
+        [-1, 1],          // 2 pins
+        [0]               // 1 pin onderaan
     ];
 
     rows.forEach((row, i) => {
@@ -61,6 +64,7 @@ function createPins() {
         });
     });
 }
+
 createPins();
 
 // =========================
