@@ -5,31 +5,33 @@ canvas.width = 400;
 canvas.height = 600;
 
 // -------------------------------------
+// Bird sprite
+// -------------------------------------
+const birdImg = new Image();
+birdImg.src = "../assets/images/bird.png";
+
+// -------------------------------------
 // Bird
 // -------------------------------------
 let bird = {
     x: 80,
     y: 300,
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
     velocity: 0
 };
 
-let gravity = 0.3;
-let jumpForce = -6;
-
 // -------------------------------------
-// Pipes
+// Game settings
 // -------------------------------------
+let gravity = 0.18;       // veel trager
+let jumpForce = -5;       // zachter
 let pipes = [];
-let pipeGap = 180;
-let pipeSpeed = 2;
-
-// -------------------------------------
-// Game
-// -------------------------------------
+let pipeGap = 190;        // grote opening
+let pipeSpeed = 1.8;      // trager
 let score = 0;
-let running = true;
+
+let running = false;      // begint pas na eerste klik
 
 // -------------------------------------
 // Input
@@ -38,15 +40,17 @@ window.addEventListener("mousedown", flap);
 window.addEventListener("touchstart", flap);
 
 function flap() {
-    if (!running) return;
+    if (!running) {
+        running = true;   // start game pas bij eerste klik
+    }
     bird.velocity = jumpForce;
 }
 
 // -------------------------------------
-// Spawn pipes
+// Pipes
 // -------------------------------------
 function spawnPipe() {
-    const topHeight = Math.random() * (canvas.height - pipeGap - 100) + 50;
+    const topHeight = Math.random() * (canvas.height - pipeGap - 120) + 60;
 
     pipes.push({
         x: canvas.width,
@@ -57,35 +61,46 @@ function spawnPipe() {
 
 setInterval(() => {
     if (running) spawnPipe();
-}, 2000);
+}, 2200);
 
 // -------------------------------------
 // Game loop
 // -------------------------------------
 function loop() {
-    if (!running) return;
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Bird physics
-    bird.velocity += gravity;
-    bird.y += bird.velocity;
+    if (running) {
+        bird.velocity += gravity;
+        bird.y += bird.velocity;
+    }
 
     // Draw bird
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+    ctx.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     // Pipes
     pipes.forEach(pipe => {
         pipe.x -= pipeSpeed;
 
-        ctx.fillStyle = "green";
-        ctx.fillRect(pipe.x, 0, 60, pipe.top);
-        ctx.fillRect(pipe.x, pipe.bottom, 60, canvas.height - pipe.bottom);
+        // Pipe style
+        ctx.fillStyle = "#4CAF50";
+        ctx.strokeStyle = "#2E7D32";
+        ctx.lineWidth = 4;
+
+        // Top pipe
+        ctx.beginPath();
+        ctx.roundRect(pipe.x, 0, 70, pipe.top, 12);
+        ctx.fill();
+        ctx.stroke();
+
+        // Bottom pipe
+        ctx.beginPath();
+        ctx.roundRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom, 12);
+        ctx.fill();
+        ctx.stroke();
 
         // Collision
         if (
-            bird.x < pipe.x + 60 &&
+            bird.x < pipe.x + 70 &&
             bird.x + bird.width > pipe.x &&
             (bird.y < pipe.top || bird.y + bird.height > pipe.bottom)
         ) {
@@ -93,7 +108,7 @@ function loop() {
         }
 
         // Score
-        if (pipe.x + 60 === bird.x) {
+        if (pipe.x + 70 === bird.x) {
             score++;
         }
     });
