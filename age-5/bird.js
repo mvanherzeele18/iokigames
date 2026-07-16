@@ -8,7 +8,7 @@ canvas.height = 600;
 // Bird sprite
 // -------------------------------------
 const birdImg = new Image();
-birdImg.src = "../assets/images/bird.png"; // zorg dat dit pad klopt
+birdImg.src = "../assets/images/bird.png";
 
 // -------------------------------------
 // Bird
@@ -16,22 +16,22 @@ birdImg.src = "../assets/images/bird.png"; // zorg dat dit pad klopt
 let bird = {
     x: 80,
     y: 300,
-    width: 55,   // GROTER
-    height: 55,  // GROTER
+    width: 60,
+    height: 60,
     velocity: 0
 };
 
 // -------------------------------------
 // Game settings
 // -------------------------------------
-let gravity = 0.15;       // TRAGER
-let jumpForce = -5;
+let gravity = 0.12;       // zachter
+let jumpForce = -4;       // minder sterke jump
 let pipes = [];
-let pipeGap = 200;        // GROTERE OPENING
+let pipeGap = 260;        // veel grotere opening
 let pipeSpeed = 2;
 let score = 0;
 
-let running = false;      // start pas na eerste klik
+let running = false;
 let gameOverState = false;
 
 // -------------------------------------
@@ -42,7 +42,6 @@ window.addEventListener("touchstart", flap);
 
 function flap() {
     if (gameOverState) return;
-
     running = true;
     bird.velocity = jumpForce;
 }
@@ -57,13 +56,38 @@ function spawnPipe() {
         x: canvas.width,
         top: topHeight,
         bottom: topHeight + pipeGap,
-        counted: false // voor score
+        counted: false
     });
 }
 
 setInterval(() => {
     if (running && !gameOverState) spawnPipe();
 }, 2000);
+
+// -------------------------------------
+// Mooie buizen tekenen
+// -------------------------------------
+function drawPipe(pipe) {
+    // Main pipe color
+    ctx.fillStyle = "#4CAF50";
+
+    // Top pipe
+    ctx.fillRect(pipe.x, 0, 70, pipe.top);
+
+    // Bottom pipe
+    ctx.fillRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
+
+    // Dark border
+    ctx.strokeStyle = "#2E7D32";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(pipe.x, 0, 70, pipe.top);
+    ctx.strokeRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
+
+    // Highlight
+    ctx.fillStyle = "rgba(255,255,255,0.15)";
+    ctx.fillRect(pipe.x + 10, 0, 10, pipe.top);
+    ctx.fillRect(pipe.x + 10, pipe.bottom, 10, canvas.height - pipe.bottom);
+}
 
 // -------------------------------------
 // Game loop
@@ -85,9 +109,7 @@ function loop() {
         pipes.forEach(pipe => {
             pipe.x -= pipeSpeed;
 
-            ctx.fillStyle = "#4CAF50";
-            ctx.fillRect(pipe.x, 0, 70, pipe.top);
-            ctx.fillRect(pipe.x, pipe.bottom, 70, canvas.height - pipe.bottom);
+            drawPipe(pipe);
 
             // Collision
             if (
@@ -116,7 +138,7 @@ function loop() {
         ctx.fillText(score, 20, 50);
     }
 
-    // ⭐ Game Over blijft zichtbaar omdat we het elke frame tekenen
+    // Game Over overlay (blijft zichtbaar)
     if (gameOverState) {
         ctx.fillStyle = "rgba(0,0,0,0.5)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -129,14 +151,13 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-
 loop();
 
 // -------------------------------------
 // Game over
 // -------------------------------------
 function showGameOver() {
-    if (gameOverState) return; // voorkomt dubbele triggers
+    if (gameOverState) return;
 
     gameOverState = true;
 
@@ -145,6 +166,9 @@ function showGameOver() {
     }, 3000);
 }
 
+// -------------------------------------
+// Reset game
+// -------------------------------------
 function resetGame() {
     bird.x = 80;
     bird.y = 300;
@@ -156,5 +180,3 @@ function resetGame() {
     running = false;
     gameOverState = false;
 }
-
-
