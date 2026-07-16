@@ -15,15 +15,17 @@ window.addEventListener("resize", resizeCanvas);
 //  Game Objects
 // =========================
 
+// Baan iets lager
 const lane = {
     x: canvas.width * 0.1,
     width: canvas.width * 0.8,
+    yOffset: canvas.height * 0.05,   // NIEUW: schuift alles naar beneden
     height: canvas.height
 };
 
 const ball = {
     x: canvas.width / 2,
-    y: canvas.height * 0.85,
+    y: canvas.height * 0.90,   // lager dan vorige versie
     radius: canvas.width * 0.045,
     vx: 0,
     vy: 0,
@@ -38,7 +40,7 @@ const pinHeight = canvas.height * 0.11;
 // Pin layout
 function createPins() {
     pins = [];
-    const startY = canvas.height * 0.18;
+    const startY = canvas.height * 0.25 + lane.yOffset; // lager geplaatst
     const centerX = canvas.width / 2;
 
     const rows = [
@@ -86,24 +88,22 @@ canvas.addEventListener("pointermove", e => {
 
     // Grenzen
     ball.x = Math.max(lane.x + ball.radius, Math.min(lane.x + lane.width - ball.radius, ball.x));
-    ball.y = Math.max(canvas.height * 0.55, Math.min(canvas.height * 0.95, ball.y));
+    ball.y = Math.max(canvas.height * 0.60, Math.min(canvas.height * 0.95, ball.y));
 });
 
 canvas.addEventListener("pointerup", () => {
     if (!ball.dragging) return;
     ball.dragging = false;
 
-    // Snelheid gebaseerd op hoe ver je naar ACHTER hebt getrokken
     const pullDistance = ball.lastY - ball.y;
 
-    // Preventie: bal mag NOOIT naar achter
+    // Preventie: bal mag niet naar achter
     if (pullDistance < 0) {
         ball.vy = 0;
         return;
     }
 
-    // Realistische snelheid
-    const maxSpeed = 18; // veel trager dan vorige versie
+    const maxSpeed = 18;
     ball.vy = -Math.min(maxSpeed, pullDistance * 0.25);
 });
 
@@ -116,7 +116,6 @@ function update() {
         ball.x += ball.vx;
         ball.y += ball.vy;
 
-        // Wrijving
         ball.vy *= 0.985;
 
         // Botsing met pins
@@ -126,11 +125,10 @@ function update() {
             const dist = Math.hypot(ball.x - pin.x, ball.y - pin.y);
             if (dist < ball.radius + pinWidth * 0.45) {
                 pin.falling = true;
-                pin.rotation = (Math.random() * 0.8 + 0.4); // realistische valhoek
+                pin.rotation = (Math.random() * 0.8 + 0.4);
             }
         });
 
-        // Reset als bal voorbij pins is
         if (ball.y < -80) {
             resetBall();
         }
@@ -139,7 +137,7 @@ function update() {
 
 function resetBall() {
     ball.x = canvas.width / 2;
-    ball.y = canvas.height * 0.85;
+    ball.y = canvas.height * 0.90;
     ball.vx = 0;
     ball.vy = 0;
     createPins();
@@ -151,11 +149,10 @@ function resetBall() {
 
 function drawLane() {
     ctx.fillStyle = "#d9b67d";
-    ctx.fillRect(lane.x, 0, lane.width, lane.height);
+    ctx.fillRect(lane.x, lane.yOffset, lane.width, lane.height);
 }
 
 function drawBall() {
-    // Realistische bowlingbal
     const gradient = ctx.createRadialGradient(
         ball.x - ball.radius * 0.4,
         ball.y - ball.radius * 0.4,
@@ -172,7 +169,6 @@ function drawBall() {
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fill();
 
-    // Glans
     ctx.fillStyle = "rgba(255,255,255,0.25)";
     ctx.beginPath();
     ctx.arc(ball.x - ball.radius * 0.4, ball.y - ball.radius * 0.4, ball.radius * 0.25, 0, Math.PI * 2);
@@ -188,16 +184,18 @@ function drawPins() {
             ctx.rotate(pin.rotation);
         }
 
-        // Realistische pin vorm
+        // *** NIEUWE PIN VORM (smal boven, breed onder) ***
         ctx.fillStyle = "white";
         ctx.strokeStyle = "#ccc";
         ctx.lineWidth = 2;
 
         ctx.beginPath();
-        ctx.moveTo(-pinWidth * 0.4, pinHeight * 0.5);
-        ctx.lineTo(-pinWidth * 0.6, -pinHeight * 0.2);
-        ctx.quadraticCurveTo(0, -pinHeight * 0.55, pinWidth * 0.6, -pinHeight * 0.2);
-        ctx.lineTo(pinWidth * 0.4, pinHeight * 0.5);
+        ctx.moveTo(-pinWidth * 0.25, -pinHeight * 0.5); // smalle bovenkant
+        ctx.quadraticCurveTo(0, -pinHeight * 0.65, pinWidth * 0.25, -pinHeight * 0.5);
+
+        ctx.lineTo(pinWidth * 0.45, pinHeight * 0.45); // brede onderkant
+        ctx.quadraticCurveTo(0, pinHeight * 0.55, -pinWidth * 0.45, pinHeight * 0.45);
+
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
@@ -205,14 +203,15 @@ function drawPins() {
         // Rode strepen
         ctx.strokeStyle = "red";
         ctx.lineWidth = 3;
+
         ctx.beginPath();
-        ctx.moveTo(-pinWidth * 0.5, -pinHeight * 0.1);
-        ctx.lineTo(pinWidth * 0.5, -pinHeight * 0.1);
+        ctx.moveTo(-pinWidth * 0.35, -pinHeight * 0.15);
+        ctx.lineTo(pinWidth * 0.35, -pinHeight * 0.15);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(-pinWidth * 0.45, -pinHeight * 0.2);
-        ctx.lineTo(pinWidth * 0.45, -pinHeight * 0.2);
+        ctx.moveTo(-pinWidth * 0.30, -pinHeight * 0.25);
+        ctx.lineTo(pinWidth * 0.30, -pinHeight * 0.25);
         ctx.stroke();
 
         ctx.restore();
