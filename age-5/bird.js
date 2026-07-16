@@ -2,7 +2,7 @@ const canvas = document.getElementById("bird-canvas");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 400;
-canvas.height = 600;
+canvas.height = 480;
 
 // -------------------------------------
 // Bird sprite
