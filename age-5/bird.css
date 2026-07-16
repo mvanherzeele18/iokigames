@@ -80,9 +80,10 @@
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,.15);
 
-    margin: 120px auto 0; /* ruimte voor logo + back button */
+    margin: 120px auto 0;
     display: block;
 }
+
 
 /* ===========================
    Responsive
