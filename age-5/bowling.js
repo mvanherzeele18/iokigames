@@ -44,7 +44,7 @@ function createPins() {
     const centerX = canvas.width / 2;
 
     // De driehoek moet omgekeerd → breedste rij bovenaan
-    const startY = canvas.height * 0.25 + lane.yOffset;
+    const startY = canvas.height * 0.18 + lane.yOffset;
 
     const rows = [
         [-3, -1, 1, 3],   // 4 pins bovenaan
@@ -79,7 +79,10 @@ canvas.addEventListener("pointerdown", e => {
     const dist = Math.hypot(mx - ball.x, my - ball.y);
     if (dist < ball.radius) {
         ball.dragging = true;
-        ball.lastY = ball.y;
+
+        // Startpositie opslaan voor richting
+        ball.startX = ball.x;
+        ball.startY = ball.y;
     }
 });
 
@@ -99,16 +102,23 @@ canvas.addEventListener("pointerup", () => {
     if (!ball.dragging) return;
     ball.dragging = false;
 
-    const pullDistance = ball.lastY - ball.y;
+    const pullY = ball.startY - ball.y;
+    const pullX = ball.startX - ball.x;
 
     // Preventie: bal mag niet naar achter
-    if (pullDistance < 0) {
+    if (pullY < 0) {
         ball.vy = 0;
+        ball.vx = 0;
         return;
     }
 
     const maxSpeed = 18;
-    ball.vy = -Math.min(maxSpeed, pullDistance * 0.25);
+
+    // Verticale snelheid
+    ball.vy = -Math.min(maxSpeed, pullY * 0.25);
+
+    // Horizontale snelheid (schuin gooien)
+    ball.vx = -Math.min(maxSpeed * 0.6, pullX * 0.15);
 });
 
 // =========================
@@ -117,9 +127,13 @@ canvas.addEventListener("pointerup", () => {
 
 function update() {
     if (!ball.dragging) {
+
+        // Beweging
         ball.x += ball.vx;
         ball.y += ball.vy;
 
+        // Wrijving voor beide richtingen
+        ball.vx *= 0.985;
         ball.vy *= 0.985;
 
         // Botsing met pins
@@ -133,6 +147,7 @@ function update() {
             }
         });
 
+        // Reset wanneer bal voorbij de pins is
         if (ball.y < -80) {
             resetBall();
         }
