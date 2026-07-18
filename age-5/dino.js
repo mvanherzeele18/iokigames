@@ -12,17 +12,17 @@ function jump() {
     if (!gameRunning || isJumping) return;
 
     isJumping = true;
-    dino.style.bottom = "140px";
+    dino.style.bottom = "160px";
 
     setTimeout(() => {
         dino.style.bottom = "70px";
         isJumping = false;
-    }, 450);
+    }, 380);
 }
 
 jumpButton.addEventListener("click", jump);
 
-// Keyboard voor oudere kids
+// Keyboard (optioneel)
 window.addEventListener("keydown", e => {
     if (e.key === " " || e.key === "ArrowUp") {
         jump();
@@ -31,18 +31,31 @@ window.addEventListener("keydown", e => {
 
 // Obstakels maken
 function createObstacle() {
+    if (!gameRunning) return;
+
     const obstacle = document.createElement("div");
     obstacle.className = "obstacle";
-    obstacle.textContent = "🪨";
 
+    const img = document.createElement("img");
+    img.src = "rock.png"; // vervang door jouw PNG-pad
+    img.className = "obstacleImg";
+    img.alt = "Obstacle";
+
+    obstacle.appendChild(img);
     obstaclesContainer.appendChild(obstacle);
 
-    let pos = obstaclesContainer.clientWidth + 80; // start rechts buiten beeld
+    let pos = obstaclesContainer.clientWidth + 80;
     obstacle.style.left = pos + "px";
 
-    const speed = 4;
+    const speed = 5;
 
     const moveInterval = setInterval(() => {
+        if (!gameRunning) {
+            clearInterval(moveInterval);
+            obstacle.remove();
+            return;
+        }
+
         pos -= speed;
         obstacle.style.left = pos + "px";
 
@@ -73,31 +86,15 @@ function createObstacle() {
     }, 20);
 }
 
-// Obstakels interval
-let obstacleTimer = null;
+// Obstakels interval (makkelijker tempo)
+let obstacleTimer = setInterval(() => {
+    if (gameRunning) createObstacle();
+}, 2200);
 
-function startObstacles() {
-    obstacleTimer = setInterval(() => {
-        createObstacle();
-    }, 1600);
-}
-
-function stopObstacles() {
-    if (obstacleTimer) clearInterval(obstacleTimer);
-}
-
-// Game reset
+// Reset game
 function resetGame() {
-    // Obstakels weg
     obstaclesContainer.innerHTML = "";
-    stopObstacles();
-
-    // Kleine pauze
     setTimeout(() => {
         gameRunning = true;
-        startObstacles();
     }, 600);
 }
-
-// Start
-startObstacles();
