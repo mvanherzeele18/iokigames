@@ -17,7 +17,7 @@ function jump() {
     setTimeout(() => {
         dino.style.bottom = "70px";
         isJumping = false;
-    }, 380);
+    }, 550);
 }
 
 jumpButton.addEventListener("click", jump);
