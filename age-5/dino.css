@@ -63,19 +63,18 @@
 .obstacle{
     position:absolute;
     bottom:0;
-    width:40px;      /* kleiner obstakel */
-    height:40px;
+    width:36px;     /* kleiner */
+    height:36px;
     display:flex;
     justify-content:center;
     align-items:flex-end;
 }
 
 .obstacleImg{
-    width:40px;      /* PNG schaalt mee */
+    width:36px;     /* cactus schaalt mee */
     height:auto;
     pointer-events:none;
 }
-
 
 /* Controls */
 
@@ -184,11 +183,16 @@
     }
 
     .obstacle{
-        width:50px;
-        height:40px;
+        width:30px;
+        height:30px;
     }
 
     .obstacleImg{
-        width:50px;
+        width:30px;
     }
+
+    #obstacles{
+        bottom:60px; /* zelfde als #ground op GSM */
+    }
+
 }
