@@ -185,6 +185,7 @@ async function createUserIfNeeded(user){
                 logic:true,
                 bowling:true,
                 bird:true,
+                dino:true,
             }
 
         }
