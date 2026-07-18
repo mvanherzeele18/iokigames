@@ -31,29 +31,21 @@ window.addEventListener("keydown", e => {
 
 // Obstakels maken
 function createObstacle() {
-    if (!gameRunning) return;
-
     const obstacle = document.createElement("div");
     obstacle.className = "obstacle";
     obstacle.textContent = "🪨";
 
     obstaclesContainer.appendChild(obstacle);
 
-    let pos = obstaclesContainer.clientWidth + 80;
+    let pos = obstaclesContainer.clientWidth + 80; // start rechts buiten beeld
+    obstacle.style.left = pos + "px";
 
-    const speed = 4 + Math.random() * 2;
+    const speed = 4;
 
     const moveInterval = setInterval(() => {
-        if (!gameRunning) {
-            clearInterval(moveInterval);
-            obstacle.remove();
-            return;
-        }
-
         pos -= speed;
-        obstacle.style.right = pos + "px";
+        obstacle.style.left = pos + "px";
 
-        // Collision check
         const dinoRect = dino.getBoundingClientRect();
         const obsRect = obstacle.getBoundingClientRect();
 
@@ -66,18 +58,12 @@ function createObstacle() {
         const dinoIsLow = parseInt(getComputedStyle(dino).bottom) <= 90;
 
         if (overlap && dinoIsLow) {
-            // "Botsing" → zachte reset
+            clearInterval(moveInterval);
+            obstacle.remove();
             gameRunning = false;
-            dino.style.bottom = "70px";
-            obstacle.style.background = "#c0392b";
-            obstacle.textContent = "💥";
-
-            setTimeout(() => {
-                resetGame();
-            }, 900);
+            resetGame();
         }
 
-        // Obstakel voorbij
         if (pos < -100) {
             clearInterval(moveInterval);
             obstacle.remove();
