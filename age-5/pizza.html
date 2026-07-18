@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pizza - Ioki Games</title>
+
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="pizza.css">
+
+</head>
+<body>
+
+<div id="game">
+
+    <a href="index.html" class="back-button">⬅</a>
+
+    <div class="logo">
+        Ioki Games
+    </div>
+
+    <p class="subtitle" id="order">
+        ...
+    </p>
+
+    <div id="pizza-area">
+
+        <div id="pizza">
+
+            <!-- ingrediënten komen via JS -->
+
+        </div>
+
+    </div>
+
+    <div id="ingredients">
+
+        <!-- knoppen komen via JS -->
+
+    </div>
+
+</div>
+
+<script src="../script.js"></script>
+
+<script>
+createClouds(6, "../assets/images/cloud.png");
+</script>
+
+<script type="module">
+
+import { checkGameAccess } from "../guard.js";
+import { startGameTimer } from "../timer.js";
+
+checkGameAccess("pizza").then(access=>{
+
+    if(!access) return;
+
+    startGameTimer();
+
+    import("./pizza.js");
+
+});
+
+</script>
+
+</body>
+</html>
