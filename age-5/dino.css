@@ -38,8 +38,13 @@
     position:absolute;
     left:60px;
     bottom:70px;
-    font-size:60px;
     transition:bottom .18s ease-out;
+}
+
+#dinoImg{
+    width:70px;
+    height:auto;
+    pointer-events:none;
 }
 
 /* Obstacles container */
@@ -53,22 +58,22 @@
     pointer-events:none;
 }
 
-/* Individuele obstacle */
+/* Obstakel */
 
 .obstacle{
     position:absolute;
-    right:-80px;
     bottom:0;
     width:60px;
-    height:60px;
-    border-radius:12px;
-    background:#8b5a2b;
-    box-shadow:0 6px 14px rgba(0,0,0,.25);
+    height:45px;
     display:flex;
     justify-content:center;
-    align-items:center;
-    font-size:34px;
-    color:#fbe9d0;
+    align-items:flex-end;
+}
+
+.obstacleImg{
+    width:60px;
+    height:auto;
+    pointer-events:none;
 }
 
 /* Controls */
@@ -151,9 +156,7 @@
     pointer-events:none;
 }
 
-/* ===========================
-   Responsive
-=========================== */
+/* Responsive */
 
 @media(max-width:700px){
 
@@ -171,14 +174,20 @@
     }
 
     #dino{
-        font-size:48px;
         left:40px;
         bottom:60px;
     }
 
+    #dinoImg{
+        width:60px;
+    }
+
     .obstacle{
         width:50px;
-        height:50px;
-        font-size:28px;
+        height:40px;
+    }
+
+    .obstacleImg{
+        width:50px;
     }
 }
