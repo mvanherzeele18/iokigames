@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -12,8 +11,8 @@
     <title>Pizza - Ioki Games</title>
 
     <link rel="stylesheet" href="../style.css">
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="stylesheet" href="pizza.css">
+    <link rel="icon" href="../favicon.ico">
 
 </head>
 <body>
@@ -26,23 +25,27 @@
         Ioki Games
     </div>
 
-    <p class="subtitle" id="order">
-        ...
-    </p>
+    <div id="order-box">
+
+        🍕 Ik wil een pizza met...
+
+        <div id="order"></div>
+
+    </div>
 
     <div id="pizza-area">
 
         <div id="pizza">
 
-            <!-- ingrediënten komen via JS -->
+            <!-- toppings komen hier -->
 
         </div>
 
     </div>
 
-    <div id="ingredients">
+    <div id="ingredient-bar">
 
-        <!-- knoppen komen via JS -->
+        <!-- ingrediënten komen via JS -->
 
     </div>
 
@@ -51,7 +54,9 @@
 <script src="../script.js"></script>
 
 <script>
-createClouds(6, "../assets/images/cloud.png");
+
+createClouds(6,"../assets/images/cloud.png");
+
 </script>
 
 <script type="module">
