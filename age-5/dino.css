@@ -1,0 +1,184 @@
+#game{
+    width:100%;
+    max-width:none;
+    margin:auto;
+    padding:10px;
+    text-align:center;
+}
+
+/* Track */
+
+#track{
+    position:relative;
+    width:100%;
+    max-width:800px;
+    height:260px;
+    margin:80px auto 20px;
+    border-radius:20px;
+    background:linear-gradient(#87ceeb, #cfe9ff);
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+    overflow:hidden;
+}
+
+/* Ground */
+
+#ground{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:70px;
+    background:#f5f5f5;
+    box-shadow:0 -4px 10px rgba(0,0,0,.12) inset;
+}
+
+/* Dino */
+
+#dino{
+    position:absolute;
+    left:60px;
+    bottom:70px;
+    font-size:60px;
+    transition:bottom .18s ease-out;
+}
+
+/* Obstacles container */
+
+#obstacles{
+    position:absolute;
+    left:0;
+    bottom:70px;
+    width:100%;
+    height:80px;
+    pointer-events:none;
+}
+
+/* Individuele obstacle */
+
+.obstacle{
+    position:absolute;
+    right:-80px;
+    bottom:0;
+    width:60px;
+    height:60px;
+    border-radius:12px;
+    background:#8b5a2b;
+    box-shadow:0 6px 14px rgba(0,0,0,.25);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:34px;
+    color:#fbe9d0;
+}
+
+/* Controls */
+
+#controls{
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.control-button{
+    font-size:clamp(24px,4vw,32px);
+    padding:clamp(12px,2vw,18px) 26px;
+    border:none;
+    border-radius:18px;
+    cursor:pointer;
+    background:#ffcc33;
+    color:#333;
+    box-shadow:0 6px 16px rgba(0,0,0,.2);
+    transition:.18s;
+}
+
+.control-button:hover{
+    transform:scale(1.05);
+}
+
+.control-button:active{
+    transform:scale(.95);
+}
+
+/* Status */
+
+#status{
+    margin-top:8px;
+    font-size:1.2rem;
+    color:#333;
+}
+
+/* Back button */
+
+.back-button{
+    -webkit-tap-highlight-color: transparent;
+    position:fixed;
+    top:20px;
+    left:20px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:white;
+    color:#333;
+    text-decoration:none;
+    font-size:2rem;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 6px 15px rgba(0,0,0,.2);
+    z-index:1000;
+    transition:.2s;
+}
+
+.back-button:hover{
+    transform:scale(1.08);
+}
+
+.back-button:active{
+    transform:scale(.95);
+}
+
+/* Logo */
+
+.logo{
+    position:fixed;
+    top:25px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:2rem;
+    font-weight:bold;
+    color:white;
+    text-shadow:2px 2px 8px rgba(0,0,0,.25);
+    z-index:1000;
+    pointer-events:none;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:700px){
+
+    #game{
+        padding:6px;
+    }
+
+    #track{
+        height:220px;
+        margin:70px auto 16px;
+    }
+
+    #ground{
+        height:60px;
+    }
+
+    #dino{
+        font-size:48px;
+        left:40px;
+        bottom:60px;
+    }
+
+    .obstacle{
+        width:50px;
+        height:50px;
+        font-size:28px;
+    }
+}
