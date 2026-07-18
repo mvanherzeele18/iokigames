@@ -37,7 +37,7 @@ function createObstacle() {
     obstacle.className = "obstacle";
 
     const img = document.createElement("img");
-    img.src = "rock.png"; // vervang door jouw PNG-pad
+    img.src = "../assets/images/cactus.png"; // vervang door jouw PNG-pad
     img.className = "obstacleImg";
     img.alt = "Obstacle";
 
