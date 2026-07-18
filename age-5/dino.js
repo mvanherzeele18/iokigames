@@ -13,7 +13,7 @@ function jump() {
 
     isJumping = true;
 
-    dino.style.bottom = "240px";   // hoge sprong
+    dino.style.bottom = "200px";   // hoge sprong
 
     setTimeout(() => {
         dino.style.bottom = "70px"; // terug naar grond
