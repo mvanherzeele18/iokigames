@@ -12,13 +12,18 @@ function jump() {
     if (!gameRunning || isJumping) return;
 
     isJumping = true;
-    dino.style.bottom = "160px";
+
+    dino.style.bottom = "240px";   // hoge sprong
 
     setTimeout(() => {
-        dino.style.bottom = "70px";
-        isJumping = false;
-    }, 550);
+        dino.style.bottom = "70px"; // terug naar grond
+    }, 550); // tijd omhoog
+
+    setTimeout(() => {
+        isJumping = false;          // sprong volledig klaar
+    }, 650); // totale sprongduur
 }
+
 
 jumpButton.addEventListener("click", jump);
 
