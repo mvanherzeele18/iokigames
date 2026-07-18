@@ -1,7 +1,5 @@
 #game{
 
-    width:100%;
-
     max-width:900px;
 
     margin:auto;
@@ -83,13 +81,31 @@
 
 }
 
-.subtitle{
+#order-box{
 
-    font-size:1.4rem;
+    background:white;
 
-    margin:20px 0 30px;
+    border-radius:25px;
+
+    padding:18px;
+
+    margin:20px auto;
+
+    width:min(90%,600px);
+
+    box-shadow:0 6px 15px rgba(0,0,0,.15);
+
+    font-size:1.3rem;
 
     font-weight:bold;
+
+}
+
+#order{
+
+    margin-top:12px;
+
+    font-size:2rem;
 
 }
 
@@ -99,25 +115,27 @@
 
     justify-content:center;
 
-    margin-bottom:40px;
+    margin:35px 0;
 
 }
 
 #pizza{
 
-    width:min(75vw,420px);
+    width:340px;
 
-    aspect-ratio:1;
+    height:340px;
 
     border-radius:50%;
 
-    background:#F4D28A;
+    background:#F2C67D;
 
-    border:14px solid #C98A45;
+    border:16px solid #B87938;
 
     position:relative;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    box-shadow:
+        inset 0 0 0 10px #D83A2E,
+        0 8px 18px rgba(0,0,0,.2);
 
 }
 
@@ -129,55 +147,63 @@
 
     transform:translate(-50%,-50%);
 
-    user-select:none;
-
-    pointer-events:none;
-
 }
 
-#ingredients{
+#ingredient-bar{
 
-    display:grid;
+    background:#C68A4C;
 
-    grid-template-columns:repeat(3,1fr);
+    border-radius:25px;
 
-    gap:15px;
+    padding:20px;
 
-    max-width:600px;
+    display:flex;
 
-    margin:auto;
+    justify-content:center;
+
+    gap:18px;
+
+    flex-wrap:wrap;
+
+    box-shadow:0 6px 15px rgba(0,0,0,.2);
 
 }
 
 .ingredient{
 
-    background:white;
+    width:70px;
 
-    border:none;
+    height:70px;
 
     border-radius:18px;
 
-    padding:18px;
+    background:white;
 
-    font-size:42px;
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:40px;
 
     cursor:pointer;
 
     transition:.2s;
 
-    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    user-select:none;
 
 }
 
 .ingredient:hover{
 
-    transform:scale(1.05);
+    transform:scale(1.08);
 
 }
 
 .ingredient:active{
 
-    transform:scale(.95);
+    transform:scale(.94);
 
 }
 
@@ -185,29 +211,39 @@
 
     #pizza{
 
-        width:90vw;
+        width:280px;
 
-    }
+        height:280px;
 
-    .topping{
-
-        font-size:30px;
+        border-width:12px;
 
     }
 
     .ingredient{
 
-        font-size:30px;
+        width:58px;
 
-        padding:14px;
+        height:58px;
 
-        border-radius:14px;
+        font-size:32px;
 
     }
 
-    .subtitle{
+    .topping{
 
-        font-size:1.1rem;
+        font-size:34px;
+
+    }
+
+    #order-box{
+
+        font-size:1.05rem;
+
+    }
+
+    #order{
+
+        font-size:1.6rem;
 
     }
 
